@@ -1,16 +1,162 @@
+import Link from "next/link";
+import { FaGithub, FaBlog } from "react-icons/fa";
+
 export default function About() {
   return (
+    <>
+    <div>
+      <Link href="/">
+        <button className="px-4 py-2 border border-cyan-300 text-cyan-300 rounded hover:bg-cyan-300 hover:text-black transition">
+          ← 홈으로 돌아가기
+        </button>
+      </Link>
+    </div>
     <section className="space-y-6 py-10">
       <h2 className="text-4xl font-bold">👨‍💻 About Me</h2>
-      <p className="text-violet-200">
-        저는 다양한 문제를 직접 부딪히며 해결해온 경험을 통해 성장한 개발자입니다.
-        백엔드와 프론트엔드를 모두 경험했으며, 실전 프로젝트에서 기획부터 배포까지 주도적으로 참여했습니다.
-      </p>
-      <ul className="list-disc pl-6 space-y-2 text-indigo-400">
-        <li><strong>기술스택</strong>: TypeScript, Next.js, ClickHouse, PostgreSQL, AWS</li>
-        <li><strong>대표 경험</strong>: 클릭스트림 분석 플랫폼, 키오스크 버전 관리 웹앱</li>
-        <li><strong>특징</strong>: 빠른 적응력, 주도적 문제 해결, 커뮤니케이션 중심의 협업</li>
-      </ul>
+      <div className="space-y-4 text-violet-200">
+        <h3 className="text-xl font-semibold text-white">"문제를 구조화하고, 끝까지 해결하는 개발자"</h3>
+        <p>
+          저는 반도체에 관심이 있어 전자공학을 전공으로 선택했지만,
+          1학년 때 처음 접한 C언어 프로그래밍 수업을 계기로 제 진로가 바뀌기 시작했습니다.
+          문제를 코드로 해결해나가는 과정이 너무 재미있었고,
+          이후에는 임베디드 실험, 백오피스 개발, 실시간 대시보드 프로젝트까지
+          다양한 환경에서 개발을 경험하며 점점 더 개발자의 길을 확신하게 되었습니다.
+        </p>
+        <p>
+          CS 기초를 탄탄히 다지기 위해 크래프톤 정글에서 운영체제, 알고리즘, 네트워크 등 전산학 기반을 집중적으로 학습했고,
+          지금은 기술을 넘어 문제를 해결하는 구조를 설계하는 개발자를 목표로 성장하고 있습니다.
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-2xl font-semibold text-white">📇 Profile</h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-2 text-violet-200 text-base">
+          <p><span className="text-cyan-300 font-medium">이름:</span> 박준식</p>
+          <p><span className="text-cyan-300 font-medium">MBTI:</span> ISFJ</p>
+          <p><span className="text-cyan-300 font-medium">생년월일:</span> 2000.02.15</p>
+          <p><span className="text-cyan-300 font-medium">이메일:</span> qkrwns1478@gmail.com</p>
+          <p><span className="text-cyan-300 font-medium">거주지:</span> 대구광역시 북구</p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a
+              href="https://github.com/qkrwns1478"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:underline"
+            >
+              <FaGithub className="text-cyan-300"/> Github
+            </a>
+
+            <a
+              href="https://munsik22.tistory.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:underline"
+            >
+              <FaBlog className="text-cyan-300"/> Blog
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="text-2xl font-semibold text-white">📚 Education</h3>
+        <ul className="list-disc pl-6 text-violet-200">
+          <li>
+            <strong className="text-cyan-300">경북대학교 전자공학부 학사</strong> <span className="text-white"><code>2019.03 - 2025.08</code></span>
+            <ul className="list-[square] pl-6">
+              <li>임베디드 시스템, MCU 제어 등 하드웨어 기반 실험 수행</li>
+            </ul>
+          </li>
+          <li>
+            <strong className="text-cyan-300">크래프톤 정글 8기 수료</strong> <span className="text-white"><code>2025.03 - 2025.07</code></span>
+            <ul className="list-[square] pl-6">
+              <li>OS(PintOS), 네트워크, 자료구조, 알고리즘 등 CS 기반 집중 교육</li>
+              <li>실전 프로젝트를 통해 백엔드/풀스택 실무 경험</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div className="space-y-2">
+        <h3 className="text-2xl font-semibold text-white">💼 Experience</h3>
+        <ul className="list-disc pl-6 text-violet-200">
+          <li>
+            <strong className="text-cyan-300">moki | 키오스크 버전 관리 웹 백오피스 개발 (현장실습)</strong> <span className="text-white"><code>2024.01 - 2024.02</code></span>
+            <ul className="list-[square] pl-6">
+              <li>전국 사업지 단말기별 APK 버전 현황 조회 / 배포 기능 구현</li>
+              <li>관리자 권한, 업데이트 로그 추적 등 백오피스 실무 경험</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-white">🛠 Tech Stack</h3>
+
+        <div>
+          <h4 className="text-lg font-semibold text-cyan-300 mb-2">Languages</h4>
+          <div className="flex flex-wrap gap-2">
+            <img src="https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white" alt="C" />
+            <img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++" />
+            <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+            <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+            <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-lg font-semibold text-cyan-300 mb-2">Backend</h4>
+          <div className="flex flex-wrap gap-2">
+            <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+            <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
+            <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask" />
+            <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+            <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
+            <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+            <img src="https://img.shields.io/badge/ClickHouse-FFDD00?style=for-the-badge&logo=clickhouse&logoColor=black" alt="ClickHouse" />
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-lg font-semibold text-cyan-300 mb-2">Frontend</h4>
+          <div className="flex flex-wrap gap-2">
+            <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+            <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+            <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+            <img src="https://img.shields.io/badge/Zustand-000000?style=for-the-badge&logo=zustand&logoColor=white" alt="Zustand" />
+            <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap" />
+            <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="TailwindCSS" />
+          </div>
+        </div>
+
+        <div>
+          <h4 className="text-lg font-semibold text-cyan-300 mb-2">DevOps</h4>
+          <div className="flex flex-wrap gap-2">
+            <img src="https://img.shields.io/badge/AWS EC2-FF9900?style=for-the-badge&logo=amazon-ec2&logoColor=white" alt="AWS EC2" />
+            <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-2xl font-semibold text-white">🧠 나다운 개발자란?</h3>
+        <ul className="list-disc pl-6 text-violet-200 space-y-2">
+          <li>
+            <strong className="text-white">시스템을 이해하며 개발하는 사람</strong><br />
+            단순 구현을 넘어, 데이터 흐름과 병목을 이해하고 최적화하는 데에 관심이 많습니다.
+          </li>
+          <li>
+            <strong className="text-white">실행력 있는 문제 해결자</strong><br />
+            아무도 맡지 않으려는 어려운 문제일수록 직접 해결하려고 합니다. 빠르게 실험하고 고치며 정답을 찾아가는 과정이 즐겁습니다.
+          </li>
+          <li>
+            <strong className="text-white">성장에 진심인 동료</strong><br />
+            협업은 내 성장의 가속기라고 생각합니다. 코드 리뷰, 역할 분담, 팀 기획까지 모두 적극적으로 참여해왔습니다.
+          </li>
+        </ul>
+      </div>
     </section>
+    </>
   );
 }
