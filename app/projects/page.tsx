@@ -17,8 +17,16 @@ export default function ProjectsPage() {
       {projects.map((project, idx) => (
         <div
           key={idx}
-          className="border border-white/10 rounded-xl p-6 shadow-md bg-slate-800 space-y-4"
+          className="relative border border-white/10 rounded-xl p-6 shadow-md bg-slate-800 space-y-4"
         >
+          {project.details && (
+            <Link href={project.details}>
+              <button className="absolute top-4 right-4 text-sm px-3 py-1 border border-cyan-300 text-cyan-300 rounded hover:bg-cyan-300 hover:text-black transition">
+                더보기 →
+              </button>
+            </Link>
+          )}
+
           <div>
             <h3 className="text-2xl font-semibold text-cyan-300">{project.title}</h3>
             <p className="text-sm text-indigo-300">{project.period}</p>
@@ -58,7 +66,11 @@ export default function ProjectsPage() {
           {project.role && (
             <div>
               <p className="text-cyan-300 font-medium">🔧 내 역할</p>
-              <p className="whitespace-pre-line text-violet-200">{project.role}</p>
+              <ul className="list-disc list-inside text-violet-200 space-y-1">
+                {project.role.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
             </div>
           )}
 
