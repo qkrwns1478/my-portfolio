@@ -1,6 +1,7 @@
 export interface Project {
   title: string;
   desc?: string;
+  category: string[];
   period: string;
   summary: string;
   asis?: string[];
@@ -17,6 +18,7 @@ export const projects: Project[] = [
   {
     title: 'KlickLab',
     desc: '클릭스트림 분석 플랫폼',
+    category: ['Frontend', 'Backend'],
     period: '2025.06 – 2025.07',
     summary:
       'SDK 한 줄로 사용자 행동을 수집하고, 실시간 시각화 및 전환율 분석까지 제공하는 데이터 분석 플랫폼',
@@ -48,6 +50,7 @@ export const projects: Project[] = [
   {
     title: 'KAIST PintOS',
     desc: '운영체제 프로젝트',
+    category: ['OS'],
     period: '2025.05 – 2025.06',
     summary:
       '운영체제 핵심 구조를 직접 구현하며 시스템 수준의 동시성, 인터페이스, 메모리 모델 등을 설계하고 검증한 팀 프로젝트',
@@ -70,6 +73,7 @@ export const projects: Project[] = [
   {
     title: '디지털 포춘 쿠키',
     period: '2025.03',
+    category: ['Frontend'],
     summary: '운세를 랜덤으로 제공하는 디지털 포춘 쿠키 웹 애플리케이션',
     asis: [
       '포춘쿠키 열기 버튼을 빠르게 연속 클릭하면 ajax 요청이 중복 발생하며 동시성 문제가 발생함.',
@@ -97,6 +101,7 @@ export const projects: Project[] = [
   {
     title: 'STM32 선풍기 제어 시스템',
     desc: '전공 프로젝트',
+    category: ['Embedded'],
     period: '2024.03 – 2024.06',
     summary:
       '인터럽트 기반 사용자 입력을 처리하고 PWM 제어를 안정화한 MCU 임베디드 제어 프로젝트',
@@ -122,6 +127,7 @@ export const projects: Project[] = [
   {
     title: '키오스크 버전 관리',
     desc: '현장실습 과제 프로젝트',
+    category: ['Frontend', 'Backend'],
     period: '2024.01 – 2024.02',
     summary:
       '사업장 단말기별 APK 버전 현황 조회 및 안정적인 분할 업로드 기능을 지원하는 관리자용 백오피스 시스템',
