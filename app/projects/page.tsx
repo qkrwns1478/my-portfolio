@@ -12,7 +12,7 @@ export default function Projects() {
       </Link>
     </div>
     <section className="space-y-10 py-10">
-      <h2 className="text-4xl font-bold text-white">🛠 Projects</h2>
+      <h2 className="text-4xl font-bold text-white">Projects</h2>
 
       {projects.map((project, idx) => (
         <div

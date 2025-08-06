@@ -70,7 +70,6 @@ export const projects: Project[] = [
     ],
     stack: ['C', 'QEMU', 'GDB', 'Makefile'],
     link: 'https://github.com/qkrwns1478/pintos-kaist',
-    details: '/projects/pintos',
   },
   {
     title: '디지털 포춘 쿠키',

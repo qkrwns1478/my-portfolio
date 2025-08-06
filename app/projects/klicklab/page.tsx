@@ -13,7 +13,7 @@ export default function KlickLabDetail() {
       </div>
       <div className="flex justify-between items-center">
         <h2 className="text-4xl font-bold text-cyan-300">
-          📊 데이터 분석 플랫폼 KlickLab
+          데이터 분석 플랫폼 KlickLab
         </h2>
         <div className="flex gap-4 text-sm">
           <a
