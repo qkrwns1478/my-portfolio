@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { projects } from '@/data/projects';
 import Button from "../components/Button";
 import ResponsiveText from "../components/ResponsiveText";
@@ -23,7 +22,7 @@ export default function Projects() {
 
           <div>
             <h3 className="text-2xl font-semibold text-cyan-300">{
-              project.desc ? <ResponsiveText values={[project.title, project.desc]} separator=" - "/> : project.title
+              project.desc ? <ResponsiveText values={[project.title, project.desc]} separator=" - " isDesc={true}/> : project.title
             }</h3>
             <code className="text-sm text-indigo-300">{project.period}</code>
           </div>

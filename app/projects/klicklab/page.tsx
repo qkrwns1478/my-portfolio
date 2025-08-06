@@ -1,3 +1,4 @@
+import ResponsiveText from "../../components/ResponsiveText";
 import Button from "../../components/Button";
 
 export default function KlickLabDetail() {
@@ -7,11 +8,11 @@ export default function KlickLabDetail() {
       <Button href="/projects">← 프로젝트 목록으로 돌아가기</Button>
     </div>
     <section className="space-y-10 py-10">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start sm:items-center">
         <h2 className="text-4xl font-bold text-cyan-300">
-          데이터 분석 플랫폼 KlickLab
+          <ResponsiveText values={["데이터 분석", "플랫폼", "KlickLab"]}/>
         </h2>
-        <div className="flex gap-4 text-sm">
+        <div className="flex flex-col-reverse sm:flex-row gap-4 text-sm">
           <a
             href="https://github.com/Eatventory/KlickLab"
             className="text-cyan-300 underline"

@@ -120,7 +120,7 @@ export const projects: Project[] = [
     video: 'https://www.youtube.com/watch?v=8qhFRJbyApA',
   },
   {
-    title: '키오스크 버전 관리 백오피스',
+    title: '키오스크 버전 관리',
     desc: '현장실습 과제 프로젝트',
     period: '2024.01 – 2024.02',
     summary:

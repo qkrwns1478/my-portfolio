@@ -1,3 +1,4 @@
+import ResponsiveText from "../../components/ResponsiveText";
 import Button from "../../components/Button";
 
 export default function KioskBackofficeDetail() {
@@ -7,9 +8,9 @@ export default function KioskBackofficeDetail() {
       <Button href="/projects">← 프로젝트 목록으로 돌아가기</Button>
     </div>
     <section className="space-y-10 py-10">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start sm:items-center">
         <h2 className="text-4xl font-bold text-cyan-300">
-          키오스크 버전 관리 웹 애플리케이션
+          <ResponsiveText values={["키오스크", "버전 관리", "웹 앱"]}/>
         </h2>
       </div>
 

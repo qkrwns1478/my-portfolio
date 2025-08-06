@@ -3,6 +3,7 @@ interface ResponsiveTextProps {
   groupSize?: number;
   className?: string;
   separator?: string;
+  isDesc?: boolean;
 }
 
 export default function ResponsiveText({
@@ -10,6 +11,7 @@ export default function ResponsiveText({
   groupSize = values.length,
   className = "",
   separator = " ",
+  isDesc = false,
 }: ResponsiveTextProps) {
   const desktopLines: string[] = [];
 
@@ -23,7 +25,7 @@ export default function ResponsiveText({
       {/* 모바일: 줄마다 <br /> */}
       <span className={`block sm:hidden ${className}`}>
         {values.map((text, idx) => (
-          <span key={idx}>
+          <span key={idx} className={(isDesc && idx > 0) ? "text-sm" : ""}>
             {text}
             <br />
           </span>
