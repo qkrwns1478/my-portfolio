@@ -1,4 +1,3 @@
-// data/projects.ts
 export interface Project {
   title: string;
   period: string;
@@ -16,7 +15,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: 'KlickLab - 클릭스트림 분석 플랫폼',
-    period: '2025.06.19 – 2025.07.26',
+    period: '2025.06 – 2025.07',
     summary:
       'SDK 한 줄로 사용자 행동을 수집하고, 실시간 시각화 및 전환율 분석까지 제공하는 데이터 분석 플랫폼',
     asis:
@@ -37,15 +36,7 @@ export const projects: Project[] = [
       '참여도 분석 대시보드 프론트엔드에서 비동기 렌더링 최적화',
       '커스텀 그래프 툴팁/필터 구현',
     ],
-    stack: [
-      'React',
-      'Zustand',
-      'TailwindCSS',
-      'Node.js',
-      'ClickHouse',
-      'Kafka',
-      'AWS EC2',
-    ],
+    stack: ['React', 'Zustand', 'TailwindCSS', 'Node.js', 'ClickHouse', 'Kafka', 'AWS EC2'],
     link: 'https://github.com/Eatventory/KlickLab',
     video: 'https://jungle.krafton.com/board/project/read/213',
     details: '/projects/klicklab',
@@ -73,7 +64,7 @@ export const projects: Project[] = [
   },
   {
     title: '디지털 포춘 쿠키',
-    period: '2025.03.10 – 2025.03.13',
+    period: '2025.03',
     summary: '운세를 랜덤으로 제공하는 디지털 포춘 쿠키 웹 애플리케이션',
     asis:
     '운세는 랜덤으로 제공되지만, 포춘쿠키 열기 버튼을 빠르게 연속 클릭하면 ajax 요청이 중복 발생하며 동시성 문제가 발생함. 하루에 한 번만 열 수 있는 제약이 무력화될 수 있었음.',
@@ -139,7 +130,7 @@ export const projects: Project[] = [
       '분할 업로드 / 서버 병합 로직 구현',
       '설치 현황 조회 및 이력 확인 기능 개발'
     ],
-    stack: ['JavaScript', 'PHP', 'MySQL'],
+    stack: ['jQuery', 'PHP', 'MySQL'],
     details: '/projects/kiosk-backoffice',
   },
 ];
