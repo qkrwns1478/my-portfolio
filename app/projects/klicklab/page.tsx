@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function KlickLabDetailPage() {
+export default function KlickLabDetail() {
   return (
     <section className="py-10 space-y-8">
       <div>

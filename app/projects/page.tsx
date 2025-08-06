@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { projects } from '@/data/projects';
 
-export default function ProjectsPage() {
+export default function Projects() {
   return (
     <>
     <div>
@@ -29,7 +29,7 @@ export default function ProjectsPage() {
 
           <div>
             <h3 className="text-2xl font-semibold text-cyan-300">{project.title}</h3>
-            <p className="text-sm text-indigo-300">{project.period}</p>
+            <code className="text-sm text-indigo-300">{project.period}</code>
           </div>
 
           <p className="text-violet-200">{project.summary}</p>
@@ -90,16 +90,28 @@ export default function ProjectsPage() {
             </div>
           )}
 
-          {project.link && (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline mt-2 inline-block text-cyan-300"
-            >
-              GitHub ↗
-            </a>
-          )}
+          <div className="flex gap-2">
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline mt-2 inline-block text-cyan-300"
+              >
+                GitHub ↗
+              </a>
+            )}
+            {project.video && (
+              <a
+                href={project.video}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline mt-2 inline-block text-cyan-300"
+              >
+                발표영상 ↗
+              </a>
+            )}
+          </div>
         </div>
       ))}
     </section>

@@ -30,13 +30,13 @@ export default function About() {
 
       <div className="space-y-4">
         <h3 className="text-2xl font-semibold text-white">📇 Profile</h3>
-
+        <div className="border border-white/10 rounded-xl p-6 shadow-md bg-slate-800">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-2 text-violet-200 text-base">
-          <p><span className="text-cyan-300 font-medium">이름:</span> 박준식</p>
-          <p><span className="text-cyan-300 font-medium">MBTI:</span> ISFJ</p>
-          <p><span className="text-cyan-300 font-medium">생년월일:</span> 2000.02.15</p>
-          <p><span className="text-cyan-300 font-medium">이메일:</span> qkrwns1478@gmail.com</p>
-          <p><span className="text-cyan-300 font-medium">거주지:</span> 대구광역시 북구</p>
+          <p><span className="text-cyan-300 font-semibold">이름</span> 박준식</p>
+          <p><span className="text-cyan-300 font-semibold">MBTI</span> ISFJ</p>
+          <p><span className="text-cyan-300 font-semibold">생년월일</span> 2000.02.15</p>
+          <p><span className="text-cyan-300 font-semibold">이메일</span> qkrwns1478@gmail.com</p>
+          <p><span className="text-cyan-300 font-semibold">거주지</span> 대구광역시 북구</p>
           <div className="flex flex-col sm:flex-row gap-4">
             <a
               href="https://github.com/qkrwns1478"
@@ -56,6 +56,7 @@ export default function About() {
               <FaBlog className="text-cyan-300"/> Blog
             </a>
           </div>
+        </div>
         </div>
       </div>
 

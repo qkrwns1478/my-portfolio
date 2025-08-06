@@ -9,13 +9,14 @@ export interface Project {
   role?: string[];
   stack?: string[];
   link?: string;
+  video?: string;
   details?: string;
 }
 
 export const projects: Project[] = [
   {
-    title: '📊 KlickLab - 클릭스트림 분석 플랫폼',
-    period: '2025.06 – 2025.07 (크래프톤 정글, 팀 프로젝트)',
+    title: 'KlickLab - 클릭스트림 분석 플랫폼',
+    period: '2025.06.19 – 2025.07.26',
     summary:
       'SDK 한 줄로 사용자 행동을 수집하고, 실시간 시각화 및 전환율 분석까지 제공하는 데이터 분석 플랫폼',
     asis:
@@ -33,8 +34,8 @@ export const projects: Project[] = [
     ],
     role: [
       'ClickHouse 쿼리 설계 및 실시간 집계 구조 구축',
-      '대시보드 프론트엔드에서 비동기 렌더링 최적화, 커스텀 그래프 툴팁/필터 구현',
-      '페이지별 이탈률, 전환율 계산 로직 설계'
+      '참여도 분석 대시보드 프론트엔드에서 비동기 렌더링 최적화',
+      '커스텀 그래프 툴팁/필터 구현',
     ],
     stack: [
       'React',
@@ -46,11 +47,12 @@ export const projects: Project[] = [
       'AWS EC2',
     ],
     link: 'https://github.com/Eatventory/KlickLab',
+    video: 'https://jungle.krafton.com/board/project/read/213',
     details: '/projects/klicklab',
   },
   {
-    title: '🧵 KAIST PintOS - 운영체제 프로젝트',
-    period: '2025.03 – 2025.07 (크래프톤 정글)',
+    title: 'KAIST PintOS - 운영체제 프로젝트',
+    period: '2025.05 – 2025.06',
     summary:
       '운영체제 핵심 구조를 직접 구현하며 시스템 수준의 동시성, 인터페이스, 메모리 모델 등을 설계하고 검증한 팀 프로젝트',
     challenge: [
@@ -67,11 +69,12 @@ export const projects: Project[] = [
       '동기화 문제 해결 및 인터페이스 안정성 설계'
     ],
     stack: ['C', 'QEMU', 'GDB', 'Makefile'],
+    link: 'https://github.com/qkrwns1478/pintos-kaist',
     details: '/projects/pintos',
   },
   {
-    title: '🥠 디지털 포춘 쿠키',
-    period: '2025.03.10 – 2025.03.13 (크래프톤 정글, 팀 프로젝트)',
+    title: '디지털 포춘 쿠키',
+    period: '2025.03.10 – 2025.03.13',
     summary: '운세를 랜덤으로 제공하는 디지털 포춘 쿠키 웹 애플리케이션',
     asis:
     '운세는 랜덤으로 제공되지만, 포춘쿠키 열기 버튼을 빠르게 연속 클릭하면 ajax 요청이 중복 발생하며 동시성 문제가 발생함. 하루에 한 번만 열 수 있는 제약이 무력화될 수 있었음.',
@@ -95,8 +98,8 @@ export const projects: Project[] = [
     link: 'https://github.com/qkrwns1478/digital-fortune-cookie',
   },
   {
-    title: '🌀 STM32 선풍기 제어 시스템',
-    period: '2024.03 – 2024.06 (전공 프로젝트)',
+    title: 'STM32 선풍기 제어 시스템 - 전공 프로젝트',
+    period: '2024.03 – 2024.06',
     summary:
       '인터럽트 기반 사용자 입력을 처리하고 PWM 제어를 안정화한 MCU 임베디드 제어 프로젝트',
     asis:
@@ -114,10 +117,11 @@ export const projects: Project[] = [
       '인터럽트 동기화 및 실시간 반응 로직 구현'
     ],
     stack: ['STM32F', 'Embedded C'],
+    video: 'https://www.youtube.com/watch?v=8qhFRJbyApA',
   },
   {
-    title: '🧾 키오스크 버전 관리 백오피스',
-    period: '2024.01 – 2024.02 (현장실습, moki)',
+    title: '키오스크 버전 관리 백오피스',
+    period: '2024.01 – 2024.02',
     summary:
       '사업장 단말기별 APK 버전 현황 조회 및 안정적인 분할 업로드 기능을 지원하는 관리자용 백오피스 시스템',
     asis:
