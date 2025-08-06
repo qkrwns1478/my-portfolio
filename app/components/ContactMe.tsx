@@ -2,7 +2,7 @@
 import { useState, useRef } from "react";
 import toast from "react-hot-toast";
 import ReCAPTCHA from "react-google-recaptcha";
-
+import Button from "../components/Button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -102,14 +102,7 @@ export default function ContactMe() {
             <textarea {...register("message")} required placeholder="메시지" className="w-full p-2 h-28 rounded bg-slate-700 resize-none" />
             {errors.message && <p className="text-xs">{errors.message.message}</p>}
           </div>
-          <button type="submit" disabled={loading} 
-          className={`w-full px-4 py-2 border border-cyan-300 rounded ${loading ? `bg-cyan-300 text-black` : `text-cyan-300 hover:bg-cyan-300 hover:text-black active:bg-cyan-300 active:text-black`} transition`}>
-            {loading ? (
-              <span className="animate-spin inline-block w-5 h-5 border-[3px] border-white border-t-transparent rounded-full" />
-            ) : (
-              "보내기"
-            )}
-          </button>
+          <Button type="submit" loading={loading} className="w-full">보내기</Button>
           <ReCAPTCHA
             sitekey={siteKey}
             size="invisible"
