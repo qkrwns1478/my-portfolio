@@ -21,6 +21,10 @@ html {
   background-color: #22d3ee; /* Tailwind cyan-300 */
 }
 
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
+
 /* * {
   scrollbar-width: thin;
   scrollbar-color: #06b6d4 #0f172a;
