@@ -1,15 +1,13 @@
 import Link from "next/link";
 import { projects } from '@/data/projects';
+import Button from "../components/Button";
+import ResponsiveText from "../components/ResponsiveText";
 
 export default function Projects() {
   return (
     <>
     <div>
-      <Link href="/">
-        <button className="px-4 py-2 border border-cyan-300 text-cyan-300 rounded hover:bg-cyan-300 hover:text-black transition">
-          ← 홈으로 돌아가기
-        </button>
-      </Link>
+      <Button href="/">← 홈으로 돌아가기</Button>
     </div>
     <section className="space-y-10 py-10">
       <h2 className="text-4xl font-bold text-white">Projects</h2>
@@ -20,15 +18,13 @@ export default function Projects() {
           className="relative border border-white/10 rounded-xl p-6 shadow-md bg-slate-800 space-y-4"
         >
           {project.details && (
-            <Link href={project.details}>
-              <button className="absolute top-4 right-4 text-sm px-3 py-1 border border-cyan-300 text-cyan-300 rounded hover:bg-cyan-300 hover:text-black transition">
-                더보기 →
-              </button>
-            </Link>
+            <Button href={project.details} className="absolute top-4 right-4 text-sm px-3 py-1">더보기 →</Button>
           )}
 
           <div>
-            <h3 className="text-2xl font-semibold text-cyan-300">{project.title}</h3>
+            <h3 className="text-2xl font-semibold text-cyan-300">{
+              project.desc ? <ResponsiveText values={[project.title, project.desc]} separator=" - "/> : project.title
+            }</h3>
             <code className="text-sm text-indigo-300">{project.period}</code>
           </div>
 
@@ -36,15 +32,19 @@ export default function Projects() {
 
           {project.asis && (
             <div>
-              <p className="text-cyan-300 font-medium">[AS-IS]</p>
-              <p className="text-violet-200">{project.asis}</p>
+              <p className="text-cyan-300 font-semibold">[AS-IS]</p>
+              <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                {project.asis.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
             </div>
           )}
 
           {project.challenge && (
             <div>
-              <p className="text-cyan-300 font-medium">[Challenge]</p>
-              <ul className="list-disc list-inside text-violet-200 space-y-1">
+              <p className="text-cyan-300 font-semibold">[Challenge]</p>
+              <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
                 {project.challenge.map((item, i) => (
                   <li key={i}>{item}</li>
                 ))}
@@ -54,8 +54,8 @@ export default function Projects() {
 
           {project.tobe && (
             <div>
-              <p className="text-cyan-300 font-medium">[TO-BE]</p>
-              <ul className="list-disc list-inside text-violet-200 space-y-1">
+              <p className="text-cyan-300 font-semibold">[TO-BE]</p>
+              <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
                 {project.tobe.map((item, i) => (
                   <li key={i}>{item}</li>
                 ))}
@@ -65,8 +65,8 @@ export default function Projects() {
 
           {project.role && (
             <div>
-              <p className="text-cyan-300 font-medium">🔧 내 역할</p>
-              <ul className="list-disc list-inside text-violet-200 space-y-1">
+              <p className="text-cyan-300 font-semibold">My Role</p>
+              <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
                 {project.role.map((item, i) => (
                   <li key={i}>{item}</li>
                 ))}
@@ -76,7 +76,7 @@ export default function Projects() {
 
           {project.stack && (
             <div>
-              <p className="text-cyan-300 font-medium">🛠 Tech Stack</p>
+              <p className="text-cyan-300 font-semibold">Tech Stack</p>
               <div className="flex flex-wrap gap-2 pt-2">
                 {project.stack.map((tech) => (
                   <span

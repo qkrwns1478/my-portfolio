@@ -1,8 +1,9 @@
 export interface Project {
   title: string;
+  desc?: string;
   period: string;
   summary: string;
-  asis?: string;
+  asis?: string[];
   challenge?: string[];
   tobe?: string[];
   role?: string[];
@@ -14,12 +15,15 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: 'KlickLab - 클릭스트림 분석 플랫폼',
+    title: 'KlickLab',
+    desc: '클릭스트림 분석 플랫폼',
     period: '2025.06 – 2025.07',
     summary:
       'SDK 한 줄로 사용자 행동을 수집하고, 실시간 시각화 및 전환율 분석까지 제공하는 데이터 분석 플랫폼',
-    asis:
-      '모든 이벤트 로그를 단일 DB에서 조회하면서 쿼리 응답 속도가 매우 느리고, 쓰기/읽기 작업이 동시에 이뤄지며 병목 현상이 발생함.',
+    asis: [
+      '모든 이벤트 로그를 단일 DB에서 조회하면서 쿼리 응답 속도가 매우 느려짐',
+      '쓰기/읽기 작업이 동시에 이뤄지며 병목 현상이 발생함.'
+    ],
     challenge: [
       'ClickHouse 기반의 컬럼형 DB 도입으로 조회 성능 개선',
       '시간 단위 Materialized View 설계 및 집계 테이블 구성',
@@ -42,7 +46,8 @@ export const projects: Project[] = [
     details: '/projects/klicklab',
   },
   {
-    title: 'KAIST PintOS - 운영체제 프로젝트',
+    title: 'KAIST PintOS',
+    desc: '운영체제 프로젝트',
     period: '2025.05 – 2025.06',
     summary:
       '운영체제 핵심 구조를 직접 구현하며 시스템 수준의 동시성, 인터페이스, 메모리 모델 등을 설계하고 검증한 팀 프로젝트',
@@ -66,8 +71,10 @@ export const projects: Project[] = [
     title: '디지털 포춘 쿠키',
     period: '2025.03',
     summary: '운세를 랜덤으로 제공하는 디지털 포춘 쿠키 웹 애플리케이션',
-    asis:
-    '운세는 랜덤으로 제공되지만, 포춘쿠키 열기 버튼을 빠르게 연속 클릭하면 ajax 요청이 중복 발생하며 동시성 문제가 발생함. 하루에 한 번만 열 수 있는 제약이 무력화될 수 있었음.',
+    asis: [
+      '포춘쿠키 열기 버튼을 빠르게 연속 클릭하면 ajax 요청이 중복 발생하며 동시성 문제가 발생함.',
+      '하루에 한 번만 열 수 있는 제약이 무력화될 수 있었음.'
+    ],
     challenge: [
       '하루 한 번만 포춘쿠키 열 수 있도록 MongoDB Atomic Update 적용',
       '행운 점수에 가중치 기반 확률 알고리즘 도입',
@@ -88,12 +95,15 @@ export const projects: Project[] = [
     link: 'https://github.com/qkrwns1478/digital-fortune-cookie',
   },
   {
-    title: 'STM32 선풍기 제어 시스템 - 전공 프로젝트',
+    title: 'STM32 선풍기 제어 시스템',
+    desc: '전공 프로젝트',
     period: '2024.03 – 2024.06',
     summary:
       '인터럽트 기반 사용자 입력을 처리하고 PWM 제어를 안정화한 MCU 임베디드 제어 프로젝트',
-    asis:
-      '인터럽트 기반 처리 중 변수 값 불일치 및 PWM 제어 구조 부재로 인한 실시간 반응 실패',
+    asis: [
+      '인터럽트 기반 처리 중 변수 값 불일치',
+      'PWM 제어 구조 부재로 인한 실시간 반응 실패'
+    ],
     challenge: [
       '하드웨어 레지스터 직접 제어를 통해 GPIO, PWM 설정',
       'volatile 키워드를 활용한 인터럽트/루프 간 동기화 보장',
@@ -111,11 +121,15 @@ export const projects: Project[] = [
   },
   {
     title: '키오스크 버전 관리 백오피스',
+    desc: '현장실습 과제 프로젝트',
     period: '2024.01 – 2024.02',
     summary:
       '사업장 단말기별 APK 버전 현황 조회 및 안정적인 분할 업로드 기능을 지원하는 관리자용 백오피스 시스템',
-    asis:
-      'APK 배포가 수동으로 이뤄졌고, 업로드 중 오류 발생 시 전체 파일이 유실됨. 사업장별 버전 관리가 어려웠음.',
+    asis: [
+      'APK 배포가 수동으로 이뤄짐.',
+      '업로드 중 오류 발생 시 전체 파일이 유실됨.',
+      '사업장별 버전 관리가 어려웠음.'
+    ],
     challenge: [
       'APK 파일 분할 업로드 및 서버 병합 로직 설계',
       '사업장별 설치 버전 일괄 조회 기능 구현',

@@ -1,16 +1,12 @@
-import Link from "next/link";
+import Button from "../../components/Button";
 
 export default function KioskBackofficeDetail() {
   return (
-    <section className="py-10 space-y-8">
-      <div>
-        <Link
-          href="/projects"
-          className="text-cyan-300 border border-cyan-300 px-4 py-2 rounded hover:bg-cyan-300 hover:text-black transition"
-        >
-          ← 프로젝트 목록으로 돌아가기
-        </Link>
-      </div>
+    <>
+    <div>
+      <Button href="/projects">← 프로젝트 목록으로 돌아가기</Button>
+    </div>
+    <section className="space-y-10 py-10">
       <div className="flex justify-between items-center">
         <h2 className="text-4xl font-bold text-cyan-300">
           키오스크 버전 관리 웹 애플리케이션
@@ -80,5 +76,6 @@ export default function KioskBackofficeDetail() {
         </div>
       </div>
     </section>
+    </>
   );
 }

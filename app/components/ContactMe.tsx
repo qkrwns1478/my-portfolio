@@ -71,7 +71,7 @@ export default function ContactMe() {
       {/* Floating Button */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-50 bg-cyan-500 text-black px-4 py-2 rounded-full shadow-lg hover:bg-cyan-400 transition"
+        className="fixed bottom-20 sm:bottom-6 right-6 z-50 bg-cyan-500 text-black px-4 py-2 rounded-full shadow-lg hover:bg-cyan-400 transition"
       >
         Contact Me
       </button>
@@ -103,7 +103,7 @@ export default function ContactMe() {
             {errors.message && <p className="text-xs">{errors.message.message}</p>}
           </div>
           <button type="submit" disabled={loading} 
-          className={`w-full px-4 py-2 border border-cyan-300 rounded ${loading ? `bg-cyan-300 text-black` : `text-cyan-300 hover:bg-cyan-300 hover:text-black`} transition`}>
+          className={`w-full px-4 py-2 border border-cyan-300 rounded ${loading ? `bg-cyan-300 text-black` : `text-cyan-300 hover:bg-cyan-300 hover:text-black active:bg-cyan-300 active:text-black`} transition`}>
             {loading ? (
               <span className="animate-spin inline-block w-5 h-5 border-[3px] border-white border-t-transparent rounded-full" />
             ) : (

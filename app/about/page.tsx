@@ -1,15 +1,11 @@
-import Link from "next/link";
 import { FaGithub, FaBlog } from "react-icons/fa";
+import Button from "../components/Button";
 
 export default function About() {
   return (
     <>
     <div>
-      <Link href="/">
-        <button className="px-4 py-2 border border-cyan-300 text-cyan-300 rounded hover:bg-cyan-300 hover:text-black transition">
-          ← 홈으로 돌아가기
-        </button>
-      </Link>
+      <Button href="/">← 홈으로 돌아가기</Button>
     </div>
     <section className="space-y-6 py-10">
       <h2 className="text-4xl font-bold">👨‍💻 About Me</h2>
