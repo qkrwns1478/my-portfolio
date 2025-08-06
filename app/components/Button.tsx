@@ -15,17 +15,32 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseClass = twMerge(`
+    relative overflow-hidden
+    group
     w-auto px-4 py-2
     border border-cyan-300 text-cyan-300 rounded
-    hover:bg-cyan-300 hover:text-black 
-    active:bg-cyan-300 active:text-black 
-    transition-colors duration-200
+    transition-all duration-200
+    hover:shadow-[0_0_10px_2px_rgba(34,211,238,0.75)]
+    cursor-pointer
     ${className}
   `);
 
   const button = (
     <button className={baseClass} {...props}>
-      {children}
+      {/* 채워지는 배경 */}
+      <span
+        className={`
+          absolute inset-0 z-0
+          bg-gradient-to-r from-cyan-300 to-cyan-400
+          transform origin-left scale-x-0
+          group-hover:scale-x-100
+          transition-transform duration-300 ease-in-out
+        `}
+      />
+      {/* 텍스트 */}
+      <span className="relative z-10 transition-colors duration-300 group-hover:text-black">
+        {children}
+      </span>
     </button>
   );
 

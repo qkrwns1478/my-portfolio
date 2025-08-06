@@ -71,7 +71,7 @@ export default function ContactMe() {
       {/* Floating Button */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-20 sm:bottom-6 right-6 z-50 bg-cyan-500 text-black px-4 py-2 rounded-full shadow-lg hover:bg-cyan-400 transition"
+        className="fixed bottom-20 sm:bottom-6 right-6 z-50 bg-cyan-500 text-black px-4 py-2 rounded-full shadow-lg hover:bg-cyan-400 transition cursor-pointer"
       >
         Contact Me
       </button>
