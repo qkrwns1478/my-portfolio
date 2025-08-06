@@ -1,26 +1,27 @@
 @import "tailwindcss";
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* 스크롤 애니메이션 (전체 페이지에 부드러운 스크롤 적용) */
+html {
+  scroll-behavior: smooth;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* WebKit 기반 브라우저용 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a; /* Tailwind bg-slate-900 */
+}
+::-webkit-scrollbar-thumb {
+  background-color: #06b6d4; /* Tailwind cyan-400 */
+  border-radius: 8px;
+  border: 2px solid #0f172a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #22d3ee; /* Tailwind cyan-300 */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* * {
+  scrollbar-width: thin;
+  scrollbar-color: #06b6d4 #0f172a;
 } */
