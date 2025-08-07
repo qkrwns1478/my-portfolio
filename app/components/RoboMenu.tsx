@@ -53,6 +53,22 @@ export default function RoboMenu() {
     }
   }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking]);
 
+  useEffect(() => {
+    const imagesToPreload = [
+      '/robo1.png',
+      '/robo2.png',
+      '/robo3.png',
+      '/robo4.png',
+      '/robo5.png',
+      '/robo6.png',
+    ];
+  
+    imagesToPreload.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }, []);
+
   return (
     <>
       <div className="fixed bottom-12 right-12 z-[150]">
