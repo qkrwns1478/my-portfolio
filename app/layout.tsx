@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 // import ContactMe from "./components/ContactMe";
 // import Resume from "./components/Resume";
-import FabMenu from "./components/FabMenu";
+import RoboMenu from "./components/RoboMenu";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
         {/* <ContactMe />
         <Resume /> */}
-        <FabMenu />
+        <RoboMenu />
         <Toaster position="top-center" />
       </body>
     </html>

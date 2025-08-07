@@ -7,7 +7,15 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export default function ContactMe({ open, setOpen }: { open: boolean, setOpen: (val: boolean) => void }) {
+export default function ContactMe({
+  open,
+  setOpen,
+  onSuccess,
+}: {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+  onSuccess?: () => void;
+}) {
   const [loading, setLoading] = useState(false);
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!;
   const recaptchaRef = useRef<ReCAPTCHA>(null);
@@ -55,9 +63,10 @@ export default function ContactMe({ open, setOpen }: { open: boolean, setOpen: (
   
       if (!res.ok) throw new Error();
   
-      toast.success("메일이 전송되었습니다!");
+      // toast.success("메일이 전송되었습니다!");
       reset();
       setOpen(false);
+      onSuccess?.();
     } catch {
       toast.error("메일 전송에 실패했습니다.");
     } finally {
