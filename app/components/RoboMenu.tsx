@@ -1,5 +1,4 @@
 "use client";
-import Image from 'next/image'
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FiMail, FiFileText } from "react-icons/fi";
@@ -91,7 +90,7 @@ export default function RoboMenu() {
                 </button>
               )}
 
-              <Image
+              <img
                 src={roboImage}
                 alt="Robo Button"
                 width={240}
@@ -130,7 +129,7 @@ export default function RoboMenu() {
                 resetRoboVisible ? "translate-x-[-20px] opacity-100" : "translate-x-0 opacity-0"
               }`}
             >
-              <Image
+              <img
                 src="/robo6.png"
                 alt="Robo Reset Button"
                 width={240}
