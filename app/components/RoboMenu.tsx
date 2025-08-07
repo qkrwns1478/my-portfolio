@@ -1,17 +1,9 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FiMail, FiFileText } from "react-icons/fi";
 import ContactMe from "./ContactMe";
 import Resume from "./Resume";
-
-import robo1 from "../src/robo1.png";
-import robo2 from "../src/robo2.png";
-import robo3 from "../src/robo3.png";
-import robo4 from "../src/robo4.png";
-import robo5 from "../src/robo5.png";
-import robo6 from "../src/robo6.png";
 
 export default function RoboMenu() {
   const [open, setOpen] = useState(false);
@@ -28,38 +20,54 @@ export default function RoboMenu() {
   const pathname = usePathname();
 
   const [roboText, setRoboText] = useState("안녕하세요!\n무엇을 도와드릴까요?");
-  const [roboImage, setRoboImage] = useState(robo1);
+  const [roboImage, setRoboImage] = useState("/robo1.png");
 
   useEffect(() => {
     if (roboPanicking) {
       setRoboText("으아아악!!");
-      setRoboImage(robo5);
+      setRoboImage("/robo5.png");
     } else if (!open) {
       if (pathname.startsWith("/projects")) {
         setRoboText("프로젝트 소개 페이지입니다.");
-        setRoboImage(robo3);
+        setRoboImage("/robo3.png");
       } else if (pathname.startsWith("/about")) {
         setRoboText("자기소개 페이지입니다.");
-        setRoboImage(robo3);
+        setRoboImage("/robo3.png");
       } else {
         setRoboText("안녕하세요!\n무엇을 도와드릴까요?");
-        setRoboImage(robo1);
+        setRoboImage("/robo1.png");
       }
     } else {
       if (feedbackState === "success") {
         setRoboText("메일이 전송되었습니다.\n감사합니다!");
-        setRoboImage(robo4);
+        setRoboImage("/robo4.png");
       } else if (feedbackStatePDF === "success") {
         setRoboText("파일이 다운로드되었습니다.\n감사합니다!");
-        setRoboImage(robo4);
+        setRoboImage("/robo4.png");
       } else {
         if (hovered === "contact") setRoboText("이메일을 보낼 수 있어요!");
         else if (hovered === "resume") setRoboText("이력서를 열람할 수 있어요!");
         else setRoboText("원하는 기능을 선택하세요.");
-        setRoboImage(robo2);
+        setRoboImage("/robo2.png");
       }
     }
   }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking]);
+
+  useEffect(() => {
+    const imagesToPreload = [
+      '/robo1.png',
+      '/robo2.png',
+      '/robo3.png',
+      '/robo4.png',
+      '/robo5.png',
+      '/robo6.png',
+    ];
+  
+    imagesToPreload.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }, []);
 
   return (
     <>
@@ -98,14 +106,13 @@ export default function RoboMenu() {
                 </button>
               )}
 
-              <Image
+              <img
                 src={roboImage}
                 alt="Robo Button"
                 width={240}
                 height={240}
                 onClick={() => setOpen((prev) => !prev)}
                 className="z-[200] relative transition cursor-pointer"
-                priority={true}
               />
 
               <button
@@ -138,8 +145,8 @@ export default function RoboMenu() {
                 resetRoboVisible ? "translate-x-[-20px] opacity-100" : "translate-x-0 opacity-0"
               }`}
             >
-              <Image
-                src={robo6}
+              <img
+                src="/robo6.png"
                 alt="Robo Reset Button"
                 width={240}
                 height={240}
