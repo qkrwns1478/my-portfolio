@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FiMail, FiFileText } from "react-icons/fi";
 import ContactMe from "./ContactMe";
@@ -20,37 +20,39 @@ export default function RoboMenu() {
   const [feedbackStatePDF, setFeedbackStatePDF] = useState<"default" | "success">("default");
   const pathname = usePathname();
 
-  let roboText = "안녕하세요!\n무엇을 도와드릴까요?";
-  let roboImage = "/robo1.png";
+  const [roboText, setRoboText] = useState("안녕하세요!\n무엇을 도와드릴까요?");
+  const [roboImage, setRoboImage] = useState("/robo1.png");
 
-  if (roboPanicking) {
-    roboText = "으아아악!!";
-    roboImage = "/robo5.png";
-  } else if (!open) {
-    if (pathname.startsWith("/projects")) {
-      roboText = "프로젝트 소개 페이지입니다.";
-      roboImage = "/robo3.png";
-    } else if (pathname.startsWith("/about")) {
-      roboText = "자기소개 페이지입니다.";
-      roboImage = "/robo3.png";
+  useEffect(() => {
+    if (roboPanicking) {
+      setRoboText("으아아악!!");
+      setRoboImage("/robo5.png");
+    } else if (!open) {
+      if (pathname.startsWith("/projects")) {
+        setRoboText("프로젝트 소개 페이지입니다.");
+        setRoboImage("/robo3.png");
+      } else if (pathname.startsWith("/about")) {
+        setRoboText("자기소개 페이지입니다.");
+        setRoboImage("/robo3.png");
+      } else {
+        setRoboText("안녕하세요!\n무엇을 도와드릴까요?");
+        setRoboImage("/robo1.png");
+      }
     } else {
-      roboText = "안녕하세요!\n무엇을 도와드릴까요?";
-      roboImage = "/robo1.png";
+      if (feedbackState === "success") {
+        setRoboText("메일이 전송되었습니다.\n감사합니다!");
+        setRoboImage("/robo4.png");
+      } else if (feedbackStatePDF === "success") {
+        setRoboText("파일이 다운로드되었습니다.\n감사합니다!");
+        setRoboImage("/robo4.png");
+      } else {
+        if (hovered === "contact") setRoboText("이메일을 보낼 수 있어요!");
+        else if (hovered === "resume") setRoboText("이력서를 열람할 수 있어요!");
+        else setRoboText("원하는 기능을 선택하세요.");
+        setRoboImage("/robo2.png");
+      }
     }
-  } else {
-    if (feedbackState === "success") {
-      roboText = "메일이 전송되었습니다.\n감사합니다!";
-      roboImage = "/robo4.png";
-    } else if (feedbackStatePDF === "success") {
-      roboText = "파일이 다운로드되었습니다.\n감사합니다!";
-      roboImage = "/robo4.png";
-    } else {
-      if (hovered === "contact") roboText = "이메일을 보낼 수 있어요!";
-      else if (hovered === "resume") roboText = "이력서를 열람할 수 있어요!";
-      else roboText = "원하는 기능을 선택하세요.";
-      roboImage = "/robo2.png";
-    }
-  }
+  }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking]);
 
   return (
     <>
