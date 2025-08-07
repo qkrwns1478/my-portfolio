@@ -78,7 +78,7 @@ export default function ContactMe() {
 
       {/* Slide-in Panel */}
       <div
-        className={`fixed bottom-0 right-0 w-full max-w-md h-full sm:h-auto sm:bottom-6 sm:right-6 sm:rounded-xl bg-slate-800 text-white p-6 shadow-2xl z-50 transition-all duration-300 ${
+        className={`fixed bottom-0 right-0 w-full max-w-md h-full sm:h-auto sm:bottom-6 sm:right-6 sm:rounded-xl bg-slate-800 text-white p-6 shadow-2xl z-75 transition-all duration-300 ${
           open
             ? "translate-x-0 opacity-100 pointer-events-auto"
             : "sm:right-[-100%] translate-x-full sm:translate-x-0 opacity-0 pointer-events-none"

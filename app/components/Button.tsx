@@ -24,6 +24,7 @@ export default function Button({
     w-auto px-4 py-2
     border border-cyan-300 rounded
     transition-all duration-200
+    cursor-pointer
     ${loading
       ? "bg-cyan-300 text-black"
       : "text-cyan-300 hover:shadow-[0_0_12px_2px_rgba(34,211,238,0.75)]"

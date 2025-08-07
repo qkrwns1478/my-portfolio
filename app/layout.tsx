@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import ContactMe from "./components/ContactMe";
+import Resume from "./components/Resume";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           &copy; {new Date().getFullYear()} ParkJS. All rights reserved.
         </footer>
         <ContactMe />
+        <Resume />
         <Toaster position="top-center" />
       </body>
     </html>
