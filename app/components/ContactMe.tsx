@@ -63,7 +63,7 @@ export default function ContactMe({
   
       if (!res.ok) throw new Error();
   
-      // toast.success("메일이 전송되었습니다!");
+      toast.success("메일이 전송되었습니다!");
       reset();
       setOpen(false);
       onSuccess?.();
