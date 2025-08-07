@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { FiMail, FiFileText } from "react-icons/fi";
 import ContactMe from "./ContactMe";
@@ -17,6 +17,7 @@ export default function RoboMenu() {
   const [showResetRobo, setShowResetRobo] = useState(false);
   const [resetRoboVisible, setResetRoboVisible] = useState(false);
   const [feedbackState, setFeedbackState] = useState<"default" | "success">("default");
+  const [feedbackStatePDF, setFeedbackStatePDF] = useState<"default" | "success">("default");
   const pathname = usePathname();
 
   let roboText = "안녕하세요!\n무엇을 도와드릴까요?";
@@ -39,6 +40,9 @@ export default function RoboMenu() {
   } else {
     if (feedbackState === "success") {
       roboText = "메일이 전송되었습니다.\n감사합니다!";
+      roboImage = "/robo4.png";
+    } else if (feedbackStatePDF === "success") {
+      roboText = "파일이 다운로드되었습니다.\n감사합니다!";
       roboImage = "/robo4.png";
     } else {
       if (hovered === "contact") roboText = "이메일을 보낼 수 있어요!";
@@ -79,7 +83,7 @@ export default function RoboMenu() {
                       setTimeout(() => setResetRoboVisible(true), 10);
                     }, 1000);
                   }}
-                  className="absolute top-2 right-2 z-[201] text-white w-6 h-6 flex items-center justify-center shadow hover:text-gray-100 cursor-pointer"
+                  className="absolute top-2 right-2 z-[201] text-slate-600 w-6 h-6 flex items-center justify-center shadow hover:text-slate-300 cursor-pointer"
                 >
                   ✕
                 </button>
@@ -91,7 +95,7 @@ export default function RoboMenu() {
                 width={240}
                 height={240}
                 onClick={() => setOpen((prev) => !prev)}
-                className="z-[200] relative transition"
+                className="z-[200] relative transition cursor-pointer"
               />
 
               <button
@@ -138,6 +142,7 @@ export default function RoboMenu() {
                     setHovered("none");
                     setRoboPanicking(false);
                     setFeedbackState("default");
+                    setFeedbackStatePDF("default");
                     setIsSlidingOut(false);
                     setShowResetRobo(false);
                   }, 500);
@@ -157,7 +162,15 @@ export default function RoboMenu() {
           setTimeout(() => setFeedbackState("default"), 5000);
         }}
       />
-      <Resume open={resumeOpen} setOpen={setResumeOpen} />
+      <Resume
+        open={resumeOpen}
+        setOpen={setResumeOpen}
+        onSuccess={() => {
+          setFeedbackStatePDF("success");
+          setResumeOpen(false);
+          setTimeout(() => setFeedbackStatePDF("default"), 5000);
+        }}
+      />
     </>
   );
 }

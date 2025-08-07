@@ -2,7 +2,7 @@
 // import { useState } from "react";
 import Button from "./Button";
 
-export default function Resume({ open, setOpen }: { open: boolean, setOpen: (val: boolean) => void }) {
+export default function Resume({ open, setOpen, onSuccess, }: { open: boolean, setOpen: (val: boolean) => void, onSuccess?: () => void; }) {
   return (
     <>
       {/* Floating Resume Button */}
@@ -25,7 +25,7 @@ export default function Resume({ open, setOpen }: { open: boolean, setOpen: (val
           <h2 className="text-xl font-bold">Resume</h2>
           <button
             onClick={() => setOpen(false)}
-            className="text-sm text-gray-500 hover:text-black"
+            className="text-sm text-gray-500 hover:text-white"
           >
             ✕
           </button>
@@ -44,7 +44,14 @@ export default function Resume({ open, setOpen }: { open: boolean, setOpen: (val
           download
           className="mt-4 inline-block text-center w-full"
         >
-          <Button className="w-full">PDF 다운로드</Button>
+          <Button
+            className="w-full"
+            onClick={() => {
+              setOpen(false);
+              onSuccess?.();
+            }}>
+            PDF 다운로드
+          </Button>
         </a>
       </div>
     </>
