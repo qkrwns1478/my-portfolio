@@ -154,7 +154,7 @@ export default function RoboMenu() {
                   onMouseLeave={() => setHovered("none")}
                   className="absolute w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300"
                   variants={buttonVariants}
-                  custom={{ x: -160, y: -80 }}
+                  custom={{ x: -160, y: 0 }}
                 >
                   <FiMail size={20} />
                 </motion.button>
@@ -165,7 +165,7 @@ export default function RoboMenu() {
                   onMouseLeave={() => setHovered("none")}
                   className="absolute w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300"
                   variants={buttonVariants}
-                  custom={{ x: -160, y: 0 }}
+                  custom={{ x: -160, y: 80 }}
                 >
                   <FiFileText size={20} />
                 </motion.button>
@@ -176,7 +176,7 @@ export default function RoboMenu() {
                   onMouseLeave={() => setHovered("none")}
                   className="absolute w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300"
                   variants={buttonVariants}
-                  custom={{ x: -160, y: 80 }}
+                  custom={{ x: -160, y: -80 }}
                 >
                   <FiSettings size={20} />
                 </motion.button>

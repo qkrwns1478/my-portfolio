@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-import RoboMenu from "./components/RoboMenu";
-import FabMenu from "./components/FabMenu";
+import Menu from "./components/Menu";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -35,8 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="p-6 text-sm text-center border-t border-white/10 text-violet-200">
           &copy; {new Date().getFullYear()} ParkJS. All rights reserved.
         </footer>
-        <RoboMenu />
-        {/* <FabMenu /> */}
+        <Menu />
         <Toaster position="top-center" />
       </body>
     </html>

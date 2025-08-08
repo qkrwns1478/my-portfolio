@@ -1,6 +1,6 @@
 "use client";
 import { useSettingsStore } from '../store/settingsStore';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const ToggleSwitch = <T extends string>({
   label,
