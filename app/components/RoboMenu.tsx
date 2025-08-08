@@ -1,15 +1,43 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { FiMail, FiFileText } from "react-icons/fi";
+import { motion, Variants } from "framer-motion";
+import { FiMail, FiFileText, FiSettings } from "react-icons/fi";
 import ContactMe from "./ContactMe";
 import Resume from "./Resume";
+import Settings from "./Settings";
+
+const buttonContainerVariants: Variants = {
+  open: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+  closed: {},
+};
+
+const buttonVariants: Variants = {
+  open: (custom: { x: number; y: number }) => ({
+    opacity: 1,
+    scale: 1,
+    x: custom.x,
+    y: custom.y,
+    transition: { type: "spring", stiffness: 400, damping: 25 },
+  }),
+  closed: {
+    opacity: 0,
+    scale: 0.5,
+    x: 0,
+    y: 0,
+  },
+};
 
 export default function RoboMenu() {
   const [open, setOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
-  const [hovered, setHovered] = useState<"none" | "contact" | "resume">("none");
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [hovered, setHovered] = useState<"none" | "contact" | "resume" | "settings">("none");
   const [isImageVisible, setIsImageVisible] = useState(true);
   const [isSlidingOut, setIsSlidingOut] = useState(false);
   const [roboPanicking, setRoboPanicking] = useState(false);
@@ -47,6 +75,7 @@ export default function RoboMenu() {
       } else {
         if (hovered === "contact") setRoboText("이메일을 보낼 수 있어요!");
         else if (hovered === "resume") setRoboText("이력서를 열람할 수 있어요!");
+        else if (hovered === "settings") setRoboText("설정 메뉴를 열 수 있어요!");
         else setRoboText("원하는 기능을 선택하세요.");
         setRoboImage("/robo2.png");
       }
@@ -71,7 +100,7 @@ export default function RoboMenu() {
 
   return (
     <>
-      <div className="fixed bottom-2 right-2 sm:bottom-12 sm:right-12 z-[150]">
+      <div className="fixed bottom-2 right-2 sm:bottom-8 sm:right-8 z-[150]">
         <div className="relative">
           {isImageVisible && (
             <div
@@ -113,33 +142,51 @@ export default function RoboMenu() {
                 className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] z-[200] relative transition cursor-pointer"
               />
 
-              <button
-                onClick={() => setContactOpen(true)}
-                onMouseEnter={() => setHovered("contact")}
-                onMouseLeave={() => setHovered("none")}
-                className={`absolute bottom-24 right-24 w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300 transition-all duration-300
-                  ${open ? "translate-x-[-80px] translate-y-[-60px] sm:translate-x-[-160px] sm:translate-y-[-80px] opacity-100 scale-100 pointer-events-auto" : "translate-y-0 opacity-0 scale-75 pointer-events-none"}
-                `}
+              <motion.div
+                className="absolute bottom-36 right-24 sm:right-36"
+                initial="closed"
+                animate={open ? "open" : "closed"}
+                variants={buttonContainerVariants}
               >
-                <FiMail size={20} />
-              </button>
+                <motion.button
+                  onClick={() => setContactOpen(true)}
+                  onMouseEnter={() => setHovered("contact")}
+                  onMouseLeave={() => setHovered("none")}
+                  className="absolute w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300"
+                  variants={buttonVariants}
+                  custom={{ x: -160, y: -80 }}
+                >
+                  <FiMail size={20} />
+                </motion.button>
 
-              <button
-                onClick={() => setResumeOpen(true)}
-                onMouseEnter={() => setHovered("resume")}
-                onMouseLeave={() => setHovered("none")}
-                className={`absolute bottom-24 right-24 w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300 transition-all duration-300
-                  ${open ? "translate-x-[-80px] sm:translate-x-[-160px] opacity-100 scale-100 pointer-events-auto" : "translate-x-0 opacity-0 scale-75 pointer-events-none"}
-                `}
-              >
-                <FiFileText size={20} />
-              </button>
+                <motion.button
+                  onClick={() => setResumeOpen(true)}
+                  onMouseEnter={() => setHovered("resume")}
+                  onMouseLeave={() => setHovered("none")}
+                  className="absolute w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300"
+                  variants={buttonVariants}
+                  custom={{ x: -160, y: 0 }}
+                >
+                  <FiFileText size={20} />
+                </motion.button>
+
+                <motion.button
+                  onClick={() => setSettingsOpen(true)}
+                  onMouseEnter={() => setHovered("settings")}
+                  onMouseLeave={() => setHovered("none")}
+                  className="absolute w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300"
+                  variants={buttonVariants}
+                  custom={{ x: -160, y: 80 }}
+                >
+                  <FiSettings size={20} />
+                </motion.button>
+              </motion.div>
             </div>
           )}
 
           {showResetRobo && (
             <div
-              className={`fixed bottom-12 right-[-100px] z-[200] transition-all duration-500 ease-out ${
+              className={`fixed bottom-8 right-[-100px] z-[200] transition-all duration-500 ease-out ${
                 resetRoboVisible ? "translate-x-[-20px] opacity-100" : "translate-x-0 opacity-0"
               }`}
             >
@@ -183,6 +230,10 @@ export default function RoboMenu() {
           setResumeOpen(false);
           setTimeout(() => setFeedbackStatePDF("default"), 5000);
         }}
+      />
+      <Settings
+        open={settingsOpen}
+        setOpen={setSettingsOpen}
       />
     </>
   );

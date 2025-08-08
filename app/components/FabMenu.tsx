@@ -1,16 +1,24 @@
 "use client";
 import { useState } from "react";
-import { FiPlus, FiMail, FiFileText, FiSettings } from "react-icons/fi";
+import { FiPlus, FiMail, FiFileText, FiSettings } from "react-icons/fi"; 
 import ContactMe from "./ContactMe";
 import Resume from "./Resume";
+import Settings from "./Settings";
 
 const menuItems = [
+  {
+    icon: <FiSettings size={20} />,
+    label: "Settings",
+    action: "settings",
+    offsetY: "-205px",
+    delay: "delay-100",
+  },
   {
     icon: <FiMail size={20} />,
     label: "Contact Me",
     action: "contact",
     offsetY: "-140px",
-    delay: "delay-100",
+    delay: "delay-50",
   },
   {
     icon: <FiFileText size={20} />,
@@ -25,12 +33,15 @@ export default function FabMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false); 
 
   const handleMenuClick = (action: string) => {
     if (action === "contact") {
       setContactOpen(true);
     } else if (action === "resume") {
       setResumeOpen(true);
+    } else if (action === "settings") {
+      setSettingsOpen(true);
     }
     setIsOpen(false);
   };
@@ -57,11 +68,7 @@ export default function FabMenu() {
                   ? `opacity-100 scale-100 pointer-events-auto`
                   : "opacity-0 scale-75 pointer-events-none"
               }`}
-              style={{
-                transform: `
-                  translateY(${isOpen ? item.offsetY : 0}px)
-                `,
-              }}
+              style={{ transform: isOpen ? `translateY(${item.offsetY})` : 'translateY(0)' }}
             >
               <div
                 className="absolute top-1/2 -translate-y-1/2 right-full mr-4 w-max px-3 py-1.5 
@@ -93,7 +100,7 @@ export default function FabMenu() {
             aria-label="메뉴 열기/닫기"
           >
             <FiPlus
-              size={24}
+              size={32}
               className={`transition-transform duration-300 ${
                 isOpen ? "rotate-45" : "rotate-0"
               }`}
@@ -105,6 +112,7 @@ export default function FabMenu() {
       {/* 패널 컴포넌트 */}
       <ContactMe open={contactOpen} setOpen={setContactOpen} />
       <Resume open={resumeOpen} setOpen={setResumeOpen} />
+      <Settings open={settingsOpen} setOpen={setSettingsOpen} /> 
     </>
   );
 }

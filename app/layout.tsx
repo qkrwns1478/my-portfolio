@@ -35,8 +35,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="p-6 text-sm text-center border-t border-white/10 text-violet-200">
           &copy; {new Date().getFullYear()} ParkJS. All rights reserved.
         </footer>
-        {/* <RoboMenu /> */}
-        <FabMenu />
+        <RoboMenu />
+        {/* <FabMenu /> */}
         <Toaster position="top-center" />
       </body>
     </html>
