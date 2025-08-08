@@ -44,7 +44,7 @@ export const projects: Project[] = [
     ],
     stack: ['React', 'Zustand', 'TailwindCSS', 'Node.js', 'ClickHouse', 'Kafka', 'AWS EC2'],
     link: 'https://github.com/Eatventory/KlickLab',
-    video: 'https://jungle.krafton.com/board/project/read/213',
+    video: 'https://www.youtube.com/watch?v=j3gBUdQbYz4',
     details: '/projects/klicklab',
   },
   {

@@ -71,7 +71,7 @@ export default function RoboMenu() {
 
   return (
     <>
-      <div className="fixed bottom-12 right-12 z-[150]">
+      <div className="fixed bottom-2 right-2 sm:bottom-12 sm:right-12 z-[150]">
         <div className="relative">
           {isImageVisible && (
             <div
@@ -109,10 +109,8 @@ export default function RoboMenu() {
               <img
                 src={roboImage}
                 alt="Robo Button"
-                width={240}
-                height={240}
                 onClick={() => setOpen((prev) => !prev)}
-                className="z-[200] relative transition cursor-pointer"
+                className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] z-[200] relative transition cursor-pointer"
               />
 
               <button
@@ -120,7 +118,7 @@ export default function RoboMenu() {
                 onMouseEnter={() => setHovered("contact")}
                 onMouseLeave={() => setHovered("none")}
                 className={`absolute bottom-24 right-24 w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300 transition-all duration-300
-                  ${open ? "translate-x-[-160px] translate-y-[-100px] opacity-100 scale-100 pointer-events-auto" : "translate-y-0 opacity-0 scale-75 pointer-events-none"}
+                  ${open ? "translate-x-[-80px] translate-y-[-60px] sm:translate-x-[-160px] sm:translate-y-[-80px] opacity-100 scale-100 pointer-events-auto" : "translate-y-0 opacity-0 scale-75 pointer-events-none"}
                 `}
               >
                 <FiMail size={20} />
@@ -131,7 +129,7 @@ export default function RoboMenu() {
                 onMouseEnter={() => setHovered("resume")}
                 onMouseLeave={() => setHovered("none")}
                 className={`absolute bottom-24 right-24 w-12 h-12 z-[50] bg-white text-gray-700 rounded-full shadow-md flex items-center justify-center hover:bg-gray-300 transition-all duration-300
-                  ${open ? "translate-x-[-160px] opacity-100 scale-100 pointer-events-auto" : "translate-x-0 opacity-0 scale-75 pointer-events-none"}
+                  ${open ? "translate-x-[-80px] sm:translate-x-[-160px] opacity-100 scale-100 pointer-events-auto" : "translate-x-0 opacity-0 scale-75 pointer-events-none"}
                 `}
               >
                 <FiFileText size={20} />
@@ -148,9 +146,7 @@ export default function RoboMenu() {
               <img
                 src="/robo6.png"
                 alt="Robo Reset Button"
-                width={240}
-                height={240}
-                className="cursor-pointer"
+                className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] cursor-pointer"
                 onClick={() => {
                   setResetRoboVisible(false);
                   setIsImageVisible(true);
