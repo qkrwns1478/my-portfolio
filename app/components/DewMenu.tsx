@@ -29,7 +29,7 @@ const menuItems = [
   },
 ];
 
-export default function FabMenu() {
+export default function DewMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
@@ -91,7 +91,7 @@ export default function FabMenu() {
             </div>
           ))}
 
-          {/* 메인 FAB 버튼 */}
+          {/* 메인 버튼 */}
           <button
             onClick={() => setIsOpen((prev) => !prev)}
             className="w-14 h-14 z-[200] bg-cyan-500 text-white rounded-full shadow-lg 

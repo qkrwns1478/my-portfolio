@@ -1,13 +1,13 @@
 "use client";
 import RoboMenu from "./RoboMenu";
-import FabMenu from "./FabMenu";
+import DewMenu from "./DewMenu";
 import { useSettingsStore } from "../store/settingsStore";
 
-export default function Menu() {
+export default function MenuSelector() {
   const { menuType }= useSettingsStore();
   return (
     <>
-      {menuType === 'Robo' ? <RoboMenu /> : <FabMenu />}
+      {menuType === 'Robo' ? <RoboMenu /> : <DewMenu />}
     </>
   );
 }

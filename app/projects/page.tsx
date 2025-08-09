@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { projects as projectList } from '@/data/projects';
+import { useSettingsStore } from '../store/settingsStore';
 import Button from "../components/Button";
 import ResponsiveText from "../components/ResponsiveText";
 
@@ -17,6 +18,8 @@ function parsePeriod(period: string): Date | null {
 }
 
 export default function Projects() {
+  const { language }= useSettingsStore();
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
@@ -47,7 +50,7 @@ export default function Projects() {
     <div className="p-6">
       <section className="max-w-6xl mx-auto space-y-6 py-10">
         <div>
-          <Button href="/">← 홈으로 돌아가기</Button>
+          <Button href="/">{language === "Kor" ? "← 홈으로 돌아가기" : "← Back to Home"}</Button>
         </div>
         <h2 className="text-4xl font-bold text-white">Projects</h2>
         <div className="flex flex-wrap gap-2">
@@ -57,7 +60,7 @@ export default function Projects() {
               !selectedCategory ? "bg-cyan-300 text-black" : "text-cyan-300 border-cyan-300 hover:bg-cyan-300 hover:text-black"
             }`}
           >
-            전체 보기
+            {language === "Kor" ? "전체 보기" : "All"}
           </button>
           {allCategories.map((cat) => (
             <button
@@ -79,7 +82,7 @@ export default function Projects() {
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            placeholder="프로젝트 이름 검색"
+            placeholder={language == "Kor" ? "프로젝트 이름 검색" : "Search Project Name"}
             className="w-full border border-cyan-300 bg-transparent text-white px-4 py-2 rounded-md placeholder:text-cyan-300"
           />
           <select
@@ -87,8 +90,8 @@ export default function Projects() {
             onChange={(e) => setSortOrder(e.target.value as "latest" | "oldest")}
             className="text-sm px-3 py-2 border border-cyan-300 bg-slate-700 text-white rounded-md"
           >
-            <option value="latest">최신순</option>
-            <option value="oldest">오래된순</option>
+            <option value="latest">{language == "Kor" ? "최신순" : "latest"}</option>
+            <option value="oldest">{language == "Kor" ? "오래된순" : "oldest"}</option>
           </select>
         </div>
 
@@ -189,7 +192,7 @@ export default function Projects() {
                     rel="noopener noreferrer"
                     className="hover:underline mt-2 inline-block text-cyan-300"
                   >
-                    발표영상 ↗
+                    {language == "Kor" ? "발표영상 ↗" : "Video ↗"}
                   </a>
                 )}
               </div>

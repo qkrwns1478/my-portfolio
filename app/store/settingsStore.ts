@@ -1,17 +1,23 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+export type Language = 'Kor' | 'Eng';
+export type MenuType = 'Robo' | 'Dew';
+export type Theme = 'Dark' | 'Light';
+export type Animation = 'On' | 'Off';
+export type CursorEffect = 'On' | 'Off';
+
 interface SettingsState {
-  language: 'Kor' | 'Eng';
-  menuType: 'Robo' | 'Dew';
-  theme: 'Dark' | 'Light';
-  animation: 'On' | 'Off';
-  cursorEffect: 'On' | 'Off';
-  setLanguage: (language: 'Kor' | 'Eng') => void;
-  setMenuType: (menuType: 'Robo' | 'Dew') => void;
-  setTheme: (theme: 'Dark' | 'Light') => void;
-  setAnimation: (animation: 'On' | 'Off') => void;
-  setCursorEffect: (cursorEffect: 'On' | 'Off') => void;
+  language: Language;
+  menuType: MenuType;
+  theme: Theme;
+  animation: Animation;
+  cursorEffect: CursorEffect;
+  setLanguage: (language: Language) => void;
+  setMenuType: (menuType: MenuType) => void;
+  setTheme: (theme: Theme) => void;
+  setAnimation: (animation: Animation) => void;
+  setCursorEffect: (cursorEffect: CursorEffect) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(

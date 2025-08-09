@@ -1,9 +1,9 @@
 'use client';
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Code2, Zap, Target, TrendingUp } from 'lucide-react';
 import { FaGithub, FaBookOpen } from 'react-icons/fa';
 import ResponsiveText from './components/ResponsiveText';
+import { useSettingsStore } from './store/settingsStore';
 
 const Button = ({ 
   href, 
@@ -49,30 +49,32 @@ const FeatureCard = ({
 };
 
 export default function Home() {
+  const { language }= useSettingsStore();
+
   const features = [
     {
       icon: Code2,
-      title: '풀스택 개발',
-      description: 'React, Next.js, Node.js를 활용한 완전한 웹 솔루션 개발'
+      title: language === "Kor" ? "풀스택 개발" : "Fullstack Develop",
+      description: language === "Kor" ? "React, Next.js, Node.js를 활용한 완전한 웹 솔루션 개발" : "Complete Web Solution Develop with React, Next.js, Node.js"
     },
     {
       icon: Zap,
-      title: '성능 최적화',
-      description: '빠른 로딩과 원활한 사용자 경험을 위한 최적화 전문'
+      title: language === "Kor" ? "성능 최적화" : "Performance Optimization",
+      description: language === "Kor" ? "빠른 로딩과 원활한 사용자 경험을 위한 최적화 전문" : "Optimization expertise for fast loading and seamless user experience"
     },
     {
       icon: Target,
-      title: '사용자 중심',
-      description: '직관적이고 접근성 높은 인터페이스 설계'
+      title: language === "Kor" ? "사용자 중심" : "User-centered",
+      description: language === "Kor" ? "직관적이고 접근성 높은 인터페이스 설계" : "Intuitive, Accessible Interface Design"
     },
     {
       icon: TrendingUp,
-      title: '확장 가능한 구조',
-      description: '미래 확장을 고려한 견고한 아키텍처 설계'
+      title: language === "Kor" ? "확장 가능한 구조" : "Extensible Structure",
+      description: language === "Kor" ? "미래 확장을 고려한 견고한 아키텍처 설계" : "Robust architectural design for future expansion"
     }
   ];
 
-  const techStacks = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'AWS'];
+  const techStacks = ['React', 'Next.js', 'TypeScript', 'Node.js', 'C', 'Python', 'PostgreSQL', 'MongoDB', 'ClickHouse'];
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -114,18 +116,21 @@ export default function Home() {
         <div className={"relative z-10 transition-all duration-1000"}>
           <h1 className="text-4xl xs:text-5xl sm:text-6xl font-extrabold tracking-tight mb-6">
             <ResponsiveText 
-              values={["안녕하세요,", "박준식입니다"]} 
+              values={language === "Kor" ? ["안녕하세요,", "박준식입니다"] : ["Hello!", "I'm ParkJS"]} 
               className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent slide-in-blur-top"
             />
           </h1>
 
           <div className="text-lg sm:text-xl max-w-2xl mx-auto text-slate-200/90 leading-relaxed mb-8">
             <ResponsiveText
-              values={[
+              values={language === "Kor" ? [
                 "창의적인 시도와 실전 중심 프로젝트를 즐기는", "풀스택 개발자입니다.",
                 "기술의 본질을 이해하고,", "사용자 경험을 설계하는 데 집중합니다.",
+              ] : [
+                "A full-stack developer who enjoys", "creative attempts and hands-on projects",
+                "Understand the nature of technology and", "focus on designing user experiences",
               ]}
-              groupSize={2}
+              groupSize={language === "Kor" ? 2 : 1}
               className="fade-in-expand"
             />
           </div>
@@ -146,12 +151,12 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-4">
             <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              전문 분야
+              {language === "Kor" ? "전문 분야" : "Specialized Field"}
             </span>
           </h2>
           <div className="text-center mb-12 max-w-2xl mx-auto">
             <ResponsiveText
-              values={[ "다양한 기술 스택과 경험을 바탕으로", "완성도 높은 솔루션을 제공합니다." ]}
+              values={language === "Kor" ? ["다양한 기술 스택과 경험을 바탕으로", "완성도 높은 솔루션을 제공합니다."] : ["Provide high-quality solutions", "based on a variety of technology stacks and experiences"]}
               className="text-slate-300/70"
             />
           </div>
@@ -174,7 +179,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">
             <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              주요 기술 스택
+              {language === "Kor" ? "주요 기술 스택" : "Key Tech Stacks"}
             </span>
           </h2>
           
@@ -191,7 +196,9 @@ export default function Home() {
           
           <div className="text-center mb-12 max-w-2xl mx-auto leading-relaxed">
             <ResponsiveText
-              values={["최신 기술 트렌드를 파악하고", "최적화된 기술 스택을 선택하여", "효율적이고 확장 가능한 솔루션을 구현합니다."]}
+              values={language === "Kor" ? ["최신 기술 트렌드를 파악하고", "최적화된 기술 스택을 선택하여", "효율적이고 확장 가능한 솔루션을 구현합니다."] : 
+                ["Identify the latest technology trends", "and choose an optimized tech stack", "to implement efficient and scalable solutions"]
+              }
               className="text-slate-300/70"
               groupSize={2}
             />
@@ -204,11 +211,11 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-4">
             <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              더 알아보기
+              {language == "Kor" ? "더 알아보기" : "Learn More"}
             </span>
           </h2>
           <p className="text-slate-300/70 text-center mb-12 max-w-2xl mx-auto">
-            개발 과정과 기술적 인사이트를 공유하고 소통합니다
+            {language === "Kor" ? "개발 과정과 기술적 인사이트를 공유하고 소통합니다" : "Share and communicate the development process and technical insights"}
           </p>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -220,13 +227,14 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">GitHub</h3>
-                  <p className="text-slate-400 text-sm">오픈소스 & 프로젝트</p>
+                  <p className="text-slate-400 text-sm">{language === "Kor" ? "오픈소스 & 프로젝트" : "Open Source & Project"}</p>
                 </div>
               </div>
               
               <p className="text-slate-300/80 mb-6 leading-relaxed">
-                실제 개발한 프로젝트들의 소스코드와 기술적 구현 방식을 확인해보세요. 
-                다양한 기술 스택으로 만든 실전 프로젝트들이 있습니다.
+                {language === "Kor"
+                  ? "실제 개발한 프로젝트들의 소스코드와 기술적 구현 방식을 확인해보세요. 다양한 기술 스택으로 만든 실전 프로젝트들이 있습니다." 
+                  : "Check out the source code and technical implementation of the projects you actually developed. There are hands-on projects made from various tech stacks."}
               </p>
               
               <div className="flex items-center justify-between">
@@ -246,7 +254,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
                 >
-                  방문하기
+                  {language === "Kor" ? "방문하기" : "Visit"}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
@@ -260,13 +268,14 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">Tech Blog</h3>
-                  <p className="text-slate-400 text-sm">개발 인사이트 & 경험</p>
+                  <p className="text-slate-400 text-sm">{language === "Kor" ? "개발 인사이트 & 경험" : "Dev Insights & Experiences"}</p>
                 </div>
               </div>
               
               <p className="text-slate-300/80 mb-6 leading-relaxed">
-                개발하면서 마주한 문제들과 해결 과정, 새로운 기술에 대한 학습 내용을 
-                정리하고 공유합니다. 실무에서 얻은 인사이트를 나눕니다.
+                {language === "Kor" 
+                  ? "개발하면서 마주한 문제들과 해결 과정, 새로운 기술에 대한 학습 내용을 정리하고 공유합니다. 실무에서 얻은 인사이트를 나눕니다."
+                  : "Organize and share learning about problems, solutions, and new technologies encountered during development. Share insights from practice."}
               </p>
               
               <div className="flex items-center justify-between">
@@ -286,7 +295,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
                 >
-                  방문하기
+                  {language === "Kor" ? "방문하기" : "Visit"}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>

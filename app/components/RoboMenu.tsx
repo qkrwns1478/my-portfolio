@@ -6,6 +6,7 @@ import { FiMail, FiFileText, FiSettings } from "react-icons/fi";
 import ContactMe from "./ContactMe";
 import Resume from "./Resume";
 import Settings from "./Settings";
+import { useSettingsStore } from '../store/settingsStore';
 
 const buttonContainerVariants: Variants = {
   open: {
@@ -33,6 +34,8 @@ const buttonVariants: Variants = {
 };
 
 export default function RoboMenu() {
+  const { language }= useSettingsStore();
+
   const [open, setOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
@@ -47,36 +50,36 @@ export default function RoboMenu() {
   const [feedbackStatePDF, setFeedbackStatePDF] = useState<"default" | "success">("default");
   const pathname = usePathname();
 
-  const [roboText, setRoboText] = useState("안녕하세요!\n무엇을 도와드릴까요?");
+  const [roboText, setRoboText] = useState(language === "Kor" ? "안녕하세요!\n무엇을 도와드릴까요?" : "Howdy! How may I help you?");
   const [roboImage, setRoboImage] = useState("/robo1.png");
 
   useEffect(() => {
     if (roboPanicking) {
-      setRoboText("으아아악!!");
+      setRoboText(language === "Kor" ? "으아아악!!" : "NOOOO!!");
       setRoboImage("/robo5.png");
     } else if (!open) {
       if (pathname.startsWith("/projects")) {
-        setRoboText("프로젝트 소개 페이지입니다.");
+        setRoboText(language === "Kor" ? "프로젝트 소개 페이지입니다." : "This is the project introduction page.");
         setRoboImage("/robo3.png");
       } else if (pathname.startsWith("/about")) {
-        setRoboText("자기소개 페이지입니다.");
+        setRoboText(language === "Kor" ? "자기소개 페이지입니다." : "This is About Me page.");
         setRoboImage("/robo3.png");
       } else {
-        setRoboText("안녕하세요!\n무엇을 도와드릴까요?");
+        setRoboText(language === "Kor" ? "안녕하세요!\n무엇을 도와드릴까요?" : "Howdy! How may I help you?");
         setRoboImage("/robo1.png");
       }
     } else {
       if (feedbackState === "success") {
-        setRoboText("메일이 전송되었습니다.\n감사합니다!");
+        setRoboText(language === "Kor" ? "메일이 전송되었습니다.\n감사합니다!" : "Your mail has been sent.\nThank you!");
         setRoboImage("/robo4.png");
       } else if (feedbackStatePDF === "success") {
-        setRoboText("파일이 다운로드되었습니다.\n감사합니다!");
+        setRoboText(language === "Kor" ? "파일이 다운로드되었습니다.\n감사합니다!" : "The file has been downloaded.\nThank you!");
         setRoboImage("/robo4.png");
       } else {
-        if (hovered === "contact") setRoboText("이메일을 보낼 수 있어요!");
-        else if (hovered === "resume") setRoboText("이력서를 열람할 수 있어요!");
-        else if (hovered === "settings") setRoboText("설정 메뉴를 열 수 있어요!");
-        else setRoboText("원하는 기능을 선택하세요.");
+        if (hovered === "contact") setRoboText(language === "Kor" ? "이메일을 보낼 수 있어요!" : "You can send a mail to me!");
+        else if (hovered === "resume") setRoboText(language === "Kor" ? "이력서를 열람할 수 있어요!" : "You can read my resume!");
+        else if (hovered === "settings") setRoboText(language === "Kor" ? "설정 메뉴를 열 수 있어요!" : "You can open the settings menu!");
+        else setRoboText(language === "Kor" ? "원하는 기능을 선택하세요." : "Choose a button!");
         setRoboImage("/robo2.png");
       }
     }

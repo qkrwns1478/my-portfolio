@@ -79,7 +79,7 @@ export default function Settings({
         <div className="p-6 space-y-2 overflow-y-auto">
           {/* 언어 설정 */}
           <ToggleSwitch
-            label="언어 설정"
+            label={language === "Kor" ? "언어 설정" : "Language"}
             options={["Kor", "Eng"]}
             value={language}
             onChange={setLanguage}
@@ -87,35 +87,35 @@ export default function Settings({
 
           {/* 메뉴 설정 */}
           <ToggleSwitch
-            label="메인 메뉴 타입"
+            label={language === "Kor" ? "메뉴 타입" : "Menu Type"}
             options={["Robo", "Dew"]}
             value={menuType}
             onChange={setMenuType}
           />
           
           {/* 테마 설정 */}
-          <ToggleSwitch
-            label="테마"
+          {/* <ToggleSwitch
+            label={language == "Kor" ? "테마" : "Theme"}
             options={["Dark", "Light"]}
             value={theme}
             onChange={setTheme}
-          />
+          /> */}
 
           {/* 애니메이션 효과 설정 */}
-          <ToggleSwitch
+          {/* <ToggleSwitch
             label="애니메이션 효과"
             options={["On", "Off"]}
             value={animation}
             onChange={setAnimation}
-          />
+          /> */}
 
           {/* 커스텀 커서 효과 설정 */}
-          <ToggleSwitch
+          {/* <ToggleSwitch
             label="커스텀 커서"
             options={["On", "Off"]}
             value={cursorEffect}
             onChange={setCursorEffect}
-          />
+          /> */}
         </div>
       </div>
     </>
