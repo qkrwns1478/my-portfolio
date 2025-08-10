@@ -94,9 +94,11 @@ export default function DewMenu() {
           {/* 메인 버튼 */}
           <button
             onClick={() => setIsOpen((prev) => !prev)}
-            className="w-14 h-14 z-[200] bg-cyan-500 text-white rounded-full shadow-lg 
+            className={`w-14 h-14 z-[200] bg-cyan-500 text-white rounded-full shadow-lg 
               flex items-center justify-center 
-              hover:bg-cyan-400 transition-transform duration-300 transform hover:scale-110"
+              hover:bg-cyan-400 transition-transform duration-300 transform hover:scale-110 ${
+                isOpen ? "opacity-100" : "opacity-75"
+              }`}
             aria-label="메뉴 열기/닫기"
           >
             <FiPlus

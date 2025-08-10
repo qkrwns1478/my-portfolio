@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { Code2, Zap, Target } from "lucide-react";
 import MenuSelector from "./components/MenuSelector";
+import CustomCursor from "./components/CustomCursor";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko" className="h-full">
       <body className={`h-full overflow-y-scroll min-h-screen flex flex-col bg-slate-900 text-violet-200 ${geistSans.variable} ${geistMono.variable} antialiased`} >
+        <CustomCursor />
         <div className="relative min-h-screen w-full flex flex-col">
           {/* Animated Background */}
           <div className="fixed inset-0 -z-10">

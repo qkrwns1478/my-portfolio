@@ -32,7 +32,7 @@ const ToggleSwitch = <T extends string>({
               value === option ? "text-white" : "text-gray-400 hover:text-white"
             }`}
           >
-            {option}
+            <span className="cursor-pointer">{option}</span>
           </button>
         ))}
       </div>
@@ -69,7 +69,7 @@ export default function Settings({
           <h2 className="text-xl font-bold">Settings</h2>
           <button
             onClick={() => setOpen(false)}
-            className="text-sm text-gray-400 hover:text-white"
+            className="text-sm text-gray-400 hover:text-white cursor-pointer"
           >
             ✕
           </button>
@@ -110,12 +110,12 @@ export default function Settings({
           /> */}
 
           {/* 커스텀 커서 효과 설정 */}
-          {/* <ToggleSwitch
-            label="커스텀 커서"
+          <ToggleSwitch
+            label={language === "Kor" ? "커서 이펙트" : "Cursor Effect"}
             options={["On", "Off"]}
             value={cursorEffect}
             onChange={setCursorEffect}
-          /> */}
+          />
         </div>
       </div>
     </>
