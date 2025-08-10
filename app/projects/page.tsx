@@ -111,7 +111,7 @@ export default function Projects() {
             return (
               <div
                 key={project.id}
-                className="relative border border-white/10 rounded-xl p-6 shadow-md bg-slate-800 space-y-4"
+                className="relative bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform space-y-4"
               >
                 {project.details && (
                   <Button href={project.details} className="absolute top-4 right-4 text-sm px-3 py-1">

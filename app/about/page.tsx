@@ -54,7 +54,7 @@ export default function About() {
 
         <div className="space-y-4">
           <h3 className="text-2xl font-semibold text-cyan-300">Profile</h3>
-          <div className="border border-white/10 rounded-xl p-6 shadow-md bg-slate-800">
+          <div className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-2 text-violet-200 text-base">
               <p><span className="text-cyan-300 font-semibold">{language === "Kor" ? "이름" : "Name"}</span> {language === "Kor" ? "박준식" : "Junsik Park"}</p>
               <p><span className="text-cyan-300 font-semibold">MBTI</span> ISFJ</p>
@@ -121,7 +121,7 @@ export default function About() {
 
         <div className="space-y-6">
           <h3 className="text-2xl font-semibold text-cyan-300">Tech Stack</h3>
-          <div className="border border-white/10 rounded-xl p-6 shadow-md bg-slate-800">
+          <div className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform">
             <div className="mb-4">
               <h4 className="text-lg font-semibold text-cyan-300 mb-2">Languages</h4>
               <div className="flex flex-wrap gap-2">
