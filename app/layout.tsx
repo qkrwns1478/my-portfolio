@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { Code2, Zap, Target } from "lucide-react";
 import MenuSelector from "./components/MenuSelector";
 import "./globals.css";
-import { Code2, Zap, Target } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

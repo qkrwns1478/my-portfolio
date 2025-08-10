@@ -133,7 +133,10 @@ export default function Home() {
           </h2>
           <div className="text-center mb-12 max-w-2xl mx-auto">
             <ResponsiveText
-              values={language === "Kor" ? ["다양한 기술 스택과 경험을 바탕으로", "완성도 높은 솔루션을 제공합니다."] : ["Provide high-quality solutions", "based on a variety of technology stacks and experiences"]}
+              values={language === "Kor" ? 
+                ["다양한 기술 스택과 경험을 바탕으로", "완성도 높은 솔루션을 제공합니다."] : 
+                ["Provide high-quality solutions", "based on a variety of tech stacks and experiences"]
+              }
               className="text-slate-300/70"
             />
           </div>
@@ -152,7 +155,7 @@ export default function Home() {
       </section>
 
       {/* Tech Stack Preview */}
-      <section className="py-16 px-4 sm:px-6 md:px-12 bg-slate-800/20">
+      <section className="py-16 px-4 sm:px-6 md:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">
             <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
