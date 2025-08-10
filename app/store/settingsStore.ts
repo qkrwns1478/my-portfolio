@@ -27,7 +27,7 @@ export const useSettingsStore = create<SettingsState>()(
       menuType: 'Robo',
       theme: 'Dark',
       animation: 'On',
-      cursorEffect: 'On',
+      cursorEffect: 'Off',
       
       setLanguage: (language) => set({ language }),
       setMenuType: (menuType) => set({ menuType }),
