@@ -50,22 +50,22 @@ export default function RoboMenu() {
   const [feedbackStatePDF, setFeedbackStatePDF] = useState<"default" | "success">("default");
   const pathname = usePathname();
 
-  const [roboText, setRoboText] = useState(language === "Kor" ? "안녕하세요!\n무엇을 도와드릴까요?" : "Howdy! How may I help you?");
+  const [roboText, setRoboText] = useState("...");
   const [roboImage, setRoboImage] = useState("/robo1.png");
 
   useEffect(() => {
     if (roboPanicking) {
-      setRoboText(language === "Kor" ? "으아아악!!" : "NOOOO!!");
+      setRoboText(language === "Kor" ? "으아아악!!" : "NOOOOOOO!!");
       setRoboImage("/robo5.png");
     } else if (!open) {
       if (pathname.startsWith("/projects")) {
-        setRoboText(language === "Kor" ? "프로젝트 소개 페이지입니다." : "This is the project introduction page.");
+        setRoboText(language === "Kor" ? "프로젝트 소개 페이지입니다." : "These are the projects that I'd worked on.");
         setRoboImage("/robo3.png");
       } else if (pathname.startsWith("/about")) {
-        setRoboText(language === "Kor" ? "자기소개 페이지입니다." : "This is About Me page.");
+        setRoboText(language === "Kor" ? "자기소개 페이지입니다." : "Let me introduce myself.");
         setRoboImage("/robo3.png");
       } else {
-        setRoboText(language === "Kor" ? "안녕하세요!\n무엇을 도와드릴까요?" : "Howdy! How may I help you?");
+        setRoboText(language === "Kor" ? "안녕하세요!\n무엇을 도와드릴까요?" : "Howdy! How can I help you?");
         setRoboImage("/robo1.png");
       }
     } else {
@@ -83,7 +83,7 @@ export default function RoboMenu() {
         setRoboImage("/robo2.png");
       }
     }
-  }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking]);
+  }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking, language]);
 
   useEffect(() => {
     const imagesToPreload = [

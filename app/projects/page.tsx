@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { projects as projectList } from '@/data/projects';
 import { useSettingsStore } from '../store/settingsStore';
 import Button from "../components/Button";
@@ -18,23 +18,29 @@ function parsePeriod(period: string): Date | null {
 }
 
 export default function Projects() {
-  const { language }= useSettingsStore();
+  const { language } = useSettingsStore();
+  const [isHydrated, setIsHydrated] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
 
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
   const allCategories = getAllCategories(projectList);
 
   const filteredProjects = projectList
     .filter((p) => {
+      const translation = p.translations[language];
       const inCategory = selectedCategory
         ? Array.isArray(p.category) && p.category.includes(selectedCategory)
         : true;
       const matchesSearch = searchText.trim() === "" ||
-        p.title.toLowerCase().includes(searchText.toLowerCase()) ||
-        p.desc?.toLowerCase().includes(searchText.toLowerCase()) ||
-        p.summary.toLowerCase().includes(searchText.toLowerCase());
+        translation.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        translation.desc?.toLowerCase().includes(searchText.toLowerCase()) ||
+        translation.summary.toLowerCase().includes(searchText.toLowerCase());
       return inCategory && matchesSearch;
     })
     .sort((a, b) => {
@@ -46,11 +52,15 @@ export default function Projects() {
         : dateA.getTime() - dateB.getTime();
     });
 
+  if (!isHydrated) {
+    return null;
+  }
+
   return (
     <div className="p-6">
       <section className="max-w-6xl mx-auto space-y-6 py-10">
         <div>
-          <Button href="/">{language === "Kor" ? "← 홈으로 돌아가기" : "← Back to Home"}</Button>
+          <Button href="/">← {language === "Kor" ? "홈으로 돌아가기" : "Back to Home"}</Button>
         </div>
         <h2 className="text-4xl font-bold text-white">Projects</h2>
         <div className="flex flex-wrap gap-2">
@@ -82,7 +92,7 @@ export default function Projects() {
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            placeholder={language == "Kor" ? "프로젝트 이름 검색" : "Search Project Name"}
+            placeholder={language === "Kor" ? "프로젝트 이름 검색" : "Search project name"}
             className="w-full border border-cyan-300 bg-transparent text-white px-4 py-2 rounded-md placeholder:text-cyan-300"
           />
           <select
@@ -90,114 +100,119 @@ export default function Projects() {
             onChange={(e) => setSortOrder(e.target.value as "latest" | "oldest")}
             className="text-sm px-3 py-2 border border-cyan-300 bg-slate-700 text-white rounded-md"
           >
-            <option value="latest">{language == "Kor" ? "최신순" : "latest"}</option>
-            <option value="oldest">{language == "Kor" ? "오래된순" : "oldest"}</option>
+            <option value="latest">{language === "Kor" ? "최신순" : "Latest"}</option>
+            <option value="oldest">{language === "Kor" ? "오래된순" : "Oldest"}</option>
           </select>
         </div>
 
         <div className="space-y-10">
-          {filteredProjects.map((project, idx) => (
-            <div
-              key={idx}
-              className="relative border border-white/10 rounded-xl p-6 shadow-md bg-slate-800 space-y-4"
-            >
-              {project.details && (
-                <Button href={project.details} className="absolute top-4 right-4 text-sm px-3 py-1">더보기 →</Button>
-              )}
+          {filteredProjects.map((project) => {
+            const t = project.translations[language];
+            return (
+              <div
+                key={project.id}
+                className="relative border border-white/10 rounded-xl p-6 shadow-md bg-slate-800 space-y-4"
+              >
+                {project.details && (
+                  <Button href={project.details} className="absolute top-4 right-4 text-sm px-3 py-1">
+                    {language === "Kor" ? "더보기 →" : "Details →"}
+                  </Button>
+                )}
 
-              <div>
-                <h3 className="text-2xl font-semibold text-cyan-300">{
-                  project.desc ? <ResponsiveText values={[project.title, project.desc]} separator=" - " isDesc={true}/> : project.title
-                }</h3>
-                <code className="text-sm text-indigo-300">{project.period}</code>
-              </div>
-
-              <p className="text-violet-200">{project.summary}</p>
-
-              {project.asis && (
                 <div>
-                  <p className="text-cyan-300 font-semibold">[AS-IS]</p>
-                  <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
-                    {project.asis.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
+                  <h3 className="text-2xl font-semibold text-cyan-300">
+                    {t.desc ? <ResponsiveText values={[t.title, t.desc]} separator=" - " isDesc={true}/> : t.title}
+                  </h3>
+                  <code className="text-sm text-indigo-300">{project.period}</code>
                 </div>
-              )}
 
-              {project.challenge && (
-                <div>
-                  <p className="text-cyan-300 font-semibold">[Challenge]</p>
-                  <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
-                    {project.challenge.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+                <p className="text-violet-200">{t.summary}</p>
 
-              {project.tobe && (
-                <div>
-                  <p className="text-cyan-300 font-semibold">[TO-BE]</p>
-                  <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
-                    {project.tobe.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {project.role && (
-                <div>
-                  <p className="text-cyan-300 font-semibold">My Role</p>
-                  <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
-                    {project.role.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {project.stack && (
-                <div>
-                  <p className="text-cyan-300 font-semibold">Tech Stack</p>
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {project.stack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                {t.asis && (
+                  <div>
+                    <p className="text-cyan-300 font-semibold">[AS-IS]</p>
+                    <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                      {t.asis.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
-              )}
+                )}
 
-              <div className="flex gap-2">
-                {project.link && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline mt-2 inline-block text-cyan-300"
-                  >
-                    GitHub ↗
-                  </a>
+                {t.challenge && (
+                  <div>
+                    <p className="text-cyan-300 font-semibold">[Challenge]</p>
+                    <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                      {t.challenge.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
-                {project.video && (
-                  <a
-                    href={project.video}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline mt-2 inline-block text-cyan-300"
-                  >
-                    {language == "Kor" ? "발표영상 ↗" : "Video ↗"}
-                  </a>
+
+                {t.tobe && (
+                  <div>
+                    <p className="text-cyan-300 font-semibold">[TO-BE]</p>
+                    <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                      {t.tobe.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
+
+                {t.role && (
+                  <div>
+                    <p className="text-cyan-300 font-semibold">My Role</p>
+                    <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                      {t.role.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {project.stack && (
+                  <div>
+                    <p className="text-cyan-300 font-semibold">Tech Stack</p>
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {project.stack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex gap-2">
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline mt-2 inline-block text-cyan-300"
+                    >
+                      GitHub ↗
+                    </a>
+                  )}
+                  {project.video && (
+                    <a
+                      href={project.video}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline mt-2 inline-block text-cyan-300"
+                    >
+                      {language === "Kor" ? "발표영상 ↗" : "Video ↗"}
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </section>
     </div>

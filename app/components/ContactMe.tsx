@@ -6,16 +6,10 @@ import Button from "../components/Button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSettingsStore } from '../store/settingsStore';
 
-export default function ContactMe({
-  open,
-  setOpen,
-  onSuccess,
-}: {
-  open: boolean;
-  setOpen: (val: boolean) => void;
-  onSuccess?: () => void;
-}) {
+export default function ContactMe({open, setOpen, onSuccess}: {open: boolean; setOpen: (val: boolean) => void; onSuccess?: () => void;}) {
+  const { language } = useSettingsStore();
   const [loading, setLoading] = useState(false);
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!;
   const recaptchaRef = useRef<ReCAPTCHA>(null);
@@ -23,16 +17,16 @@ export default function ContactMe({
   const schema = z.object({
     name: z
       .string()
-      .min(2, "이름은 2자 이상이어야 합니다.")
-      .max(50, "이름은 50자 이내여야 합니다.")
-      .regex(/^[^<>]*$/, "이름에 HTML 태그를 포함할 수 없습니다."),
-    email: z.string().email("유효한 이메일을 입력해주세요."),
+      .min(2, language === "Kor" ? "이름은 2자 이상이어야 합니다." : "Name must be at least 2 characters.")
+      .max(50, language === "Kor" ? "이름은 50자 이내여야 합니다." : "Name must be at most 50 characters.")
+      .regex(/^[^<>]*$/, language === "Kor" ? "이름에 HTML 태그를 포함할 수 없습니다." : "Name cannot contain HTML tag."),
+    email: z.string().email(language === "Kor" ? "유효한 이메일을 입력해주세요." : "Please enter a valid address."),
     message: z
       .string()
-      .min(10, "메시지는 최소 10자 이상이어야 합니다.")
-      .max(1000, "메시지는 1000자 이내여야 합니다.")
+      .min(10, language === "Kor" ? "메시지는 최소 10자 이상이어야 합니다." : "Message must be at least 10 characters.")
+      .max(1000, language === "Kor" ? "메시지는 1000자 이내여야 합니다." : "Message must be at most 1000 characters.")
       .refine((msg) => !/script|<|>|\bhttp/i.test(msg), {
-        message: "의심스러운 콘텐츠가 포함되어 있습니다.",
+        message: language === "Kor" ? "의심스러운 콘텐츠가 포함되어 있습니다." : "Suspicious content detected",
       }),
   });
 
@@ -49,7 +43,7 @@ export default function ContactMe({
     recaptchaRef.current?.reset();
 
     if (!token) {
-      toast.error("reCAPTCHA 인증에 실패했습니다.");
+      toast.error(language === "Kor" ? "reCAPTCHA 인증에 실패했습니다." : "reCAPTCHA authentication failed");
       setLoading(false);
       return;
     }
@@ -63,12 +57,12 @@ export default function ContactMe({
   
       if (!res.ok) throw new Error();
   
-      toast.success("메일이 전송되었습니다!");
+      toast.success(language === "Kor" ? "메일이 전송되었습니다!" : "Mail has been sent successfully.");
       reset();
       setOpen(false);
       onSuccess?.();
     } catch {
-      toast.error("메일 전송에 실패했습니다.");
+      toast.error(language === "Kor" ? "메일 전송에 실패했습니다." : "Failed to send mail.");
     } finally {
       setLoading(false);
     }
@@ -76,14 +70,6 @@ export default function ContactMe({
 
   return (
     <>
-      {/* Floating Button */}
-      {/* <button
-        onClick={() => setOpen(true)}
-        className="fixed bottom-20 sm:bottom-6 right-6 z-50 bg-cyan-500 text-black px-4 py-2 rounded-full shadow-lg hover:bg-cyan-400 transition cursor-pointer"
-      >
-        Contact Me
-      </button> */}
-
       {/* Slide-in Panel */}
       <div
         className={`fixed bottom-0 right-0 z-[200] w-full max-w-md h-full sm:h-auto sm:bottom-6 sm:right-6 sm:rounded-xl bg-slate-800 text-white p-6 shadow-2xl transition-all duration-300 ${
@@ -99,18 +85,18 @@ export default function ContactMe({
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <input {...register("name")} required placeholder="이름" className="w-full p-2 rounded bg-slate-700" />
+            <input {...register("name")} required placeholder={language === "Kor" ? "이름" : "Name"} className="w-full p-2 rounded bg-slate-700" />
             {errors.name && <p className="text-xs">{errors.name.message}</p>}
           </div>
           <div>
-            <input {...register("email")} required type="email" placeholder="이메일" className="w-full p-2 rounded bg-slate-700" />
+            <input {...register("email")} required type="email" placeholder={language === "Kor" ? "이메일" : "Email"} className="w-full p-2 rounded bg-slate-700" />
             {errors.email && <p className="text-xs">{errors.email.message}</p>}
           </div>
           <div>
-            <textarea {...register("message")} required placeholder="메시지" className="w-full p-2 h-28 rounded bg-slate-700 resize-none" />
+            <textarea {...register("message")} required placeholder={language === "Kor" ? "메시지" : "Message"} className="w-full p-2 h-28 rounded bg-slate-700 resize-none" />
             {errors.message && <p className="text-xs">{errors.message.message}</p>}
           </div>
-          <Button type="submit" loading={loading} className="w-full">보내기</Button>
+          <Button type="submit" loading={loading} className="w-full">{language === "Kor" ? "보내기" : "Send"}</Button>
           <ReCAPTCHA
             sitekey={siteKey}
             size="invisible"

@@ -1,21 +1,22 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Code2, Zap, Target, TrendingUp } from 'lucide-react';
-import { FaGithub, FaBookOpen } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import ResponsiveText from './components/ResponsiveText';
 import { useSettingsStore } from './store/settingsStore';
 
-const Button = ({ 
-  href, 
-  className = '', 
-  children 
-}: { 
-  href: string; 
-  className?: string; 
-  children: React.ReactNode; 
+const Button = ({
+  href,
+  className = '',
+  children
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
 }) => {
   return (
-    <Link 
+    <Link
       href={href}
       className={`group relative px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/25 hover:scale-105 border border-cyan-500/20 backdrop-blur-sm ${className}`}
     >
@@ -28,14 +29,14 @@ const Button = ({
   );
 };
 
-const FeatureCard = ({ 
-  icon: Icon, 
-  title, 
-  description 
-}: { 
-  icon: React.ElementType; 
-  title: string; 
-  description: string; 
+const FeatureCard = ({
+  icon: Icon,
+  title,
+  description
+}: {
+  icon: React.ElementType;
+  title: string;
+  description: string;
 }) => {
   return (
     <div className="group p-6 bg-slate-800/30 backdrop-blur-sm border border-cyan-500/20 rounded-xl hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105">
@@ -49,7 +50,12 @@ const FeatureCard = ({
 };
 
 export default function Home() {
-  const { language }= useSettingsStore();
+  const { language } = useSettingsStore();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const features = [
     {
@@ -76,22 +82,26 @@ export default function Home() {
 
   const techStacks = ['React', 'Next.js', 'TypeScript', 'Node.js', 'C', 'Python', 'PostgreSQL', 'MongoDB', 'ClickHouse'];
 
+  if (!isHydrated) {
+    return null;
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0 -z-10">
         {/* Primary gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-        
+
         {/* Floating geometric shapes */}
         <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-r from-cyan-500/5 to-blue-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-purple-500/10 rounded-full blur-3xl animate-bounce" style={{animationDuration: '6s'}} />
         <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/5 to-pink-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}} />
         <div className="absolute bottom-40 right-1/3 w-48 h-48 bg-gradient-to-r from-cyan-400/10 to-blue-400/15 rounded-full blur-2xl animate-bounce" style={{animationDuration: '8s', animationDelay: '1s'}} />
-        
+
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGRlZnM+CjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPgo8cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDY3LDE1NiwyMDIsMC4wNSkiIHN0cm9rZS13aWR0aD0iMSIvPgo8L3BhdHRlcm4+CjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPgo8L3N2Zz4=')] opacity-40" />
-        
+
         {/* Floating particles */}
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400/30 rounded-full animate-ping" style={{animationDelay: '0s', animationDuration: '3s'}} />
         <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-blue-400/40 rounded-full animate-ping" style={{animationDelay: '1s', animationDuration: '4s'}} />
@@ -115,8 +125,8 @@ export default function Home() {
 
         <div className={"relative z-10 transition-all duration-1000"}>
           <h1 className="text-4xl xs:text-5xl sm:text-6xl font-extrabold tracking-tight mb-6">
-            <ResponsiveText 
-              values={language === "Kor" ? ["안녕하세요,", "박준식입니다"] : ["Hello!", "I'm ParkJS"]} 
+            <ResponsiveText
+              values={language === "Kor" ? ["안녕하세요,", "박준식입니다"] : ["Hello!", "I'm ParkJS"]}
               className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent slide-in-blur-top"
             />
           </h1>
@@ -160,7 +170,7 @@ export default function Home() {
               className="text-slate-300/70"
             />
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <FeatureCard
@@ -182,10 +192,10 @@ export default function Home() {
               {language === "Kor" ? "주요 기술 스택" : "Key Tech Stacks"}
             </span>
           </h2>
-          
+
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             {techStacks.map((tech) => (
-              <span 
+              <span
                 key={tech}
                 className="px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200"
               >
@@ -193,10 +203,10 @@ export default function Home() {
               </span>
             ))}
           </div>
-          
+
           <div className="text-center mb-12 max-w-2xl mx-auto leading-relaxed">
             <ResponsiveText
-              values={language === "Kor" ? ["최신 기술 트렌드를 파악하고", "최적화된 기술 스택을 선택하여", "효율적이고 확장 가능한 솔루션을 구현합니다."] : 
+              values={language === "Kor" ? ["최신 기술 트렌드를 파악하고", "최적화된 기술 스택을 선택하여", "효율적이고 확장 가능한 솔루션을 구현합니다."] :
                 ["Identify the latest technology trends", "and choose an optimized tech stack", "to implement efficient and scalable solutions"]
               }
               className="text-slate-300/70"
@@ -217,7 +227,7 @@ export default function Home() {
           <p className="text-slate-300/70 text-center mb-12 max-w-2xl mx-auto">
             {language === "Kor" ? "개발 과정과 기술적 인사이트를 공유하고 소통합니다" : "Share and communicate the development process and technical insights"}
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-8">
             {/* GitHub Card */}
             <div className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105">
@@ -230,13 +240,13 @@ export default function Home() {
                   <p className="text-slate-400 text-sm">{language === "Kor" ? "오픈소스 & 프로젝트" : "Open Source & Project"}</p>
                 </div>
               </div>
-              
+
               <p className="text-slate-300/80 mb-6 leading-relaxed">
                 {language === "Kor"
-                  ? "실제 개발한 프로젝트들의 소스코드와 기술적 구현 방식을 확인해보세요. 다양한 기술 스택으로 만든 실전 프로젝트들이 있습니다." 
+                  ? "실제 개발한 프로젝트들의 소스코드와 기술적 구현 방식을 확인해보세요. 다양한 기술 스택으로 만든 실전 프로젝트들이 있습니다."
                   : "Check out the source code and technical implementation of the projects you actually developed. There are hands-on projects made from various tech stacks."}
               </p>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 text-sm text-slate-400">
                   <span className="flex items-center">
@@ -248,9 +258,9 @@ export default function Home() {
                     Active
                   </span>
                 </div>
-                <a 
-                  href="https://github.com/qkrwns1478" 
-                  target="_blank" 
+                <a
+                  href="https://github.com/qkrwns1478"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
                 >
@@ -271,13 +281,13 @@ export default function Home() {
                   <p className="text-slate-400 text-sm">{language === "Kor" ? "개발 인사이트 & 경험" : "Dev Insights & Experiences"}</p>
                 </div>
               </div>
-              
+
               <p className="text-slate-300/80 mb-6 leading-relaxed">
-                {language === "Kor" 
+                {language === "Kor"
                   ? "개발하면서 마주한 문제들과 해결 과정, 새로운 기술에 대한 학습 내용을 정리하고 공유합니다. 실무에서 얻은 인사이트를 나눕니다."
                   : "Organize and share learning about problems, solutions, and new technologies encountered during development. Share insights from practice."}
               </p>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 text-sm text-slate-400">
                   <span className="flex items-center">
@@ -289,9 +299,9 @@ export default function Home() {
                     Tech Focus
                   </span>
                 </div>
-                <a 
-                  href="https://munsik22.tistory.com/" 
-                  target="_blank" 
+                <a
+                  href="https://munsik22.tistory.com/"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
                 >
