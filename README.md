@@ -1,6 +1,6 @@
 # ParkJS' DEV SPACE - 포트폴리오 사이트
 <p align="center">
-    <img src="./public/robo1.png" width="256" height="256">
+    <img src="./public/images/robo/robo1.png" width="256" height="256">
 </p>
 
 개인 포트폴리오 웹사이트입니다. 저의 기술 스택, 경험, 그리고 진행했던 프로젝트들을 소개하기 위해 만들어졌습니다.
