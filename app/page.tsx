@@ -1,11 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Code2, Zap, Target, TrendingUp } from 'lucide-react';
+import { ArrowRight, Code2, Zap, Target, TrendingUp, Briefcase, Wrench, Cpu } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import { motion, Variants } from 'framer-motion';
 import ResponsiveText from './components/ResponsiveText';
 import { useSettingsStore } from './store/settingsStore';
+import { projects, Project } from '@/data/projects';
 
 const Button = ({
   href,
@@ -54,6 +55,62 @@ const FeatureCard = ({
       </div>
       <h3 className="text-lg font-bold text-slate-100 mb-2">{title}</h3>
       <p className="text-slate-300/80 text-sm leading-relaxed">{description}</p>
+    </motion.div>
+  );
+};
+
+const ProjectCard = ({ project, language }: { project: Project; language: 'Kor' | 'Eng' }) => {
+  const { title, desc, role } = project.translations[language];
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 30, scale: 0.98 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+  };
+
+  return (
+    <motion.div variants={cardVariants} className="group [perspective:1000px]">
+      <div className="relative w-full h-72 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] transition-transform duration-700 rounded-2xl">
+        {/* 카드 앞면 (이미지) */}
+        <div className="absolute w-full h-full [backface-visibility:hidden] overflow-hidden rounded-2xl border border-cyan-500/20 shadow-lg">
+          <img
+            src={`/images/projects/${project.id}.jpg`}
+            alt={`${title} project image`}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+          <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">{title}</h3>
+        </div>
+
+        {/* 카드 뒷면 (상세 정보) */}
+        <div className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] backdrop-blur-lg bg-slate-900/40 rounded-2xl border border-cyan-400/40 p-6 flex flex-col">
+          <h4 className="text-xl font-bold text-cyan-300 mb-2">{title}</h4>
+          <p className="text-sm text-slate-300/90 italic border-l-2 border-cyan-500 pl-2 mb-4">
+            {desc}
+          </p>
+
+          <div className="mb-4">
+            <h5 className="text-md font-semibold text-slate-200 mb-2 flex items-center gap-2">
+              <Cpu className="w-4 h-4" /> What I did
+            </h5>
+            <ul className="list-disc list-inside text-sm text-slate-300/80 space-y-1">
+              {role?.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
+          </div>
+
+          <div className="mt-auto">
+            <h5 className="text-md font-semibold text-slate-200 mb-2 flex items-center gap-2">
+              <Wrench className="w-4 h-4" /> Tech Stack
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              {project.stack?.map(tech => (
+                <span key={tech} className="px-2 py-1 bg-cyan-900/40 text-cyan-300 text-xs rounded-md">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 };
@@ -111,6 +168,11 @@ export default function Home() {
     }
   ];
   const techStacks = ['React', 'Next.js', 'TypeScript', 'Node.js', 'C', 'Python', 'PostgreSQL', 'MongoDB', 'ClickHouse'];
+  
+  const featuredProjectIds = ['my-portfolio', 'klicklab', 'fortune-cookie', 'kiosk-version'];
+  const featuredProjects = featuredProjectIds
+    .map(id => projects.find(p => p.id === id))
+    .filter((p): p is Project => p !== undefined);
 
   if (!isHydrated) {
     return null;
@@ -178,6 +240,37 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* Project Section */}
+      <motion.section
+        className="py-24 px-4 sm:px-6 md:px-12"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={containerVariants}
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center mb-4">
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              {language === "Kor" ? "주요 프로젝트" : "Featured Projects"}
+            </span>
+          </motion.h2>
+          <motion.div variants={itemVariants} className="text-center mb-12 max-w-2xl mx-auto">
+              <ResponsiveText
+              values={language === "Kor" ? ["기술적 도전과 성장을 경험했던", "핵심 프로젝트들을 소개합니다."] : ["Introducing core projects where I", "experienced technical challenges and growth"]}
+              className="text-slate-300/70"
+            />
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+            variants={containerVariants}
+          >
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} language={language} />
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+      
       {/* Tech Stack Preview */}
       <motion.section
         className="py-24 px-4 sm:px-6 md:px-12"
@@ -192,6 +285,12 @@ export default function Home() {
               {language === "Kor" ? "주요 기술 스택" : "Key Tech Stacks"}
             </span>
           </motion.h2>
+          <motion.div variants={itemVariants} className="text-center mb-12 max-w-2xl mx-auto">
+            <ResponsiveText
+              values={language === "Kor" ? ["현재 사용중이거나", "사용했던 적이 있는 기술들입니다."] : ["These are technologies that are", "currently in use or have been used"]}
+              className="text-slate-300/70"
+            />
+          </motion.div>
           <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-3 mb-8">
             {techStacks.map((tech) => (
               <span key={tech} className="px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200">

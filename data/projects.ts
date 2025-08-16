@@ -21,6 +21,31 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'my-portfolio',
+    category: ['Frontend'],
+    period: '2025.08',
+    stack: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Zustand', 'Vercel'],
+    link: 'https://github.com/qkrwns1478/my-portfolio',
+    translations: {
+      Kor: {
+        title: `ParkJS' DEV SPACE`,
+        desc: '개인 포트폴리오 웹사이트',
+        summary: '기술 스택, 경험, 그리고 진행했던 프로젝트들을 소개합니다.',
+        challenge: ['Vercel 배포 후 이미지 최초 로딩 시 3초 정도의 지연이 발생하는 이슈'],
+        tobe: ['useEffect를 사용하여 컴포넌트가 마운트될 때 필요한 모든 이미지를 미리 로드하여 렌더링 지연 문제를 해결하고, 자연스러운 사용자 경험을 제공'],
+        role: ['전체 프로젝트 기획 및 개발', 'UI/UX 디자인 및 인터랙션 구현', '다국어 지원 및 상태 관리'],
+      },
+      Eng: {
+        title: `ParkJS' DEV SPACE`,
+        desc: 'Personal Portfolio Website',
+        summary: 'Introduce my tech stack, experience, and projects',
+        challenge: ['An issue where there was a delay of about 3 seconds when the image was first loaded after deploying to Vercel'],
+        tobe: ['Resolved the rendering delay issue and provided a natural user experience by preloading all necessary images when the component mounts using useEffect'],
+        role: ['Full project planning and development', 'UI/UX design and interaction implementation', 'Multilingual support and state management'],
+      }
+    }
+  },
+  {
     id: 'klicklab',
     category: ['Frontend', 'Backend'],
     period: '2025.06 – 2025.07',
@@ -45,7 +70,7 @@ export const projects: Project[] = [
         asis: ['Query response speed was very slow due to querying all event logs from a single DB.', 'A bottleneck occurred as read/write operations were performed simultaneously.'],
         challenge: ['Improved query performance by introducing a ClickHouse-based columnar DB.', 'Designed time-unit Materialized View and aggregate tables.', 'Applied CQRS pattern to physically separate read/write DBs.', 'Optimized graph conditional rendering and implemented filtering logic.'],
         tobe: ['Reduced response time by 99.43% for 10 million records.', 'Increased RPS from 3,900 to over 10,600 (GC distribution strategy).', 'Completed an insight dashboard for single-person shopping mall users.'],
-        role: ['Designed ClickHouse queries and built a real-time aggregation structure.', 'Optimized asynchronous rendering on the engagement analysis dashboard front-end.', 'Implemented custom graph tooltips/filters.'],
+        role: ['Designed ClickHouse queries and built a real-time aggregation structure.', 'Optimized async-rendering on the engagement analysis dashboard F/E.', 'Implemented custom graph tooltips/filters.'],
       }
     }
   },
@@ -83,6 +108,7 @@ export const projects: Project[] = [
     translations: {
       Kor: {
         title: '디지털 포춘 쿠키',
+        desc: '일일 운세 확인 플랫폼',
         summary: '운세를 랜덤으로 제공하는 디지털 포춘 쿠키 웹 애플리케이션',
         asis: ['포춘쿠키 열기 버튼을 빠르게 연속 클릭하면 ajax 요청이 중복 발생하며 동시성 문제가 발생함.', '하루에 한 번만 열 수 있는 제약이 무력화될 수 있었음.'],
         challenge: ['하루 한 번만 포춘쿠키 열 수 있도록 MongoDB Atomic Update 적용', '행운 점수에 가중치 기반 확률 알고리즘 도입', '운세 메시지를 이벤트/결과/조언 요소로 분해하여 조합', 'JWT 기반 로그인 인증 및 토큰 무효화 처리', 'MongoDB 정렬 알고리즘 기반 행운 점수 랭킹 시스템 구현'],
@@ -91,11 +117,12 @@ export const projects: Project[] = [
       },
       Eng: {
         title: 'Digital Fortune Cookie',
+        desc: 'Daily Fortune Check Platform',
         summary: 'A digital fortune cookie web application that provides random fortunes.',
         asis: ['Concurrency issues occurred due to duplicate ajax requests when the "Open Fortune Cookie" button was clicked rapidly and repeatedly.', 'The "once-a-day" constraint could be bypassed.'],
         challenge: ['Applied MongoDB Atomic Update to ensure the cookie can only be opened once a day.', 'Introduced a weight-based probability algorithm for luck scores.', 'Composed fortune messages by breaking them down into event/result/advice elements.', 'Implemented JWT-based login authentication and token invalidation.', "Implemented a luck score ranking system based on MongoDB's sorting algorithm."],
         tobe: ['Completed a user-customized fortune generation algorithm.', 'Resolved the concurrency issue from duplicate ajax requests on rapid button clicks by disabling the button after the first click.', 'Provided a concise fortune-telling service considering both security and UX.'],
-        role: ['Front-end development and UI/UX implementation for the fortune cookie dashboard.', 'Integrated with the Flask back-end server and deployed to an AWS server.'],
+        role: ['F/E development and UI/UX implementation for the fortune cookie dashboard.', 'Integrated with the Flask B/E server and deployed to an AWS server.'],
       }
     }
   },

@@ -130,7 +130,7 @@ export default function Projects() {
 
                 {t.asis && (
                   <div>
-                    <p className="text-cyan-300 font-semibold">[AS-IS]</p>
+                    <p className="text-cyan-300 font-semibold">AS-IS</p>
                     <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
                       {t.asis.map((item, i) => (
                         <li key={i}>{item}</li>
@@ -141,7 +141,7 @@ export default function Projects() {
 
                 {t.challenge && (
                   <div>
-                    <p className="text-cyan-300 font-semibold">[Challenge]</p>
+                    <p className="text-cyan-300 font-semibold">Challenge</p>
                     <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
                       {t.challenge.map((item, i) => (
                         <li key={i}>{item}</li>
@@ -152,7 +152,7 @@ export default function Projects() {
 
                 {t.tobe && (
                   <div>
-                    <p className="text-cyan-300 font-semibold">[TO-BE]</p>
+                    <p className="text-cyan-300 font-semibold">TO-BE</p>
                     <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
                       {t.tobe.map((item, i) => (
                         <li key={i}>{item}</li>
@@ -163,7 +163,7 @@ export default function Projects() {
 
                 {t.role && (
                   <div>
-                    <p className="text-cyan-300 font-semibold">My Role</p>
+                    <p className="text-cyan-300 font-semibold">What I did</p>
                     <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
                       {t.role.map((item, i) => (
                         <li key={i}>{item}</li>
