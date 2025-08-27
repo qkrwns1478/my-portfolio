@@ -32,7 +32,7 @@ export const projects: Project[] = [
         desc: '개인 포트폴리오 웹사이트',
         summary: '기술 스택, 경험, 그리고 진행했던 프로젝트들을 소개합니다.',
         challenge: ['Vercel 배포 후 이미지 최초 로딩 시 3초 정도의 지연이 발생하는 이슈'],
-        tobe: ['useEffect를 사용하여 컴포넌트가 마운트될 때 필요한 모든 이미지를 미리 로드하여 렌더링 지연 문제를 해결하고, 자연스러운 사용자 경험을 제공'],
+        tobe: ['useEffect를 사용하여 컴포넌트가 마운트될 때 필요한 모든 이미지를 미리 로드하여 렌더링 지연 문제를 해결'],
         role: ['전체 프로젝트 기획 및 개발', 'UI/UX 디자인 및 인터랙션 구현', '다국어 지원 및 상태 관리'],
       },
       Eng: {
@@ -40,7 +40,7 @@ export const projects: Project[] = [
         desc: 'Personal Portfolio Website',
         summary: 'Introduce my tech stack, experience, and projects',
         challenge: ['An issue where there was a delay of about 3 seconds when the image was first loaded after deploying to Vercel'],
-        tobe: ['Resolved the rendering delay issue and provided a natural user experience by preloading all necessary images when the component mounts using useEffect'],
+        tobe: ['Resolved the rendering delay issue and by preloading all necessary images when the component mounts using useEffect'],
         role: ['Full project planning and development', 'UI/UX design and interaction implementation', 'Multilingual support and state management'],
       }
     }

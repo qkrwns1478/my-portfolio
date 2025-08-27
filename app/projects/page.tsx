@@ -4,6 +4,8 @@ import { projects as projectList } from '@/data/projects';
 import { useSettingsStore } from '../store/settingsStore';
 import Button from "../components/Button";
 import ResponsiveText from "../components/ResponsiveText";
+import ImageModal from "../components/ImageModal";
+import ProjectImage from "../components/ProjectImage";
 
 const getAllCategories = (projects: typeof projectList) => {
   const categories = projects.flatMap(p => p.category || []);
@@ -24,6 +26,8 @@ export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
   const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
+  
+  const [modalImage, setModalImage] = useState<string | null>(null);
 
   useEffect(() => {
     setIsHydrated(true);
@@ -128,93 +132,81 @@ export default function Projects() {
 
                 <p className="text-violet-200">{t.summary}</p>
 
-                {t.asis && (
-                  <div>
-                    <p className="text-cyan-300 font-semibold">AS-IS</p>
-                    <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
-                      {t.asis.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {t.challenge && (
-                  <div>
-                    <p className="text-cyan-300 font-semibold">Challenge</p>
-                    <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
-                      {t.challenge.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {t.tobe && (
-                  <div>
-                    <p className="text-cyan-300 font-semibold">TO-BE</p>
-                    <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
-                      {t.tobe.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {t.role && (
-                  <div>
-                    <p className="text-cyan-300 font-semibold">What I did</p>
-                    <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
-                      {t.role.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {project.stack && (
-                  <div>
-                    <p className="text-cyan-300 font-semibold">Tech Stack</p>
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {project.stack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                <div className="flex flex-col md:flex-row gap-8 pt-4">
+                  <div className="flex-1 space-y-4">
+                    {t.asis && (
+                      <div>
+                        <p className="text-cyan-300 font-semibold">AS-IS</p>
+                        <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                          {t.asis.map((item, i) => <li key={i}>{item}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {t.challenge && (
+                      <div>
+                        <p className="text-cyan-300 font-semibold">Challenge</p>
+                        <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                          {t.challenge.map((item, i) => <li key={i}>{item}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {t.tobe && (
+                      <div>
+                        <p className="text-cyan-300 font-semibold">TO-BE</p>
+                        <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                          {t.tobe.map((item, i) => <li key={i}>{item}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {t.role && (
+                      <div>
+                        <p className="text-cyan-300 font-semibold">What I did</p>
+                        <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                          {t.role.map((item, i) => <li key={i}>{item}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {project.stack && (
+                      <div>
+                        <p className="text-cyan-300 font-semibold">Tech Stack</p>
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {project.stack.map((tech) => (
+                            <span key={tech} className="px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div className="flex gap-2">
+                      {project.link && (
+                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-cyan-300">
+                          GitHub ↗
+                        </a>
+                      )}
+                      {project.video && (
+                        <a href={project.video} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-cyan-300">
+                          {language === "Kor" ? "발표영상 ↗" : "Video ↗"}
+                        </a>
+                      )}
                     </div>
                   </div>
-                )}
 
-                <div className="flex gap-2">
-                  {project.link && (
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline mt-2 inline-block text-cyan-300"
-                    >
-                      GitHub ↗
-                    </a>
-                  )}
-                  {project.video && (
-                    <a
-                      href={project.video}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline mt-2 inline-block text-cyan-300"
-                    >
-                      {language === "Kor" ? "발표영상 ↗" : "Video ↗"}
-                    </a>
-                  )}
+                  <ProjectImage
+                    projectId={project.id}
+                    projectTitle={t.title}
+                    onClick={(imageUrl) => setModalImage(imageUrl)}
+                  />
                 </div>
               </div>
             )
           })}
         </div>
       </section>
+
+      {modalImage && (
+        <ImageModal src={modalImage} onClose={() => setModalImage(null)} />
+      )}
     </div>
   );
 }

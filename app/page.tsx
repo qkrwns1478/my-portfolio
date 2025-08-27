@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Code2, Zap, Target, TrendingUp, Briefcase, Wrench, Cpu } from 'lucide-react';
+import { ArrowRight, Code2, Zap, Target, TrendingUp, ChevronsDown, Wrench, Cpu } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import { motion, Variants } from 'framer-motion';
 import ResponsiveText from './components/ResponsiveText';
@@ -123,6 +123,24 @@ export default function Home() {
     setIsHydrated(true);
   }, []);
 
+  const handleScroll = () => {
+    const featuresSection = document.getElementById('features-section');
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const bounceVariants: Variants = {
+    animate: {
+      y: ['0%', '-30%', '0%'],
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      },
+    },
+  };
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -182,7 +200,7 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <section className="min-h-screen flex flex-col justify-center items-center text-center space-y-8 py-16 px-4 sm:px-6 md:px-12 relative overflow-hidden">
-        <div className={"relative z-10 transition-all duration-1000"}>
+        <div className={"relative z-10 transition-all duration-1000 flex flex-col items-center"}>
           <h1 className="text-4xl xs:text-5xl sm:text-6xl font-extrabold tracking-tight mb-6">
             <ResponsiveText
               values={language === "Kor" ? ["안녕하세요,", "박준식입니다"] : ["Hello!", "I'm ParkJS"]}
@@ -206,11 +224,23 @@ export default function Home() {
             <Button href="/about" className="w-48 fade-in-expand">About Me</Button>
             <Button href="/projects" className="w-48 fade-in-expand">Projects</Button>
           </div>
+          
+          {/* --- 수정된 화살표 위치 --- */}
+          <motion.button
+            onClick={handleScroll}
+            className="text-white/50 hover:text-white/80 transition-colors duration-300 mt-12" // absolute 속성 제거, mt-12 추가
+            variants={bounceVariants}
+            animate="animate"
+            aria-label="Scroll down"
+          >
+            <ChevronsDown size={40} />
+          </motion.button>
         </div>
       </section>
 
       {/* Features Section */}
       <motion.section
+        id="features-section"
         className="py-24 px-4 sm:px-6 md:px-12"
         initial="hidden"
         whileInView="visible"
