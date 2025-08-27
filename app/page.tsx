@@ -225,10 +225,9 @@ export default function Home() {
             <Button href="/projects" className="w-48 fade-in-expand">Projects</Button>
           </div>
           
-          {/* --- 수정된 화살표 위치 --- */}
           <motion.button
             onClick={handleScroll}
-            className="text-white/50 hover:text-white/80 transition-colors duration-300 mt-12" // absolute 속성 제거, mt-12 추가
+            className="text-white/50 hover:text-white/80 transition-colors duration-300 mt-12"
             variants={bounceVariants}
             animate="animate"
             aria-label="Scroll down"
