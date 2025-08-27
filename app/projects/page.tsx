@@ -179,9 +179,14 @@ export default function Projects() {
                       </div>
                     )}
                     <div className="flex gap-2">
+                      {project.github && (
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-cyan-300">
+                          GitHub ↗
+                        </a>
+                      )}
                       {project.link && (
                         <a href={project.link} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-cyan-300">
-                          GitHub ↗
+                          {language === "Kor" ? "링크 ↗" : "Link ↗"}
                         </a>
                       )}
                       {project.video && (

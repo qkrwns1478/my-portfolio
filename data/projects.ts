@@ -3,6 +3,7 @@ export interface Project {
   category: string[];
   period: string;
   stack?: string[];
+  github?: string;
   link?: string;
   video?: string;
   details?: string;
@@ -21,11 +22,39 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'my-activity-graph',
+    category: ['Frontend', 'Backend'],
+    period: '2025.08',
+    stack: ['React', 'Next.js', 'TailwindCSS', 'Vercel'],
+    github: 'https://github.com/qkrwns1478/my-activity-graph',
+    link: 'https://activity-graph-generator.vercel.app/',
+    translations: {
+      Kor: {
+        title: 'Activity Graph Generator',
+        desc: '동적 깃허브 스타일 활동 그래프 생성기',
+        summary: '일일 활동 데이터를 시각화하여 프로필 README를 꾸밀 수 있는 동적 SVG 그래프 생성 도구',
+        asis: ['깃허브 README에 추가할 일일 공부 히트맵 UI의 부재'],
+        challenge: ['URL 쿼리 파라미터를 기반으로 동적으로 SVG 이미지를 생성', '다양한 테마와 사이즈 옵션 제공', '활동량에 따라 순차적으로 사각형이 나타나는 애니메이션 구현'],
+        tobe: ['직접 데이터를 입력하고 테마와 크기를 선택하여 실시간으로 그래프를 미리보기', '생성된 마크다운 코드를 복사하여 README에 쉽게 붙여넣을 수 있는 웹 UI 완성', 'Vercel을 통해 API 엔드포인트와 프론트엔드를 배포하여 누구나 쉽게 사용 가능'],
+        role: ['전체 프로젝트 기획, 프론트엔드 및 백엔드 개발', 'SVG 생성 로직 및 동적 테마/애니메이션 구현', 'Vercel 배포 및 README 문서 작성'],
+      },
+      Eng: {
+        title: 'Activity Graph Generator',
+        desc: 'Dynamic GitHub-Style Activity Graph Generator',
+        summary: 'A tool to generate a dynamic, GitHub-style activity graph (heatmap calendar) for your profile README',
+        asis: ['There was no UI for daily study heatmap in Github README'],
+        challenge: ['Dynamically generate SVG images based on URL query parameters', 'Provide various themes and size options', 'Add visual interest by implementing an animation where squares appear sequentially based on activity level'],
+        tobe: ['Users can input data, select themes and sizes, preview the graph in real-time', 'Completed a web UI able to easily copy the generated Markdown code to paste into their README', 'Deployed the API endpoint and frontend via Vercel to make it easily accessible to anyone'],
+        role: ['Full project planning, frontend, and backend development', 'Implemented SVG generation logic and dynamic themes/animations', 'Handled Vercel deployment and README documentation'],
+      }
+    }
+  },
+  {
     id: 'my-portfolio',
     category: ['Frontend'],
     period: '2025.08',
     stack: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Zustand', 'Vercel'],
-    link: 'https://github.com/qkrwns1478/my-portfolio',
+    github: 'https://github.com/qkrwns1478/my-portfolio',
     translations: {
       Kor: {
         title: `ParkJS' DEV SPACE`,
@@ -50,7 +79,7 @@ export const projects: Project[] = [
     category: ['Frontend', 'Backend'],
     period: '2025.06 – 2025.07',
     stack: ['React', 'Zustand', 'TailwindCSS', 'Node.js', 'ClickHouse', 'Kafka', 'AWS EC2'],
-    link: 'https://github.com/Eatventory/KlickLab',
+    github: 'https://github.com/Eatventory/KlickLab',
     video: 'https://www.youtube.com/watch?v=j3gBUdQbYz4',
     details: '/projects/klicklab',
     translations: {
@@ -79,7 +108,7 @@ export const projects: Project[] = [
     category: ['OS'],
     period: '2025.05 – 2025.06',
     stack: ['C', 'QEMU', 'GDB', 'Makefile'],
-    link: 'https://github.com/qkrwns1478/pintos-kaist',
+    github: 'https://github.com/qkrwns1478/pintos-kaist',
     translations: {
       Kor: {
         title: 'KAIST PintOS',
@@ -104,7 +133,7 @@ export const projects: Project[] = [
     category: ['Frontend'],
     period: '2025.03',
     stack: ['TailwindCSS', 'JavaScript', 'Python', 'Flask', 'Jinja', 'MongoDB'],
-    link: 'https://github.com/qkrwns1478/digital-fortune-cookie',
+    github: 'https://github.com/qkrwns1478/digital-fortune-cookie',
     translations: {
       Kor: {
         title: '디지털 포춘 쿠키',
