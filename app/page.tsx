@@ -185,7 +185,7 @@ export default function Home() {
       description: language === "Kor" ? "미래 확장을 고려한 견고한 아키텍처 설계" : "Robust architectural design for future expansion"
     }
   ];
-  const techStacks = ['React', 'Next.js', 'TypeScript', 'Node.js', 'C', 'Python', 'PostgreSQL', 'MongoDB', 'ClickHouse'];
+  const techStacks = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Spring Boot', 'Java', 'Python', 'PostgreSQL', 'MongoDB'];
   
   const featuredProjectIds = ['my-portfolio', 'klicklab', 'fortune-cookie', 'kiosk-version'];
   const featuredProjects = featuredProjectIds

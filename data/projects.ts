@@ -22,10 +22,73 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'my-activity-graph',
+    id: 'pkes-editor',
     category: ['Frontend', 'Backend'],
+    period: '2025.09',
+    stack: ['Vue.js', 'Spring Boot', 'Gradle', 'Java', 'Ruby'],
+    github: 'https://github.com/qkrwns1478/pkes-editor',
+    translations: {
+      Kor: {
+        title: 'PKES Save Editor',
+        summary: 'Pokemon Essentials 엔진 기반 게임 세이브 에디터',
+        asis: [
+          '분산 저장된 값들을 일일이 찾아 계산하면서 수정해야 했음',
+          'Ruby Marshal 바이너리 파일(.rxdata)의 복잡한 구조로 인한 직접 편집의 어려움',
+          '기존 도구로는 어떤 값을 수정해야 할지 직관적으로 알기 힘듦'
+        ],
+        challenge: [
+          'Ruby Marshal 직렬화/역직렬화를 Java 환경에서 JRuby로 처리',
+          '중첩된 게임 데이터 구조를 직관적인 트리뷰로 시각화',
+          '바이너리 파일과 JSON 간 양방향 변환 시 데이터 무결성 보장',
+          'Spring Boot와 Vue.js 간 효율적인 파일 업로드/다운로드 구현'
+        ],
+        tobe: [
+          '웹 브라우저에서 직접 .rxdata 세이브 파일 편집 가능',
+          '계층적 트리 구조로 복잡한 게임 데이터를 직관적으로 탐색 및 수정',
+          'parser.rb/generator.rb를 통한 안정적인 Ruby-JSON 변환 자동화',
+          '단일 JAR 파일로 배포 가능한 독립적인 웹 애플리케이션'
+        ],
+        role: [
+          'Spring Boot 백엔드 API 설계 및 JRuby 통합 구현',
+          'Vue.js 기반 트리뷰 에디터 컴포넌트 개발',
+          'Ruby 스크립트를 통한 Marshal 데이터 파싱/생성 로직 구현',
+          // 'Gradle 빌드 자동화 및 프론트엔드-백엔드 통합 배포 설정'
+        ],
+      },
+      Eng: {
+        title: 'PKES Save Editor',
+        summary: 'Web-based save file editor for Pokemon Essentials games',
+        asis: [
+          'Users had to manually locate and calculate distributed values to avoid errors when modifying save files',
+          'Difficulty in direct editing due to complex Ruby Marshal binary file (.rxdata) structure',
+          'Intuitively difficult to know what to modify with existing tool'
+        ],
+        challenge: [
+          'Processing Ruby Marshal serialization/deserialization using JRuby in Java environment',
+          'Visualizing nested game data structures as intuitive tree view interface',
+          'Ensuring data integrity during bidirectional conversion between binary files and JSON',
+          'Implementing efficient file upload/download between Spring Boot and Vue.js'
+        ],
+        tobe: [
+          'Direct .rxdata save file editing capability in web browser',
+          'Intuitive navigation and modification of complex game data through hierarchical tree structure',
+          'Automated Ruby-JSON conversion through parser.rb/generator.rb scripts',
+          'Standalone web application deployable as single JAR file'
+        ],
+        role: [
+          'Designed Spring Boot backend API and implemented JRuby integration',
+          'Developed Vue.js-based tree view editor components',
+          'Implemented Marshal data parsing/generation logic through Ruby scripts',
+          // 'Configured Gradle build automation and integrated frontend-backend deployment'
+        ],
+      }
+    }
+  },
+  {
+    id: 'my-activity-graph',
+    category: ['Frontend'],
     period: '2025.08',
-    stack: ['React', 'Next.js', 'TailwindCSS', 'Vercel'],
+    stack: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Vercel'],
     github: 'https://github.com/qkrwns1478/my-activity-graph',
     link: 'https://activity-graph-generator.vercel.app/',
     translations: {
@@ -52,7 +115,7 @@ export const projects: Project[] = [
   {
     id: 'my-portfolio',
     category: ['Frontend'],
-    period: '2025.08',
+    period: '2025.08 – 2025.09',
     stack: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Zustand', 'Vercel'],
     github: 'https://github.com/qkrwns1478/my-portfolio',
     translations: {

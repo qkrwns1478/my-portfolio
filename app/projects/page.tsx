@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { projects as projectList } from '@/data/projects';
 import { useSettingsStore } from '../store/settingsStore';
+import { techIconMap } from '../utils/techIcons';
 import Button from "../components/Button";
 import ResponsiveText from "../components/ResponsiveText";
 import ImageModal from "../components/ImageModal";
@@ -170,11 +171,18 @@ export default function Projects() {
                       <div>
                         <p className="text-cyan-300 font-semibold">Tech Stack</p>
                         <div className="flex flex-wrap gap-2 pt-2">
-                          {project.stack.map((tech) => (
-                            <span key={tech} className="px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200">
-                              {tech}
-                            </span>
-                          ))}
+                          {(project.stack as string[]).map((tech: string) => {
+                            const IconComponent = techIconMap[tech];
+                            return (
+                              <span 
+                                key={tech} 
+                                className="flex items-center gap-2 px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200"
+                              >
+                                {IconComponent && <IconComponent className="w-4 h-4" />}
+                                {tech}
+                              </span>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
