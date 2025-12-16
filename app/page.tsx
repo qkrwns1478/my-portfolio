@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Code2, Zap, Target, TrendingUp, ChevronsDown, Wrench, Cpu } from 'lucide-react';
+import { ArrowRight, ChevronsDown, Wrench, Cpu } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import { motion, Variants } from 'framer-motion';
 import ResponsiveText from './components/ResponsiveText';
@@ -31,36 +31,9 @@ const Button = ({
   );
 };
 
-const FeatureCard = ({
-  icon: Icon,
-  title,
-  description
-}: {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-}) => {
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 30, scale: 0.98 },
-    visible: { opacity: 1, y: 0, scale: 1 },
-  };
-
-  return (
-    <motion.div
-      className="group p-6 bg-slate-800/30 backdrop-blur-sm border border-cyan-500/20 rounded-xl hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105"
-      variants={cardVariants}
-    >
-      <div className="mb-4">
-        <Icon className="w-8 h-8 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
-      </div>
-      <h3 className="text-lg font-bold text-slate-100 mb-2">{title}</h3>
-      <p className="text-slate-300/80 text-sm leading-relaxed">{description}</p>
-    </motion.div>
-  );
-};
-
 const ProjectCard = ({ project, language }: { project: Project; language: 'Kor' | 'Eng' }) => {
   const { title, desc, role } = project.translations[language];
+  const [isHovered, setIsHovered] = useState(false);
 
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 30, scale: 0.98 },
@@ -68,49 +41,58 @@ const ProjectCard = ({ project, language }: { project: Project; language: 'Kor' 
   };
 
   return (
-    <motion.div variants={cardVariants} className="group [perspective:1000px]">
-      <div className="relative w-full h-72 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] transition-transform duration-700 rounded-2xl">
-        {/* 카드 앞면 (이미지) */}
-        <div className="absolute w-full h-full [backface-visibility:hidden] overflow-hidden rounded-2xl border border-cyan-500/20 shadow-lg">
-          <img
-            src={`/images/projects/${project.id}.jpg`}
-            alt={`${title} project image`}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-          <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">{title}</h3>
+    <motion.div 
+      variants={cardVariants}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="relative w-full h-72 rounded-2xl overflow-hidden"
+    >
+      {/* 이미지 카드 */}
+      <motion.div
+        animate={{ y: isHovered ? -20 : 0, opacity: isHovered ? 0.3 : 1 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="absolute inset-0 overflow-hidden rounded-2xl border border-cyan-500/20 shadow-lg"
+      >
+        <img
+          src={`/images/projects/${project.id}.jpg`}
+          alt={`${title} project image`}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+        <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">{title}</h3>
+      </motion.div>
+
+      {/* 상세 정보 카드 */}
+      <motion.div
+        animate={{ y: isHovered ? 0 : "100%" }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="absolute inset-0 backdrop-blur-lg bg-slate-900/95 rounded-2xl border border-cyan-400/40 p-6 flex flex-col"
+      >
+        <h4 className="text-xl font-bold text-cyan-300 mb-2">{title}</h4>
+        <p className="text-sm text-slate-300/90 italic border-l-2 border-cyan-500 pl-2 mb-4">
+          {desc}
+        </p>
+        <div className="mb-4">
+          <h5 className="text-md font-semibold text-slate-200 mb-2 flex items-center gap-2">
+            <Cpu className="w-4 h-4" /> What I did
+          </h5>
+          <ul className="list-disc list-inside text-sm text-slate-300/80 space-y-1">
+            {role?.map((r, i) => <li key={i}>{r}</li>)}
+          </ul>
         </div>
-
-        {/* 카드 뒷면 (상세 정보) */}
-        <div className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] backdrop-blur-lg bg-slate-900/40 rounded-2xl border border-cyan-400/40 p-6 flex flex-col">
-          <h4 className="text-xl font-bold text-cyan-300 mb-2">{title}</h4>
-          <p className="text-sm text-slate-300/90 italic border-l-2 border-cyan-500 pl-2 mb-4">
-            {desc}
-          </p>
-
-          <div className="mb-4">
-            <h5 className="text-md font-semibold text-slate-200 mb-2 flex items-center gap-2">
-              <Cpu className="w-4 h-4" /> What I did
-            </h5>
-            <ul className="list-disc list-inside text-sm text-slate-300/80 space-y-1">
-              {role?.map((r, i) => <li key={i}>{r}</li>)}
-            </ul>
-          </div>
-
-          <div className="mt-auto">
-            <h5 className="text-md font-semibold text-slate-200 mb-2 flex items-center gap-2">
-              <Wrench className="w-4 h-4" /> Tech Stack
-            </h5>
-            <div className="flex flex-wrap gap-2">
-              {project.stack?.map(tech => (
-                <span key={tech} className="px-2 py-1 bg-cyan-900/40 text-cyan-300 text-xs rounded-md">
-                  {tech}
-                </span>
-              ))}
-            </div>
+        <div className="mt-auto">
+          <h5 className="text-md font-semibold text-slate-200 mb-2 flex items-center gap-2">
+            <Wrench className="w-4 h-4" /> Tech Stack
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            {project.stack?.map(tech => (
+              <span key={tech} className="px-2 py-1 bg-cyan-900/40 text-cyan-300 text-xs rounded-md">
+                {tech}
+              </span>
+            ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
@@ -163,28 +145,6 @@ export default function Home() {
     },
   };
 
-  const features = [
-    {
-      icon: Code2,
-      title: language === "Kor" ? "풀스택 개발" : "Fullstack Develop",
-      description: language === "Kor" ? "React, Next.js, Node.js를 활용한 완전한 웹 솔루션 개발" : "Complete Web Solution Develop with React, Next.js, Node.js"
-    },
-    {
-      icon: Zap,
-      title: language === "Kor" ? "성능 최적화" : "Performance Optimization",
-      description: language === "Kor" ? "빠른 로딩과 원활한 사용자 경험을 위한 최적화 전문" : "Optimization expertise for fast loading and seamless user experience"
-    },
-    {
-      icon: Target,
-      title: language === "Kor" ? "사용자 중심" : "User-centered",
-      description: language === "Kor" ? "직관적이고 접근성 높은 인터페이스 설계" : "Intuitive, Accessible Interface Design"
-    },
-    {
-      icon: TrendingUp,
-      title: language === "Kor" ? "확장 가능한 구조" : "Extensible Structure",
-      description: language === "Kor" ? "미래 확장을 고려한 견고한 아키텍처 설계" : "Robust architectural design for future expansion"
-    }
-  ];
   const techStacks = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Spring Boot', 'Java', 'Python', 'PostgreSQL', 'MongoDB'];
   
   const featuredProjectIds = ['my-portfolio', 'klicklab', 'fortune-cookie', 'kiosk-version'];
@@ -236,38 +196,6 @@ export default function Home() {
           </motion.button>
         </div>
       </section>
-
-      {/* Features Section */}
-      <motion.section
-        id="features-section"
-        className="py-24 px-4 sm:px-6 md:px-12"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
-      >
-        <div className="max-w-4xl mx-auto">
-          <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center mb-4">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              {language === "Kor" ? "전문 분야" : "Specialized Field"}
-            </span>
-          </motion.h2>
-          <motion.div variants={itemVariants} className="text-center mb-12 max-w-2xl mx-auto">
-            <ResponsiveText
-              values={language === "Kor" ? ["다양한 기술 스택과 경험을 바탕으로", "완성도 높은 솔루션을 제공합니다."] : ["Provide high-quality solutions", "based on a variety of tech stacks and experiences"]}
-              className="text-slate-300/70"
-            />
-          </motion.div>
-          <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={containerVariants}
-          >
-            {features.map((feature, index) => (
-              <FeatureCard key={index} icon={feature.icon} title={feature.title} description={feature.description} />
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
 
       {/* Project Section */}
       <motion.section
@@ -345,7 +273,7 @@ export default function Home() {
             </span>
           </motion.h2>
           <motion.p variants={itemVariants} className="text-slate-300/70 text-center mb-12 max-w-2xl mx-auto">
-            {language === "Kor" ? "개발 과정과 기술적 인사이트를 공유하고 소통합니다" : "Share and communicate the development process and technical insights"}
+            {language === "Kor" ? "개발 과정과 기술적 인사이트를 공유하고 소통합니다." : "Share and communicate the development process and technical insights"}
           </motion.p>
           <motion.div className="grid md:grid-cols-2 gap-8" variants={containerVariants}>
             <motion.div variants={itemVariants} className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105">
@@ -387,7 +315,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-slate-300/80 mb-6 leading-relaxed">
-                {language === "Kor" ? "개발하면서 마주한 문제들과 해결 과정, 새로운 기술에 대한 학습 내용을 정리하고 공유합니다. 실무에서 얻은 인사이트를 나눕니다." : "Organize and share learning about problems, solutions, and new technologies encountered during development. Share insights from practice."}
+                {language === "Kor" ? "개발하면서 마주한 문제들과 해결 과정, 새로운 기술에 대한 학습 내용을 정리하고 공유합니다." : "Organize and share learning about problems, solutions, and new technologies encountered during development."}
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 text-sm text-slate-400">
