@@ -22,66 +22,168 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'pkes-editor',
+    id: 'alicelingo',
     category: ['Frontend', 'Backend'],
-    period: '2025.09',
-    stack: ['Vue.js', 'Spring Boot', 'Gradle', 'Java', 'Ruby'],
-    github: 'https://github.com/qkrwns1478/pkes-editor',
+    period: '2026.02 – 진행 중',
+    stack: ['Next.js', 'TypeScript', 'TailwindCSS', 'Supabase', 'OpenAI API',],
+    github: 'https://github.com/qkrwns1478/alicelingo',
     translations: {
       Kor: {
-        title: 'PKES Save Editor',
-        summary: 'Pokemon Essentials 엔진 기반 게임 세이브 에디터',
-        asis: [
-          '분산 저장된 값들을 일일이 찾아 계산하면서 수정해야 했음',
-          'Ruby Marshal 바이너리 파일(.rxdata)의 복잡한 구조로 인한 직접 편집의 어려움',
-          '기존 도구로는 어떤 값을 수정해야 할지 직관적으로 알기 힘듦'
-        ],
-        challenge: [
-          'Ruby Marshal 직렬화/역직렬화를 Java 환경에서 JRuby로 처리',
-          '중첩된 게임 데이터 구조를 직관적인 트리뷰로 시각화',
-          '바이너리 파일과 JSON 간 양방향 변환 시 데이터 무결성 보장',
-          'Spring Boot와 Vue.js 간 효율적인 파일 업로드/다운로드 구현'
-        ],
-        tobe: [
-          '웹 브라우저에서 직접 .rxdata 세이브 파일 편집 가능',
-          '계층적 트리 구조로 복잡한 게임 데이터를 직관적으로 탐색 및 수정',
-          'parser.rb/generator.rb를 통한 안정적인 Ruby-JSON 변환 자동화',
-          '단일 JAR 파일로 배포 가능한 독립적인 웹 애플리케이션'
-        ],
+        title: 'AliceLingo',
+        desc: 'AI 기반 어학 학습 및 평가 플랫폼',
+        summary: 'OpenAI API를 활용하여 사용자의 어학 학습 준비를 돕고, 답변에 대한 AI 채점 및 피드백을 제공하는 웹 애플리케이션',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
         role: [
-          'Spring Boot 백엔드 API 설계 및 JRuby 통합 구현',
-          'Vue.js 기반 트리뷰 에디터 컴포넌트 개발',
-          'Ruby 스크립트를 통한 Marshal 데이터 파싱/생성 로직 구현',
-          // 'Gradle 빌드 자동화 및 프론트엔드-백엔드 통합 배포 설정'
-        ],
+          'Next.js와 Supabase SSR을 활용한 전반적인 풀스택 로직 및 인증 체계 구현',
+          'OpenAI API 클라이언트 연동을 통한 사용자 답변 평가/피드백 시스템 개발',
+          'fast-levenshtein 등을 활용한 텍스트 유사도 비교 및 채점 로직 설계'
+        ]
       },
       Eng: {
-        title: 'PKES Save Editor',
-        summary: 'Web-based save file editor for Pokemon Essentials games',
-        asis: [
-          'Users had to manually locate and calculate distributed values to avoid errors when modifying save files',
-          'Difficulty in direct editing due to complex Ruby Marshal binary file (.rxdata) structure',
-          'Intuitively difficult to know what to modify with existing tool'
-        ],
-        challenge: [
-          'Processing Ruby Marshal serialization/deserialization using JRuby in Java environment',
-          'Visualizing nested game data structures as intuitive tree view interface',
-          'Ensuring data integrity during bidirectional conversion between binary files and JSON',
-          'Implementing efficient file upload/download between Spring Boot and Vue.js'
-        ],
-        tobe: [
-          'Direct .rxdata save file editing capability in web browser',
-          'Intuitive navigation and modification of complex game data through hierarchical tree structure',
-          'Automated Ruby-JSON conversion through parser.rb/generator.rb scripts',
-          'Standalone web application deployable as single JAR file'
-        ],
+        title: 'AliceLingo',
+        desc: 'AI-based Language Learning and Evaluation Platform',
+        summary: 'A web application that assists users with language learning (exams) and provides AI scoring and feedback on their answers using OpenAI API.',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
         role: [
-          'Designed Spring Boot backend API and implemented JRuby integration',
-          'Developed Vue.js-based tree view editor components',
-          'Implemented Marshal data parsing/generation logic through Ruby scripts',
-          // 'Configured Gradle build automation and integrated frontend-backend deployment'
-        ],
+          'Implemented overall full-stack logic and authentication system using Next.js and Supabase SSR',
+          'Developed user answer evaluation and feedback system by integrating OpenAI API client',
+          'Designed text similarity comparison and scoring logic using fast-levenshtein'
+        ]
       }
+    }
+  },
+  {
+    id: 'namu-clone',
+    category: ['Frontend'],
+    period: '2026.02 – 2026.02',
+    stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Prisma'],
+    github: 'https://github.com/qkrwns1478/namu-clone',
+    translations: {
+      Kor: {
+        title: '나무위키 클론',
+        desc: '위키 서비스 클론 프로젝트',
+        summary: 'Next.js와 Prisma를 활용하여 나무위키의 문서 열람, 편집, 역사 등의 핵심 기능을 구현한 클론 프로젝트',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: [
+          '프론트엔드 및 백엔드 전반 로직 구현',
+          '마크다운 및 위키 문법 파싱/렌더링 로직 개발',
+          'Prisma를 활용한 데이터베이스 구조 설계 및 API 구현'
+        ]
+      },
+      Eng: {
+        title: 'Namu Clone',
+        desc: 'Wiki Service Clone Project',
+        summary: 'A clone project of Namuwiki implementing core features such as viewing, editing, and history using Next.js and Prisma.',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: [
+          'Full-stack frontend and backend development',
+          'Developed markdown and wiki syntax parsing/rendering logic',
+          'Designed database schema and implemented APIs using Prisma'
+        ]
+      }
+    }
+  },
+  {
+    id: 'shopping-mall-front',
+    category: ['Frontend'],
+    period: '2025.11 – 2025.12',
+    stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion'],
+    github: 'https://github.com/qkrwns1478/shopping-mall-front',
+    translations: {
+      Kor: {
+        title: '쇼핑몰 웹사이트 (프론트엔드)',
+        desc: '이커머스 프론트엔드 웹 애플리케이션',
+        summary: 'Next.js와 React 기반으로 구축된 쇼핑몰 프론트엔드 프로젝트로, 상품 탐색부터 결제까지의 사용자 경험(UX)을 고려한 UI 구현',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: [
+          'Next.js를 활용한 쇼핑몰 프론트엔드 전반 로직 구현',
+          'Framer Motion 및 Dnd-kit을 이용한 동적 UI 및 인터랙션 적용',
+          'React Hook Form을 활용한 효율적인 폼 상태 관리 및 유효성 검증'
+        ]
+      },
+      Eng: {
+        title: 'Shopping Mall Website (Frontend)',
+        desc: 'E-commerce Frontend Web Application',
+        summary: 'A shopping mall frontend project built with Next.js and React, implementing UI with a focus on user experience (UX) from product browsing to checkout.',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: [
+          'Implemented overall frontend logic for the shopping mall using Next.js',
+          'Applied dynamic UI and interactions using Framer Motion and Dnd-kit',
+          'Efficient form state management and validation using React Hook Form'
+        ]
+      }
+    }
+  },
+  {
+    id: 'shopping-mall-back',
+    category: ['Backend'],
+    period: '2025.11 – 2025.12',
+    stack: ['Java', 'Spring Boot', 'Spring Data JPA', 'Spring Security', 'MySQL'],
+    github: 'https://github.com/qkrwns1478/shopping-mall-back',
+    translations: {
+      Kor: {
+        title: '쇼핑몰 API 서버 (백엔드)',
+        desc: '이커머스 백엔드 REST API 서버',
+        summary: 'Spring Boot 기반의 쇼핑몰 백엔드 프로젝트로, 회원 인증, 상품 관리, 주문 처리 등의 핵심 비즈니스 로직과 API 설계',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: [
+          'Spring Boot 및 Spring Data JPA를 활용한 안정적인 백엔드 아키텍처 구축',
+          'Spring Security를 적용한 사용자 인증 및 권한 관리 구조 설계',
+          '이메일 인증(Spring Mail) 구현 및 Swagger(Springdoc)를 활용한 API 문서화'
+        ]
+      },
+      Eng: {
+        title: 'Shopping Mall API Server (Backend)',
+        desc: 'E-commerce Backend REST API Server',
+        summary: 'A shopping mall backend project based on Spring Boot, focusing on designing APIs and core business logic such as user authentication, product management, and order processing.',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: [
+          'Built a robust backend architecture using Spring Boot and Spring Data JPA',
+          'Designed user authentication and authorization structure using Spring Security',
+          'Implemented email verification (Spring Mail) and API documentation using Swagger (Springdoc)'
+        ]
+      }
+    }
+  },
+  {
+    id: 'eip-practice',
+    category: ['Frontend'],
+    period: '2025.10 – 2025.12',
+    stack: ['Vue.js', 'Vite', 'JavaScript'],
+    github: 'https://github.com/qkrwns1478/eip-practice',
+    translations: {
+      Kor: {
+        title: '정보처리기사 실기 퀴즈 앱',
+        summary: '정보처리기사 실기 대비 랜덤 퀴즈 애플리케이션',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: ['Vue.js 학습 및 적용']
+      },
+      Eng: {
+        title: 'EIP Practice',
+        summary: 'Random Quiz Application for Engineer Information Processing Test',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: ['Learning and applying Vue.js']
+      },
     }
   },
   {
@@ -96,19 +198,13 @@ export const projects: Project[] = [
         title: 'Activity Graph Generator',
         desc: '동적 깃허브 스타일 활동 그래프 생성기',
         summary: '일일 활동 데이터를 시각화하여 프로필 README를 꾸밀 수 있는 동적 SVG 그래프 생성 도구',
-        asis: ['깃허브 README에 추가할 일일 공부 히트맵 UI의 부재'],
-        challenge: ['URL 쿼리 파라미터를 기반으로 동적으로 SVG 이미지를 생성', '다양한 테마와 사이즈 옵션 제공', '활동량에 따라 순차적으로 사각형이 나타나는 애니메이션 구현'],
-        tobe: ['직접 데이터를 입력하고 테마와 크기를 선택하여 실시간으로 그래프를 미리보기', '생성된 마크다운 코드를 복사하여 README에 쉽게 붙여넣을 수 있는 웹 UI 완성', 'Vercel을 통해 API 엔드포인트와 프론트엔드를 배포하여 누구나 쉽게 사용 가능'],
-        role: ['전체 프로젝트 기획, 프론트엔드 및 백엔드 개발', 'SVG 생성 로직 및 동적 테마/애니메이션 구현', 'Vercel 배포 및 README 문서 작성'],
+        role: ['프론트엔드 및 백엔드 개발', 'SVG 생성 로직 및 동적 테마/애니메이션 구현'],
       },
       Eng: {
         title: 'Activity Graph Generator',
         desc: 'Dynamic GitHub-Style Activity Graph Generator',
         summary: 'A tool to generate a dynamic, GitHub-style activity graph (heatmap calendar) for your profile README',
-        asis: ['There was no UI for daily study heatmap in Github README'],
-        challenge: ['Dynamically generate SVG images based on URL query parameters', 'Provide various themes and size options', 'Add visual interest by implementing an animation where squares appear sequentially based on activity level'],
-        tobe: ['Users can input data, select themes and sizes, preview the graph in real-time', 'Completed a web UI able to easily copy the generated Markdown code to paste into their README', 'Deployed the API endpoint and frontend via Vercel to make it easily accessible to anyone'],
-        role: ['Full project planning, frontend, and backend development', 'Implemented SVG generation logic and dynamic themes/animations', 'Handled Vercel deployment and README documentation'],
+        role: ['Frontend & Backend development', 'Implemented SVG generation logic and dynamic themes/animations'],
       }
     }
   },
@@ -232,7 +328,7 @@ export const projects: Project[] = [
         asis: ['인터럽트 기반 처리 중 변수 값 불일치', 'PWM 제어 구조 부재로 인한 실시간 반응 실패'],
         challenge: ['하드웨어 레지스터 직접 제어를 통해 GPIO, PWM 설정', 'volatile 키워드를 활용한 인터럽트/루프 간 동기화 보장'],
         tobe: ['버튼 입력에 따라 즉각적으로 선풍기 강도 변경', 'MCU 수준에서 동작하는 안정적인 제어 로직 구현'],
-        role: ['전 과정 개인 수행 (MCU 코드 작성, 회로 설계, 디버깅)', '인터럽트 동기화 및 실시간 반응 로직 구현'],
+        role: ['MCU 코드 작성, 회로 설계, 디버깅', '인터럽트 동기화 및 실시간 반응 로직 구현'],
       },
       Eng: {
         title: 'STM32 Fan Control System',
@@ -241,7 +337,7 @@ export const projects: Project[] = [
         asis: ['Variable value mismatch during interrupt-based processing.', 'Failure of real-time response due to the absence of a PWM control structure.'],
         challenge: ['Configured GPIO and PWM through direct control of hardware registers.', 'Ensured synchronization between interrupts and loops using the `volatile` keyword.'],
         tobe: ['Fan intensity changes immediately according to button input.', 'Implemented stable control logic operating at the MCU level.'],
-        role: ['Performed the entire process individually (MCU coding, circuit design, debugging).', 'Implemented interrupt synchronization and real-time response logic.'],
+        role: ['MCU coding, circuit design, debugging', 'Implemented interrupt synchronization and real-time response logic.'],
       }
     }
   },

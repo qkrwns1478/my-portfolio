@@ -12,7 +12,7 @@ import {
   // Cloud/DevOps
   SiAmazon, SiVercel, SiApachekafka,
   // Build Tools
-  SiGradle
+  SiGradle, SiVite
 } from 'react-icons/si';
 
 // 기본 아이콘들 (Simple Icons에 없는 기술들 대용)
@@ -56,6 +56,7 @@ export const techIconMap: Record<string, IconComponent> = {
   
   // Build Tools & State Management
   'Gradle': SiGradle,
+  'Vite': SiVite,
   'Zustand': FaDatabase,
   
   // Development Tool
