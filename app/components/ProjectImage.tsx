@@ -9,7 +9,7 @@ interface ProjectImageProps {
 
 const ProjectImage = ({ projectId, projectTitle, onClick }: ProjectImageProps) => {
   const [imageVisible, setImageVisible] = useState(true);
-  const imageUrl = `/images/projects/${projectId}.jpg`;
+  const imageUrl = `/images/projects/${projectId}.webp`;
 
   const handleError = () => {
     setImageVisible(false);

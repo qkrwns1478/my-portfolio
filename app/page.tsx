@@ -1,17 +1,18 @@
-'use client';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { ArrowRight, ChevronsDown, Wrench, Cpu } from 'lucide-react';
-import { FaGithub } from 'react-icons/fa';
-import { motion, Variants } from 'framer-motion';
-import ResponsiveText from './components/ResponsiveText';
-import { useSettingsStore } from './store/settingsStore';
-import { projects, Project } from '@/data/projects';
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { ArrowRight, ChevronsDown, Wrench, Cpu } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
+import { motion, Variants } from "framer-motion";
+import { techIconMap } from "./utils/techIcons";
+import ResponsiveText from "./components/ResponsiveText";
+import { useSettingsStore } from "./store/settingsStore";
+import { projects, Project } from "@/data/projects";
 
 const Button = ({
   href,
-  className = '',
-  children
+  className = "",
+  children,
 }: {
   href: string;
   className?: string;
@@ -31,7 +32,7 @@ const Button = ({
   );
 };
 
-const ProjectCard = ({ project, language }: { project: Project; language: 'Kor' | 'Eng' }) => {
+const ProjectCard = ({ project, language }: { project: Project; language: "Kor" | "Eng" }) => {
   const { title, desc, role } = project.translations[language];
   const [isHovered, setIsHovered] = useState(false);
 
@@ -41,7 +42,7 @@ const ProjectCard = ({ project, language }: { project: Project; language: 'Kor' 
   };
 
   return (
-    <motion.div 
+    <motion.div
       variants={cardVariants}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
@@ -54,7 +55,7 @@ const ProjectCard = ({ project, language }: { project: Project; language: 'Kor' 
         className="absolute inset-0 overflow-hidden rounded-2xl border border-cyan-500/20 shadow-lg"
       >
         <img
-          src={`/images/projects/${project.id}.jpg`}
+          src={`/images/projects/${project.id}.webp`}
           alt={`${title} project image`}
           className="w-full h-full object-cover"
         />
@@ -69,15 +70,15 @@ const ProjectCard = ({ project, language }: { project: Project; language: 'Kor' 
         className="absolute inset-0 backdrop-blur-lg bg-slate-900/95 rounded-2xl border border-cyan-400/40 p-6 flex flex-col"
       >
         <h4 className="text-xl font-bold text-cyan-300 mb-2">{title}</h4>
-        <p className="text-sm text-slate-300/90 italic border-l-2 border-cyan-500 pl-2 mb-4">
-          {desc}
-        </p>
+        <p className="text-sm text-slate-300/90 italic border-l-2 border-cyan-500 pl-2 mb-4">{desc}</p>
         <div className="mb-4">
           <h5 className="text-md font-semibold text-slate-200 mb-2 flex items-center gap-2">
             <Cpu className="w-4 h-4" /> What I did
           </h5>
           <ul className="list-disc list-inside text-sm text-slate-300/80 space-y-1">
-            {role?.map((r, i) => <li key={i}>{r}</li>)}
+            {role?.map((r, i) => (
+              <li key={i}>{r}</li>
+            ))}
           </ul>
         </div>
         <div className="mt-auto">
@@ -85,7 +86,7 @@ const ProjectCard = ({ project, language }: { project: Project; language: 'Kor' 
             <Wrench className="w-4 h-4" /> Tech Stack
           </h5>
           <div className="flex flex-wrap gap-2">
-            {project.stack?.map(tech => (
+            {project.stack?.map((tech) => (
               <span key={tech} className="px-2 py-1 bg-cyan-900/40 text-cyan-300 text-xs rounded-md">
                 {tech}
               </span>
@@ -106,19 +107,19 @@ export default function Home() {
   }, []);
 
   const handleScroll = () => {
-    const featuresSection = document.getElementById('features-section');
+    const featuresSection = document.getElementById("features-section");
     if (featuresSection) {
-      featuresSection.scrollIntoView({ behavior: 'smooth' });
+      featuresSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const bounceVariants: Variants = {
     animate: {
-      y: ['0%', '-30%', '0%'],
+      y: ["0%", "-30%", "0%"],
       transition: {
         duration: 1.5,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: "easeInOut",
       },
     },
   };
@@ -140,16 +141,27 @@ export default function Home() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
-      }
+        ease: "easeOut",
+      },
     },
   };
 
-  const techStacks = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Spring Boot', 'Java', 'Python', 'PostgreSQL', 'MongoDB'];
-  
-  const featuredProjectIds = ['my-portfolio', 'klicklab', 'fortune-cookie', 'kiosk-version'];
+  const techStacks = [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "Springboot",
+    "Java",
+    "Python",
+    "PostgreSQL",
+    "MongoDB",
+  ];
+
+  // 주요 프로젝트
+  const featuredProjectIds = ["alicelingo", "klicklab", "fortune-cookie", "kiosk-version"];
   const featuredProjects = featuredProjectIds
-    .map(id => projects.find(p => p.id === id))
+    .map((id) => projects.find((p) => p.id === id))
     .filter((p): p is Project => p !== undefined);
 
   if (!isHydrated) {
@@ -169,22 +181,34 @@ export default function Home() {
           </h1>
           <div className="text-lg sm:text-xl max-w-2xl mx-auto text-slate-200/90 leading-relaxed mb-8">
             <ResponsiveText
-              values={language === "Kor" ? [
-                "창의적인 시도와 실전 중심 프로젝트를 즐기는", "풀스택 개발자입니다.",
-                "기술의 본질을 이해하고,", "사용자 경험을 설계하는 데 집중합니다.",
-              ] : [
-                "A full-stack developer who enjoys", "creative attempts and hands-on projects",
-                "Understand the nature of technology and", "focus on designing user experiences",
-              ]}
+              values={
+                language === "Kor"
+                  ? [
+                      "창의적인 시도와 실전 중심 프로젝트를 즐기는",
+                      "풀스택 개발자입니다.",
+                      "기술의 본질을 이해하고,",
+                      "사용자 경험을 설계하는 데 집중합니다.",
+                    ]
+                  : [
+                      "A full-stack developer who enjoys",
+                      "creative attempts and hands-on projects",
+                      "Understand the nature of technology and",
+                      "focus on designing user experiences",
+                    ]
+              }
               groupSize={language === "Kor" ? 2 : 1}
               className="fade-in-expand"
             />
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center sm:space-x-6 space-y-4 sm:space-y-0 mb-12">
-            <Button href="/about" className="w-48 fade-in-expand">About Me</Button>
-            <Button href="/projects" className="w-48 fade-in-expand">Projects</Button>
+            <Button href="/about" className="w-48 fade-in-expand">
+              About Me
+            </Button>
+            <Button href="/projects" className="w-48 fade-in-expand">
+              Projects
+            </Button>
           </div>
-          
+
           <motion.button
             onClick={handleScroll}
             className="text-white/50 hover:text-white/80 transition-colors duration-300 mt-12"
@@ -212,22 +236,23 @@ export default function Home() {
             </span>
           </motion.h2>
           <motion.div variants={itemVariants} className="text-center mb-12 max-w-2xl mx-auto">
-              <ResponsiveText
-              values={language === "Kor" ? ["기술적 도전과 성장을 경험했던", "핵심 프로젝트들을 소개합니다."] : ["Introducing core projects where I", "experienced technical challenges and growth"]}
+            <ResponsiveText
+              values={
+                language === "Kor"
+                  ? ["기술적 도전과 성장을 경험했던", "핵심 프로젝트들을 소개합니다."]
+                  : ["Introducing core projects where I", "experienced technical challenges and growth"]
+              }
               className="text-slate-300/70"
             />
           </motion.div>
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-8"
-            variants={containerVariants}
-          >
+          <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" variants={containerVariants}>
             {featuredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} language={language} />
             ))}
           </motion.div>
         </div>
       </motion.section>
-      
+
       {/* Tech Stack Preview */}
       <motion.section
         className="py-24 px-4 sm:px-6 md:px-12"
@@ -244,16 +269,27 @@ export default function Home() {
           </motion.h2>
           <motion.div variants={itemVariants} className="text-center mb-12 max-w-2xl mx-auto">
             <ResponsiveText
-              values={language === "Kor" ? ["현재 사용중이거나", "사용했던 적이 있는 기술들입니다."] : ["These are technologies that are", "currently in use or have been used"]}
+              values={
+                language === "Kor"
+                  ? ["현재 사용중이거나", "사용했던 적이 있는 기술들입니다."]
+                  : ["These are technologies that are", "currently in use or have been used"]
+              }
               className="text-slate-300/70"
             />
           </motion.div>
           <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-3 mb-8">
-            {techStacks.map((tech) => (
-              <span key={tech} className="px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200">
-                {tech}
-              </span>
-            ))}
+            {techStacks.map((tech) => {
+              const IconComponent = techIconMap[tech];
+              return (
+                <span
+                  key={tech}
+                  className="flex items-center gap-2 px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200"
+                >
+                  {IconComponent && <IconComponent className="w-4 h-4" />}
+                  {tech}
+                </span>
+              );
+            })}
           </motion.div>
         </div>
       </motion.section>
@@ -273,21 +309,32 @@ export default function Home() {
             </span>
           </motion.h2>
           <motion.p variants={itemVariants} className="text-slate-300/70 text-center mb-12 max-w-2xl mx-auto">
-            {language === "Kor" ? "개발 과정과 기술적 인사이트를 공유하고 소통합니다." : "Share and communicate the development process and technical insights"}
+            {language === "Kor"
+              ? "개발 과정과 기술적 인사이트를 공유하고 소통합니다."
+              : "Share and communicate the development process and technical insights"}
           </motion.p>
           <motion.div className="grid md:grid-cols-2 gap-8" variants={containerVariants}>
-            <motion.div variants={itemVariants} className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105">
+            <motion.div
+              variants={itemVariants}
+              className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105"
+            >
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-slate-700 to-slate-600 rounded-full flex items-center justify-center mr-4">
-                  <FaGithub className="w-6 h-6 text-white"/>
+                  <FaGithub className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">GitHub</h3>
-                  <p className="text-slate-400 text-sm">{language === "Kor" ? "오픈소스 & 프로젝트" : "Open Source & Project"}</p>
+                  <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">
+                    GitHub
+                  </h3>
+                  <p className="text-slate-400 text-sm">
+                    {language === "Kor" ? "오픈소스 & 프로젝트" : "Open Source & Project"}
+                  </p>
                 </div>
               </div>
               <p className="text-slate-300/80 mb-6 leading-relaxed">
-                {language === "Kor" ? "실제 개발한 프로젝트들의 소스코드와 기술적 구현 방식을 확인해보세요. 다양한 기술 스택으로 만든 실전 프로젝트들이 있습니다." : "Check out the source code and technical implementation of the projects you actually developed. There are hands-on projects made from various tech stacks."}
+                {language === "Kor"
+                  ? "실제 개발한 프로젝트들의 소스코드와 기술적 구현 방식을 확인해보세요. 다양한 기술 스택으로 만든 실전 프로젝트들이 있습니다."
+                  : "Check out the source code and technical implementation of the projects you actually developed. There are hands-on projects made from various tech stacks."}
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 text-sm text-slate-400">
@@ -298,24 +345,38 @@ export default function Home() {
                     <div className="w-3 h-3 bg-green-400 rounded-full mr-2"></div>Active
                   </span>
                 </div>
-                <a href="https://github.com/qkrwns1478" target="_blank" rel="noopener noreferrer" className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium">
+                <a
+                  href="https://github.com/qkrwns1478"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
+                >
                   {language === "Kor" ? "방문하기" : "Visit"}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
             </motion.div>
-            <motion.div variants={itemVariants} className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105">
+            <motion.div
+              variants={itemVariants}
+              className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105"
+            >
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full flex items-center justify-center mr-4">
-                  <img src="/munsik.ico" className="w-8 h-8"/>
+                  <img src="/munsik.ico" className="w-8 h-8" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">Tech Blog</h3>
-                  <p className="text-slate-400 text-sm">{language === "Kor" ? "개발 인사이트 & 경험" : "Dev Insights & Experiences"}</p>
+                  <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">
+                    Tech Blog
+                  </h3>
+                  <p className="text-slate-400 text-sm">
+                    {language === "Kor" ? "개발 인사이트 & 경험" : "Dev Insights & Experiences"}
+                  </p>
                 </div>
               </div>
               <p className="text-slate-300/80 mb-6 leading-relaxed">
-                {language === "Kor" ? "개발하면서 마주한 문제들과 해결 과정, 새로운 기술에 대한 학습 내용을 정리하고 공유합니다." : "Organize and share learning about problems, solutions, and new technologies encountered during development."}
+                {language === "Kor"
+                  ? "개발하면서 마주한 문제들과 해결 과정, 새로운 기술에 대한 학습 내용을 정리하고 공유합니다."
+                  : "Organize and share learning about problems, solutions, and new technologies encountered during development."}
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 text-sm text-slate-400">
@@ -326,7 +387,12 @@ export default function Home() {
                     <div className="w-3 h-3 bg-purple-400 rounded-full mr-2"></div>Tech Focus
                   </span>
                 </div>
-                <a href="https://munsik22.tistory.com/" target="_blank" rel="noopener noreferrer" className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium">
+                <a
+                  href="https://munsik22.tistory.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
+                >
                   {language === "Kor" ? "방문하기" : "Visit"}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </a>

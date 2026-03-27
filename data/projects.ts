@@ -22,36 +22,71 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'alicelingo',
+    id: 'boj-banner-maker',
     category: ['Frontend', 'Backend'],
-    period: '2026.02 – 진행 중',
-    stack: ['Next.js', 'TypeScript', 'TailwindCSS', 'Supabase', 'OpenAI API',],
-    github: 'https://github.com/qkrwns1478/alicelingo',
+    period: '2026.03',
+    stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS'],
+    github: 'https://github.com/qkrwns1478/boj-banner-maker',
+    link: 'https://boj-banner-maker.vercel.app/',
     translations: {
       Kor: {
-        title: 'AliceLingo',
-        desc: 'AI 기반 어학 학습 및 평가 플랫폼',
-        summary: 'OpenAI API를 활용하여 사용자의 어학 학습 준비를 돕고, 답변에 대한 AI 채점 및 피드백을 제공하는 웹 애플리케이션',
+        title: '백준 문제 배너 생성기',
+        desc: '백준(BOJ) 문제 배너 이미지 생성 서비스',
+        summary: 'Solved.ac API를 활용하여 백준 알고리즘 문제 정보를 바탕으로 동적 배너 이미지를 생성하는 웹 애플리케이션',
         // asis: [],
         // challenge: [],
         // tobe: [],
         role: [
-          'Next.js와 Supabase SSR을 활용한 전반적인 풀스택 로직 및 인증 체계 구현',
-          'OpenAI API 클라이언트 연동을 통한 사용자 답변 평가/피드백 시스템 개발',
-          'fast-levenshtein 등을 활용한 텍스트 유사도 비교 및 채점 로직 설계'
+          'Next.js API Routes를 활용한 동적 배너 이미지 생성 로직 구현',
+          'Solved.ac API 연동 및 문제 데이터 파싱'
+        ]
+      },
+      Eng: {
+        title: 'BOJ Banner Maker',
+        desc: 'Baekjoon(BOJ) Problem Banner Image Generator',
+        summary: 'A web application that generates dynamic banner images based on Baekjoon problem information using the Solved.ac API.',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: [
+          'Implemented dynamic banner image generation logic using Next.js API Routes.',
+          'Integrated Solved.ac API and parsed problem data.'
+        ]
+      }
+    }
+  },
+  {
+    id: 'alicelingo',
+    category: ['Frontend', 'Backend'],
+    period: '2026.02 – 2026.03',
+    stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Supabase', 'OpenAI'],
+    github: 'https://github.com/qkrwns1478/alicelingo',
+    link: 'https://alicelingo.vercel.app',
+    translations: {
+      Kor: {
+        title: 'AliceLingo',
+        desc: 'AI 기반 어학 학습 플랫폼',
+        summary: 'Groq API와 Supabase를 활용한 맞춤형 어학 학습 및 AI 평가 서비스',
+        // asis: [],
+        // challenge: [],
+        // tobe: [],
+        role: [
+          'Next.js 및 Supabase를 활용한 풀스택 로직 및 사용자 인증 구현',
+          'Groq API를 연동한 실시간 음성 인식 및 AI 채점 파이프라인 구축',
+          'Levenshtein 알고리즘을 활용한 독자적인 발음/문법 피드백 시스템 개발'
         ]
       },
       Eng: {
         title: 'AliceLingo',
-        desc: 'AI-based Language Learning and Evaluation Platform',
-        summary: 'A web application that assists users with language learning (exams) and provides AI scoring and feedback on their answers using OpenAI API.',
+        desc: 'AI-Based Language Learning Platform',
+        summary: 'A personalized language learning and AI evaluation service using Groq API and Supabase.',
         // asis: [],
         // challenge: [],
         // tobe: [],
         role: [
-          'Implemented overall full-stack logic and authentication system using Next.js and Supabase SSR',
-          'Developed user answer evaluation and feedback system by integrating OpenAI API client',
-          'Designed text similarity comparison and scoring logic using fast-levenshtein'
+          'Implemented full-stack logic and user authentication using Next.js and Supabase.',
+          'Built a real-time voice recognition and AI grading pipeline using Groq API.',
+          'Developed a proprietary pronunciation/grammar feedback system using the Levenshtein algorithm.'
         ]
       }
     }
@@ -95,7 +130,7 @@ export const projects: Project[] = [
     id: 'shopping-mall-front',
     category: ['Frontend'],
     period: '2025.11 – 2025.12',
-    stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion'],
+    stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer'],
     github: 'https://github.com/qkrwns1478/shopping-mall-front',
     translations: {
       Kor: {
@@ -130,7 +165,7 @@ export const projects: Project[] = [
     id: 'shopping-mall-back',
     category: ['Backend'],
     period: '2025.11 – 2025.12',
-    stack: ['Java', 'Spring Boot', 'Spring Data JPA', 'Spring Security', 'MySQL'],
+    stack: ['Java', 'Spring', 'Springboot', 'MySQL'],
     github: 'https://github.com/qkrwns1478/shopping-mall-back',
     translations: {
       Kor: {

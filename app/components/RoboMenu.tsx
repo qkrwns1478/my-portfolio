@@ -51,48 +51,48 @@ export default function RoboMenu() {
   const pathname = usePathname();
 
   const [roboText, setRoboText] = useState("...");
-  const [roboImage, setRoboImage] = useState("/images/robo/robo1.png");
+  const [roboImage, setRoboImage] = useState("/images/robo/robo1.webp");
 
   useEffect(() => {
     if (roboPanicking) {
       setRoboText(language === "Kor" ? "으아아악!!" : "NOOOOOOO!!");
-      setRoboImage("/images/robo/robo5.png");
+      setRoboImage("/images/robo/robo5.webp");
     } else if (!open) {
       if (pathname.startsWith("/projects")) {
         setRoboText(language === "Kor" ? "프로젝트 소개 페이지입니다." : "These are the projects that I'd worked on.");
-        setRoboImage("/images/robo/robo3.png");
+        setRoboImage("/images/robo/robo3.webp");
       } else if (pathname.startsWith("/about")) {
         setRoboText(language === "Kor" ? "자기소개 페이지입니다." : "Let me introduce myself.");
-        setRoboImage("/images/robo/robo3.png");
+        setRoboImage("/images/robo/robo3.webp");
       } else {
         setRoboText(language === "Kor" ? "안녕하세요!\n무엇을 도와드릴까요?" : "Howdy! How can I help you?");
-        setRoboImage("/images/robo/robo1.png");
+        setRoboImage("/images/robo/robo1.webp");
       }
     } else {
       if (feedbackState === "success") {
         setRoboText(language === "Kor" ? "메일이 전송되었습니다.\n감사합니다!" : "Your mail has been sent.\nThank you!");
-        setRoboImage("/images/robo/robo4.png");
+        setRoboImage("/images/robo/robo4.webp");
       } else if (feedbackStatePDF === "success") {
         setRoboText(language === "Kor" ? "파일이 다운로드되었습니다.\n감사합니다!" : "The file has been downloaded.\nThank you!");
-        setRoboImage("/images/robo/robo4.png");
+        setRoboImage("/images/robo/robo4.webp");
       } else {
         if (hovered === "contact") setRoboText(language === "Kor" ? "이메일을 보낼 수 있어요!" : "You can send a mail to me!");
         else if (hovered === "resume") setRoboText(language === "Kor" ? "이력서를 열람할 수 있어요!" : "You can read my resume!");
         else if (hovered === "settings") setRoboText(language === "Kor" ? "설정 메뉴를 열 수 있어요!" : "You can open the settings menu!");
         else setRoboText(language === "Kor" ? "원하는 기능을 선택하세요." : "Choose a button!");
-        setRoboImage("/images/robo/robo2.png");
+        setRoboImage("/images/robo/robo2.webp");
       }
     }
   }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking, language]);
 
   useEffect(() => {
     const imagesToPreload = [
-      '/images/robo/robo1.png',
-      '/images/robo/robo2.png',
-      '/images/robo/robo3.png',
-      '/images/robo/robo4.png',
-      '/images/robo/robo5.png',
-      '/images/robo/robo6.png',
+      '/images/robo/robo1.webp',
+      '/images/robo/robo2.webp',
+      '/images/robo/robo3.webp',
+      '/images/robo/robo4.webp',
+      '/images/robo/robo5.webp',
+      '/images/robo/robo6.webp',
     ];
   
     imagesToPreload.forEach((image) => {
@@ -194,7 +194,7 @@ export default function RoboMenu() {
               }`}
             >
               <img
-                src="/images/robo/robo6.png"
+                src="/images/robo/robo6.webp"
                 alt="Robo Reset Button"
                 className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] cursor-pointer"
                 onClick={() => {

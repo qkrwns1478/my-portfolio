@@ -1,9 +1,9 @@
 # ParkJS' DEV SPACE - 포트폴리오 사이트
 <p align="center">
-    <img src="./public/images/robo/robo1.png" width="256" height="256">
+    <img src="./public/images/robo/robo1.webp" width="256" height="256">
 </p>
 
-개인 포트폴리오 웹사이트입니다. 저의 기술 스택, 경험, 그리고 진행했던 프로젝트들을 소개하기 위해 만들어졌습니다.
+저의 포트폴리오 웹사이트입니다. 기술 스택, 경험, 그리고 진행했던 프로젝트들을 소개하기 위해 만들어졌습니다.
 
 방문자들이 제 작업물을 쉽게 탐색하고, 저라는 개발자에 대해 더 깊이 이해할 수 있도록 직관적이고 인터랙티브한 UI/UX를 제공하는 데 중점을 두었습니다.
 
@@ -47,12 +47,12 @@ Vercel에 배포 후 RoboMenu 컴포넌트의 `roboImage` 경로가 바뀔 때, 
     ```javascript
     useEffect(() => {
         const imagesToPreload = [
-          '/robo1.png',
-          '/robo2.png',
-          '/robo3.png',
-          '/robo4.png',
-          '/robo5.png',
-          '/robo6.png',
+          '/robo1.webp',
+          '/robo2.webp',
+          '/robo3.webp',
+          '/robo4.webp',
+          '/robo5.webp',
+          '/robo6.webp',
         ];
       
         imagesToPreload.forEach((image) => {
