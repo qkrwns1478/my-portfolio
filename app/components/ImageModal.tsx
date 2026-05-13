@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -25,7 +26,7 @@ const ImageModal = ({ src, onClose }: ImageModalProps) => {
           onClick={(e) => e.stopPropagation()}
           className="relative"
         >
-          <img src={src} alt="Project Screenshot" className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl" />
+          <Image src={src} alt="Project Screenshot" width={0} height={0} style={{ width: 'auto', height: 'auto', maxWidth: '90vw', maxHeight: '90vh' }} className="object-contain rounded-lg shadow-2xl" unoptimized />
           <button
             onClick={onClose}
             className="absolute -top-4 -right-4 bg-white rounded-full p-1.5 text-black hover:scale-110 transition-transform cursor-pointer"

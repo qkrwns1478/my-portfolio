@@ -1,4 +1,5 @@
 "use client";
+import NextImage from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, Variants } from "framer-motion";
@@ -138,10 +139,12 @@ export default function RoboMenu() {
                 </button>
               )}
 
-              <img
+              <NextImage
                 src={roboImage}
                 alt="Robo Button"
                 onClick={() => setOpen((prev) => !prev)}
+                width={240}
+                height={240}
                 className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] z-[200] relative transition cursor-pointer"
               />
 
@@ -193,9 +196,11 @@ export default function RoboMenu() {
                 resetRoboVisible ? "translate-x-[-20px] opacity-100" : "translate-x-0 opacity-0"
               }`}
             >
-              <img
+              <NextImage
                 src="/images/robo/robo6.webp"
                 alt="Robo Reset Button"
+                width={240}
+                height={240}
                 className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] cursor-pointer"
                 onClick={() => {
                   setResetRoboVisible(false);

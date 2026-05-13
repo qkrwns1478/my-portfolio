@@ -104,7 +104,7 @@ export default function ContactMe({open, setOpen, onSuccess}: {open: boolean; se
           />
         </form>
         <p className="text-xs text-gray-400">
-          This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" className="underline">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" className="underline">Terms of Service</a> apply.
+          This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer" className="underline">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer" className="underline">Terms of Service</a> apply.
         </p>
       </div>
     </>

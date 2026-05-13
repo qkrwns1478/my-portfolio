@@ -16,7 +16,7 @@ const getAllCategories = (projects: typeof projectList) => {
 function parsePeriod(period: string): Date | null {
   const match = period.match(/(\d{4})\.(\d{2})/);
   if (!match) return null;
-  const [_, year, month] = match;
+  const [, year, month] = match;
   return new Date(Number(year), Number(month) - 1);
 }
 

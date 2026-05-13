@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronsDown, Wrench, Cpu } from "lucide-react";
@@ -54,10 +55,11 @@ const ProjectCard = ({ project, language }: { project: Project; language: "Kor" 
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className="absolute inset-0 overflow-hidden rounded-2xl border border-cyan-500/20 shadow-lg"
       >
-        <img
+        <Image
           src={`/images/projects/${project.id}.webp`}
           alt={`${title} project image`}
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">{title}</h3>
@@ -362,7 +364,7 @@ export default function Home() {
             >
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full flex items-center justify-center mr-4">
-                  <img src="/munsik.ico" className="w-8 h-8" />
+                  <Image src="/munsik.ico" alt="" width={32} height={32} />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">
