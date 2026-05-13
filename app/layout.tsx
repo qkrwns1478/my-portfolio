@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <header className="p-6 text-center shadow-md border-b border-white/10 sticky top-0 z-100 bg-slate-900/50 backdrop-blur-sm">
             <div className="mx-auto">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">ParkJS' DEV SPACE</h1>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">ParkJS&apos; DEV SPACE</h1>
             </div>
           </header>
 

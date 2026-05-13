@@ -50,8 +50,6 @@ export default function Settings({
   const {
     language, setLanguage,
     menuType, setMenuType,
-    theme, setTheme,
-    animation, setAnimation,
     cursorEffect, setCursorEffect,
   } = useSettingsStore();
 
