@@ -9,29 +9,7 @@ import { techIconMap } from "./utils/techIcons";
 import ResponsiveText from "./components/ResponsiveText";
 import { useSettingsStore } from "./store/settingsStore";
 import { projects, Project } from "@/data/projects";
-
-const Button = ({
-  href,
-  className = "",
-  children,
-}: {
-  href: string;
-  className?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <Link
-      href={href}
-      className={`group relative px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/25 hover:scale-105 border border-cyan-500/20 backdrop-blur-sm ${className}`}
-    >
-      <span className="relative z-10 flex items-center justify-center gap-2">
-        {children}
-        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-      </span>
-      <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm" />
-    </Link>
-  );
-};
+import PrismButton from "./components/PrismButton";
 
 const ProjectCard = ({ project, language }: { project: Project; language: "Kor" | "Eng" }) => {
   const { title, desc, role } = project.translations[language];
@@ -203,12 +181,12 @@ export default function Home() {
             />
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center sm:space-x-6 space-y-4 sm:space-y-0 mb-12">
-            <Button href="/about" className="w-48 fade-in-expand">
+            <PrismButton href="/about" className="w-48 fade-in-expand">
               About Me
-            </Button>
-            <Button href="/projects" className="w-48 fade-in-expand">
+            </PrismButton>
+            <PrismButton href="/projects" className="w-48 fade-in-expand">
               Projects
-            </Button>
+            </PrismButton>
           </div>
 
           <motion.button
