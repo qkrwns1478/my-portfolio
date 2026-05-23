@@ -14,11 +14,13 @@ interface Particle {
   color: string;
 }
 
-const cyanColors = [
-  '#06b6d4', // cyan-500
-  '#22d3ee', // cyan-400
-  '#67e8f9', // cyan-300
-  '#a5f3fc', // cyan-200
+const metalColors = [
+  '#94a3b8', // slate-400
+  '#cbd5e1', // slate-300
+  '#e2e8f0', // slate-200
+  '#f1f5f9', // slate-100
+  '#b8c8e8', // soft steel blue
+  '#c4b8d8', // soft silver violet
 ];
 
 export default function CustomCursor() {
@@ -35,7 +37,7 @@ export default function CustomCursor() {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 2 + 1;
       
-      const color = cyanColors[Math.floor(Math.random() * cyanColors.length)];
+      const color = metalColors[Math.floor(Math.random() * metalColors.length)];
 
       newParticles.push({
         id: particleId.current++,
