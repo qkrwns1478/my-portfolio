@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { ArrowRight, ChevronsDown, Wrench, Cpu } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { motion, Variants } from "framer-motion";
@@ -9,7 +8,7 @@ import { techIconMap } from "./utils/techIcons";
 import ResponsiveText from "./components/ResponsiveText";
 import { useSettingsStore } from "./store/settingsStore";
 import { projects, Project } from "@/data/projects";
-import PrismButton from "./components/PrismButton";
+import MetalButton from "./components/MetalButton";
 
 const ProjectCard = ({ project, language }: { project: Project; language: "Kor" | "Eng" }) => {
   const { title, desc, role } = project.translations[language];
@@ -181,12 +180,12 @@ export default function Home() {
             />
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center sm:space-x-6 space-y-4 sm:space-y-0 mb-12">
-            <PrismButton href="/about" className="w-48 fade-in-expand">
+            <MetalButton href="/about" className="w-48 fade-in-expand">
               About Me
-            </PrismButton>
-            <PrismButton href="/projects" className="w-48 fade-in-expand">
+            </MetalButton>
+            <MetalButton href="/projects" className="w-48 fade-in-expand">
               Projects
-            </PrismButton>
+            </MetalButton>
           </div>
 
           <motion.button
