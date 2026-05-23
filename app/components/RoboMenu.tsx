@@ -59,7 +59,10 @@ export default function RoboMenu() {
       setRoboText(language === "Kor" ? "으아아악!!" : "NOOOOOOO!!");
       setRoboImage("/images/robo/robo5.webp");
     } else if (!open) {
-      if (pathname.startsWith("/projects")) {
+      if (pathname === "/error") {
+        setRoboText(language === "Kor" ? "이런! 페이지를\n찾지 못했어요..." : "Oops! I couldn't\nfind that page...");
+        setRoboImage("/images/robo/robo404.webp");
+      } else if (pathname.startsWith("/projects")) {
         setRoboText(language === "Kor" ? "프로젝트 소개 페이지입니다." : "These are the projects that I'd worked on.");
         setRoboImage("/images/robo/robo3.webp");
       } else if (pathname.startsWith("/about")) {
@@ -94,6 +97,7 @@ export default function RoboMenu() {
       '/images/robo/robo4.webp',
       '/images/robo/robo5.webp',
       '/images/robo/robo6.webp',
+      '/images/robo/robo404.webp',
     ];
   
     imagesToPreload.forEach((image) => {

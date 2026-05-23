@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Target className="w-7 h-7 text-slate-400/10" />
           </div>
 
-          <main className="flex-grow max-w-full mx-auto w-full">
+          <main className="flex-grow max-w-full mx-auto w-full flex flex-col">
             {children}
           </main>
           <footer className="p-6 text-sm text-center border-t border-white/10 text-slate-400">
