@@ -29,6 +29,7 @@ const ProjectImage = ({ projectId, projectTitle, onClick }: ProjectImageProps) =
         onError={handleError}
         width={0}
         height={0}
+        sizes="(max-width: 768px) 100vw, 33vw"
         style={{ width: '100%', height: 'auto' }}
         className="rounded-lg shadow-lg cursor-pointer object-cover transition-transform duration-300 hover:scale-105"
       />

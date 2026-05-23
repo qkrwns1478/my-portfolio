@@ -72,7 +72,7 @@ export default function ContactMe({open, setOpen, onSuccess}: {open: boolean; se
     <>
       {/* Slide-in Panel */}
       <div
-        className={`fixed bottom-0 right-0 z-[200] w-full max-w-md h-full sm:h-auto sm:bottom-6 sm:right-6 sm:rounded-xl bg-slate-800 text-white p-6 shadow-2xl transition-all duration-300 ${
+        className={`fixed bottom-0 right-0 z-[200] w-full max-w-md h-full sm:h-auto sm:bottom-6 sm:right-6 sm:rounded-xl bg-[rgba(6,11,24,0.96)] backdrop-blur-xl border border-white/10 text-white p-6 shadow-2xl transition-all duration-300 ${
           open
             ? "translate-x-0 opacity-100 pointer-events-auto"
             : "sm:right-[-100%] translate-x-full sm:translate-x-0 opacity-0 pointer-events-none"
@@ -80,20 +80,20 @@ export default function ContactMe({open, setOpen, onSuccess}: {open: boolean; se
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Contact Me</h2>
-          <button onClick={() => setOpen(false)} className="text-sm text-gray-400 hover:text-white">✕</button>
+          <button onClick={() => setOpen(false)} className="text-sm text-slate-400 hover:text-white transition-colors">✕</button>
         </div>
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <input {...register("name")} required placeholder={language === "Kor" ? "이름" : "Name"} className="w-full p-2 rounded bg-slate-700" />
+            <input {...register("name")} required placeholder={language === "Kor" ? "이름" : "Name"} className="w-full p-2 rounded bg-white/6 border border-white/12 text-white placeholder:text-slate-500 focus:outline-none focus:border-white/25 transition-colors" />
             {errors.name && <p className="text-xs">{errors.name.message}</p>}
           </div>
           <div>
-            <input {...register("email")} required type="email" placeholder={language === "Kor" ? "이메일" : "Email"} className="w-full p-2 rounded bg-slate-700" />
+            <input {...register("email")} required type="email" placeholder={language === "Kor" ? "이메일" : "Email"} className="w-full p-2 rounded bg-white/6 border border-white/12 text-white placeholder:text-slate-500 focus:outline-none focus:border-white/25 transition-colors" />
             {errors.email && <p className="text-xs">{errors.email.message}</p>}
           </div>
           <div>
-            <textarea {...register("message")} required placeholder={language === "Kor" ? "메시지" : "Message"} className="w-full p-2 h-28 rounded bg-slate-700 resize-none" />
+            <textarea {...register("message")} required placeholder={language === "Kor" ? "메시지" : "Message"} className="w-full p-2 h-28 rounded bg-white/6 border border-white/12 text-white placeholder:text-slate-500 focus:outline-none focus:border-white/25 transition-colors resize-none" />
             {errors.message && <p className="text-xs">{errors.message.message}</p>}
           </div>
           <Button type="submit" loading={loading} className="w-full">{language === "Kor" ? "보내기" : "Send"}</Button>
@@ -103,7 +103,7 @@ export default function ContactMe({open, setOpen, onSuccess}: {open: boolean; se
             ref={recaptchaRef}
           />
         </form>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-slate-500">
           This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer" className="underline">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer" className="underline">Terms of Service</a> apply.
         </p>
       </div>
