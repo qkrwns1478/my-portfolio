@@ -16,11 +16,11 @@ const ToggleSwitch = <T extends string>({
   const selectedIndex = options.indexOf(value);
 
   return (
-    <div className="flex items-center justify-between py-4 border-b border-slate-700 last:border-b-0">
-      <span className="text-gray-200 font-medium">{label}</span>
-      <div className="relative flex w-32 items-center rounded-full bg-slate-700 p-1">
+    <div className="flex items-center justify-between py-4 border-b border-white/8 last:border-b-0">
+      <span className="text-slate-200 font-medium">{label}</span>
+      <div className="relative flex w-32 items-center rounded-full bg-white/8 p-1">
         <motion.div
-          className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-cyan-500"
+          className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-white/20 border border-white/15"
           animate={{ x: `${selectedIndex * 100}%` }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
@@ -29,7 +29,7 @@ const ToggleSwitch = <T extends string>({
             key={option}
             onClick={() => onChange(option)}
             className={`relative z-10 w-1/2 py-1.5 text-sm font-semibold transition-colors duration-300 ${
-              value === option ? "text-white" : "text-gray-400 hover:text-white"
+              value === option ? "text-white" : "text-slate-400 hover:text-slate-200"
             }`}
           >
             <span className="cursor-pointer">{option}</span>
@@ -57,17 +57,17 @@ export default function Settings({
     <>
       {/* Slide-in Settings Panel */}
       <div
-        className={`fixed bottom-0 right-0 z-[200] w-full max-w-md h-full sm:h-auto sm:max-h-[90vh] sm:bottom-6 sm:right-6 sm:rounded-xl bg-slate-800 text-white shadow-2xl transition-all duration-300 flex flex-col ${
+        className={`fixed bottom-0 right-0 z-[200] w-full max-w-md h-full sm:h-auto sm:max-h-[90vh] sm:bottom-6 sm:right-6 sm:rounded-xl bg-[rgba(6,11,24,0.96)] backdrop-blur-xl border border-white/10 text-white shadow-2xl transition-all duration-300 flex flex-col ${
           open
             ? "translate-x-0 opacity-100 pointer-events-auto"
             : "sm:right-[-100%] translate-x-full sm:translate-x-0 opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex justify-between items-center p-6 border-b border-slate-700">
-          <h2 className="text-xl font-bold">Settings</h2>
+        <div className="flex justify-between items-center p-6 border-b border-white/8">
+          <h2 className="text-xl font-bold text-slate-100">Settings</h2>
           <button
             onClick={() => setOpen(false)}
-            className="text-sm text-gray-400 hover:text-white cursor-pointer"
+            className="text-sm text-slate-400 hover:text-white cursor-pointer transition-colors"
           >
             ✕
           </button>

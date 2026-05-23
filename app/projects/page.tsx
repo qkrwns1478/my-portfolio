@@ -72,7 +72,7 @@ export default function Projects() {
           <button
             onClick={() => setSelectedCategory(null)}
             className={`text-xs px-3 py-1 rounded-full border transition ${
-              !selectedCategory ? "bg-cyan-300 text-black" : "text-cyan-300 border-cyan-300 hover:bg-cyan-300 hover:text-black"
+              !selectedCategory ? "bg-white/15 text-white border-white/35" : "text-slate-300 border-white/20 hover:bg-white/10 hover:text-white"
             }`}
           >
             {language === "Kor" ? "전체 보기" : "All"}
@@ -83,8 +83,8 @@ export default function Projects() {
               onClick={() => setSelectedCategory(cat)}
               className={`text-xs px-3 py-1 rounded-full border transition ${
                 selectedCategory === cat
-                  ? "bg-cyan-300 text-black"
-                  : "text-cyan-300 border-cyan-300 hover:bg-cyan-300 hover:text-black"
+                  ? "bg-white/15 text-white border-white/35"
+                  : "text-slate-300 border-white/20 hover:bg-white/10 hover:text-white"
               }`}
             >
               {cat}
@@ -98,12 +98,12 @@ export default function Projects() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder={language === "Kor" ? "프로젝트 이름 검색" : "Search project name"}
-            className="w-full border border-cyan-300 bg-transparent text-white px-4 py-2 rounded-md placeholder:text-cyan-300"
+            className="w-full border border-white/20 bg-white/4 text-white px-4 py-2 rounded-md placeholder:text-slate-500 focus:outline-none focus:border-white/35 transition-colors"
           />
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as "latest" | "oldest")}
-            className="text-sm px-3 py-2 border border-cyan-300 bg-slate-700 text-white rounded-md"
+            className="text-sm px-3 py-2 border border-white/20 bg-[rgba(6,11,24,0.8)] text-slate-200 rounded-md focus:outline-none focus:border-white/35 transition-colors"
           >
             <option value="latest">{language === "Kor" ? "최신순" : "Latest"}</option>
             <option value="oldest">{language === "Kor" ? "오래된순" : "Oldest"}</option>
@@ -116,7 +116,7 @@ export default function Projects() {
             return (
               <div
                 key={project.id}
-                className="relative bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform space-y-4"
+                className="relative bg-gradient-to-br from-white/4 to-white/2 backdrop-blur-sm border border-white/8 rounded-2xl p-8 hover:border-white/18 transition-all duration-300 hover:transform space-y-4"
               >
                 {project.details && (
                   <Button href={project.details} className="absolute top-4 right-4 text-sm px-3 py-1">
@@ -125,58 +125,58 @@ export default function Projects() {
                 )}
 
                 <div>
-                  <h3 className="text-2xl font-semibold text-cyan-300">
+                  <h3 className="text-2xl font-semibold text-slate-200">
                     {t.desc ? <ResponsiveText values={[t.title, t.desc]} separator=" - " isDesc={true}/> : t.title}
                   </h3>
-                  <code className="text-sm text-indigo-300">{project.period}</code>
+                  <code className="text-sm text-slate-400">{project.period}</code>
                 </div>
 
-                <p className="text-violet-200">{t.summary}</p>
+                <p className="text-slate-300">{t.summary}</p>
 
                 <div className="flex flex-col md:flex-row gap-8 pt-4">
                   <div className="flex-1 space-y-4">
                     {t.asis && (
                       <div>
-                        <p className="text-cyan-300 font-semibold">AS-IS</p>
-                        <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                        <p className="text-slate-200 font-semibold">AS-IS</p>
+                        <ul className="list-disc pl-6 text-slate-300 whitespace-pre-line">
                           {t.asis.map((item, i) => <li key={i}>{item}</li>)}
                         </ul>
                       </div>
                     )}
                     {t.challenge && (
                       <div>
-                        <p className="text-cyan-300 font-semibold">Challenge</p>
-                        <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                        <p className="text-slate-200 font-semibold">Challenge</p>
+                        <ul className="list-disc pl-6 text-slate-300 whitespace-pre-line">
                           {t.challenge.map((item, i) => <li key={i}>{item}</li>)}
                         </ul>
                       </div>
                     )}
                     {t.tobe && (
                       <div>
-                        <p className="text-cyan-300 font-semibold">TO-BE</p>
-                        <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                        <p className="text-slate-200 font-semibold">TO-BE</p>
+                        <ul className="list-disc pl-6 text-slate-300 whitespace-pre-line">
                           {t.tobe.map((item, i) => <li key={i}>{item}</li>)}
                         </ul>
                       </div>
                     )}
                     {t.role && (
                       <div>
-                        <p className="text-cyan-300 font-semibold">What I did</p>
-                        <ul className="list-disc pl-6 text-violet-200 whitespace-pre-line">
+                        <p className="text-slate-200 font-semibold">What I did</p>
+                        <ul className="list-disc pl-6 text-slate-300 whitespace-pre-line">
                           {t.role.map((item, i) => <li key={i}>{item}</li>)}
                         </ul>
                       </div>
                     )}
                     {project.stack && (
                       <div>
-                        <p className="text-cyan-300 font-semibold">Tech Stack</p>
+                        <p className="text-slate-200 font-semibold">Tech Stack</p>
                         <div className="flex flex-wrap gap-2 pt-2">
                           {(project.stack as string[]).map((tech: string) => {
                             const IconComponent = techIconMap[tech];
                             return (
                               <span 
                                 key={tech} 
-                                className="flex items-center gap-2 px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200"
+                                className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/15 text-slate-300 rounded-full text-sm font-medium hover:border-white/28 hover:bg-white/8 transition-all duration-200"
                               >
                                 {IconComponent && <IconComponent className="w-4 h-4" />}
                                 {tech}
@@ -188,17 +188,17 @@ export default function Projects() {
                     )}
                     <div className="flex gap-2">
                       {project.github && (
-                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-cyan-300">
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-slate-200">
                           GitHub ↗
                         </a>
                       )}
                       {project.link && (
-                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-cyan-300">
+                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-slate-200">
                           {language === "Kor" ? "링크 ↗" : "Link ↗"}
                         </a>
                       )}
                       {project.video && (
-                        <a href={project.video} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-cyan-300">
+                        <a href={project.video} target="_blank" rel="noopener noreferrer" className="hover:underline mt-2 inline-block text-slate-200">
                           {language === "Kor" ? "발표영상 ↗" : "Video ↗"}
                         </a>
                       )}
