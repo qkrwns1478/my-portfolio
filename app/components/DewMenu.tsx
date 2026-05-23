@@ -69,11 +69,9 @@ export default function DewMenu() {
     );
 
     return () => {
-      const s = mount as any;
-      if (s) {
-        if (typeof s.destroy === "function") s.destroy();
-        else if (typeof s.unmount === "function") s.unmount();
-      }
+      const s = mount as { destroy?: () => void; unmount?: () => void };
+      if (typeof s.destroy === "function") s.destroy();
+      else if (typeof s.unmount === "function") s.unmount();
       if (shaderRef.current) shaderRef.current.innerHTML = "";
     };
   }, []);

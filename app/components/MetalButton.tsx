@@ -49,14 +49,9 @@ export default function PrismButton({ href, onClick, children, className = "" }:
     );
 
     return () => {
-      const shaderMount = mount as any;
-      if (shaderMount) {
-        if (typeof shaderMount.destroy === "function") {
-          shaderMount.destroy();
-        } else if (typeof shaderMount.unmount === "function") {
-          shaderMount.unmount();
-        }
-      }
+      const s = mount as { destroy?: () => void; unmount?: () => void };
+      if (typeof s.destroy === "function") s.destroy();
+      else if (typeof s.unmount === "function") s.unmount();
       if (containerRef.current) {
         containerRef.current.innerHTML = "";
       }
