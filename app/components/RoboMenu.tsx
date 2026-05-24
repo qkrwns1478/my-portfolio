@@ -1,6 +1,6 @@
 "use client";
 import NextImage from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { motion, Variants } from "framer-motion";
 import { FiMail, FiFileText, FiSettings } from "react-icons/fi";
@@ -8,6 +8,8 @@ import ContactMe from "./ContactMe";
 import Resume from "./Resume";
 import Settings from "./Settings";
 import { useSettingsStore, Language } from '../store/settingsStore';
+
+type IdleState = "active" | "drowsing" | "sleeping" | "surprised";
 
 const buttonContainerVariants: Variants = {
   open: {
@@ -94,21 +96,60 @@ export default function RoboMenu() {
   const [roboImage, setRoboImage] = useState("/images/robo/robo1.webp");
   const [activeSectionId, setActiveSectionId] = useState("");
 
+  // ── 아이들 상태 ──────────────────────────────────────────────────────────────
+  const [idleState, setIdleState] = useState<IdleState>("active");
+  const idleStateRef = useRef<IdleState>("active");
+  const lastActivityRef = useRef<number>(Date.now());
+
+  // ── Robo 클릭 핸들러 (아이들 상태 고려) ──────────────────────────────────────
+  const handleRoboClick = useCallback(() => {
+    const current = idleStateRef.current;
+    if (current === "drowsing" || current === "sleeping") {
+      idleStateRef.current = "surprised";
+      setIdleState("surprised");
+      lastActivityRef.current = Date.now();
+      setTimeout(() => {
+        idleStateRef.current = "active";
+        setIdleState("active");
+      }, 2000);
+      return;
+    }
+    setOpen((prev) => !prev);
+  }, []);
+
   // ── 말풍선 텍스트 & 이미지 결정 ──────────────────────────────────────────────
   useEffect(() => {
     if (roboPanicking) {
       setRoboText(language === "Kor" ? "으아아악!!" : "NOOOOOOO!!");
       setRoboImage("/images/robo/robo5.webp");
-    } else if (!open) {
+      return;
+    }
+
+    if (!open) {
+      // 아이들 상태 우선 처리
+      if (idleState === "sleeping") {
+        setRoboText("ZZZ...");
+        setRoboImage("/images/robo/robo8.webp");
+        return;
+      }
+      if (idleState === "surprised") {
+        setRoboText(language === "Kor" ? "으앗! 깜짝이야! 😲" : "Oh! You startled me! 😲");
+        setRoboImage("/images/robo/robo9.webp");
+        return;
+      }
+
+      // 페이지별 이미지 (drowsing일 땐 robo7로 교체)
+      const isDrowsing = idleState === "drowsing";
+
       if (pathname === "/error") {
         setRoboText(language === "Kor" ? "이런! 페이지를\n찾지 못했어요..." : "Oops! I couldn't\nfind that page...");
-        setRoboImage("/images/robo/robo404.webp");
+        setRoboImage(isDrowsing ? "/images/robo/robo7.webp" : "/images/robo/robo404.webp");
       } else if (pathname.startsWith("/projects")) {
         setRoboText(language === "Kor" ? "프로젝트 소개 페이지입니다." : "These are the projects that I'd worked on.");
-        setRoboImage("/images/robo/robo3.webp");
+        setRoboImage(isDrowsing ? "/images/robo/robo7.webp" : "/images/robo/robo3.webp");
       } else if (pathname.startsWith("/about")) {
         setRoboText(language === "Kor" ? "자기소개 페이지입니다." : "Let me introduce myself.");
-        setRoboImage("/images/robo/robo3.webp");
+        setRoboImage(isDrowsing ? "/images/robo/robo7.webp" : "/images/robo/robo3.webp");
       } else if (pathname === "/") {
         // 홈: 스크롤 섹션 코멘트 우선, 없으면 시간대별 인사말
         const sectionMsg = activeSectionId ? sectionMessages[activeSectionId] : null;
@@ -117,10 +158,10 @@ export default function RoboMenu() {
             ? language === "Kor" ? sectionMsg.Kor : sectionMsg.Eng
             : getTimeGreeting(language)
         );
-        setRoboImage("/images/robo/robo1.webp");
+        setRoboImage(isDrowsing ? "/images/robo/robo7.webp" : "/images/robo/robo1.webp");
       } else {
         setRoboText(getTimeGreeting(language));
-        setRoboImage("/images/robo/robo1.webp");
+        setRoboImage(isDrowsing ? "/images/robo/robo7.webp" : "/images/robo/robo1.webp");
       }
     } else {
       if (feedbackState === "success") {
@@ -137,7 +178,7 @@ export default function RoboMenu() {
         setRoboImage("/images/robo/robo2.webp");
       }
     }
-  }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking, language, activeSectionId]);
+  }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking, language, activeSectionId, idleState]);
 
   useEffect(() => {
     const imagesToPreload = [
@@ -147,6 +188,9 @@ export default function RoboMenu() {
       '/images/robo/robo4.webp',
       '/images/robo/robo5.webp',
       '/images/robo/robo6.webp',
+      '/images/robo/robo7.webp',
+      '/images/robo/robo8.webp',
+      '/images/robo/robo9.webp',
       '/images/robo/robo404.webp',
     ];
 
@@ -170,6 +214,67 @@ export default function RoboMenu() {
   useEffect(() => {
     setActiveSectionId("");
   }, [pathname]);
+
+  // ── 아이들 타이머 ─────────────────────────────────────────────────────────────
+  useEffect(() => {
+    // 마우스 이동: 타이머만 리셋 (drowsing은 해제되지만 sleeping은 해제 안 됨)
+    const onMouseMove = () => {
+      lastActivityRef.current = Date.now();
+    };
+
+    // 키보드/터치: sleeping 포함 모든 아이들 상태에서 강제 active 복귀
+    const onExplicitActivity = () => {
+      lastActivityRef.current = Date.now();
+      if (idleStateRef.current === "drowsing" || idleStateRef.current === "sleeping") {
+        idleStateRef.current = "active";
+        setIdleState("active");
+      }
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("keydown", onExplicitActivity);
+    window.addEventListener("touchstart", onExplicitActivity);
+
+    const drowseTime = 30_000;
+    const sleepTime = 60_000;
+
+    const interval = setInterval(() => {
+      const current = idleStateRef.current;
+      if (current === "surprised") return;
+      // sleeping은 타이머로 자동 복귀하지 않음 — 클릭(surprised) 또는 키/터치만 해제 가능
+      if (current === "sleeping") return;
+
+      const elapsed = Date.now() - lastActivityRef.current;
+      if (elapsed >= sleepTime) {
+        idleStateRef.current = "sleeping";
+        setIdleState("sleeping");
+      } else if (elapsed >= drowseTime && current !== "drowsing") {
+        idleStateRef.current = "drowsing";
+        setIdleState("drowsing");
+      } else if (elapsed < drowseTime && current !== "active") {
+        idleStateRef.current = "active";
+        setIdleState("active");
+      }
+    }, 1000);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("keydown", onExplicitActivity);
+      window.removeEventListener("touchstart", onExplicitActivity);
+      clearInterval(interval);
+    };
+  }, []);
+
+  // 메뉴 열릴 때 아이들 타이머 초기화
+  useEffect(() => {
+    if (open) {
+      lastActivityRef.current = Date.now();
+      if (idleStateRef.current !== "active") {
+        idleStateRef.current = "active";
+        setIdleState("active");
+      }
+    }
+  }, [open]);
 
   return (
     <>
@@ -208,14 +313,31 @@ export default function RoboMenu() {
                 </button>
               )}
 
-              <NextImage
-                src={roboImage}
-                alt="Robo Button"
-                onClick={() => setOpen((prev) => !prev)}
-                width={240}
-                height={240}
-                className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] z-[200] relative transition cursor-pointer"
-              />
+              <motion.div
+                animate={
+                  idleState === "drowsing"
+                    ? { rotate: [-3, 3, -3] }
+                    : idleState === "surprised"
+                    ? { y: [0, -30, 10, 0], scale: [1, 1.1, 1.05, 1] }
+                    : { rotate: 0, y: 0, scale: 1 }
+                }
+                transition={
+                  idleState === "drowsing"
+                    ? { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                    : idleState === "surprised"
+                    ? { duration: 0.5, ease: "easeOut" }
+                    : { duration: 0.3 }
+                }
+              >
+                <NextImage
+                  src={roboImage}
+                  alt="Robo Button"
+                  onClick={handleRoboClick}
+                  width={240}
+                  height={240}
+                  className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] z-[200] relative transition cursor-pointer"
+                />
+              </motion.div>
 
               <motion.div
                 className="absolute bottom-36 right-24 sm:right-36"
