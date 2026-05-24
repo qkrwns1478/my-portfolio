@@ -50,6 +50,31 @@ const sectionMessages: Record<string, { Kor: string; Eng: string }> = {
     Kor: "GitHub이나 블로그도\n한번 들러보세요!",
     Eng: "Feel free to check\nout my GitHub!",
   },
+  // ── Snake game events ──────────────────────────────────────────────────────
+  "snake-idle": {
+    Kor: "스네이크 게임을 즐겨보세요! 🐍",
+    Eng: "Enjoy the Snake game! 🐍",
+  },
+  "snake-running": {
+    Kor: "열심히 해봐요!",
+    Eng: "Go for it!",
+  },
+  "snake-paused": {
+    Kor: "잠깐 쉬어가는 건가요? 😏",
+    Eng: "Taking a breather? 😏",
+  },
+  "snake-over": {
+    Kor: "괜찮아요,\n다시 해봐요! 💪",
+    Eng: "Don't give up!\nTry again! 💪",
+  },
+  "snake-levelup": {
+    Kor: "레벨 업!\n빠르게 달려요! 🔥",
+    Eng: "Level up!\nGo faster! 🔥",
+  },
+  "snake-highscore": {
+    Kor: "🎉 최고 기록을 경신했어요!!",
+    Eng: "🎉 New high score!!",
+  },
 };
 
 // ─── 시간대별 기본 인사말 ─────────────────────────────────────────────────────
@@ -150,6 +175,25 @@ export default function RoboMenu() {
       } else if (pathname.startsWith("/about")) {
         setRoboText(language === "Kor" ? "자기소개 페이지입니다." : "Let me introduce myself.");
         setRoboImage(isDrowsing ? "/images/robo/robo7.webp" : "/images/robo/robo3.webp");
+      } else if (pathname.startsWith("/snake")) {
+        // Snake page: 섹션 이벤트(snake-*)가 오면 sectionMessages에서 처리,
+        // 이벤트 없을 땐 기본 안내 문구
+        const sectionMsg = activeSectionId ? sectionMessages[activeSectionId] : null;
+        setRoboText(
+          sectionMsg
+            ? language === "Kor" ? sectionMsg.Kor : sectionMsg.Eng
+            : language === "Kor" ? "스네이크 게임을\n즐겨보세요! 🐍" : "Enjoy the\nSnake game! 🐍"
+        );
+        // 레벨업·최고점 경신 이벤트에선 robo4(응원) 이미지 사용
+        const isExcitedEvent =
+          activeSectionId === "snake-levelup" || activeSectionId === "snake-highscore";
+        setRoboImage(
+          isDrowsing
+            ? "/images/robo/robo7.webp"
+            : isExcitedEvent
+            ? "/images/robo/robo4.webp"
+            : "/images/robo/robo3.webp"
+        );
       } else if (pathname === "/") {
         // 홈: 스크롤 섹션 코멘트 우선, 없으면 시간대별 인사말
         const sectionMsg = activeSectionId ? sectionMessages[activeSectionId] : null;
