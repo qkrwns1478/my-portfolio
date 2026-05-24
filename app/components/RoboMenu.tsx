@@ -335,6 +335,7 @@ export default function RoboMenu() {
                   onClick={handleRoboClick}
                   width={240}
                   height={240}
+                  unoptimized
                   className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] z-[200] relative transition cursor-pointer"
                 />
               </motion.div>
