@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { projects as projectList } from '@/data/projects';
 import { useSettingsStore } from '../store/settingsStore';
 import { techIconMap } from '../utils/techIcons';
@@ -7,6 +8,8 @@ import Button from "../components/Button";
 import ResponsiveText from "../components/ResponsiveText";
 import ImageModal from "../components/ImageModal";
 import ProjectImage from "../components/ProjectImage";
+
+const SNAKE_KEYWORDS = ["게임", "game", "뱀", "스네이크", "snake"];
 
 const getAllCategories = (projects: typeof projectList) => {
   const categories = projects.flatMap(p => p.category || []);
@@ -35,6 +38,11 @@ export default function Projects() {
   }, []);
 
   const allCategories = getAllCategories(projectList);
+
+  const isSnakeSearch = searchText.trim() !== "" &&
+    SNAKE_KEYWORDS.some((kw) =>
+      searchText.toLowerCase().includes(kw.toLowerCase())
+    );
 
   const filteredProjects = projectList
     .filter((p) => {
@@ -111,6 +119,33 @@ export default function Projects() {
         </div>
 
         <div className="space-y-10">
+          {/* ── Snake Easter Egg Card ──────────────────────────────────────── */}
+          {isSnakeSearch && (
+            <Link
+              href="/snake"
+              className="block relative bg-gradient-to-br from-emerald-950/50 to-green-900/20
+                        border border-emerald-500/40 rounded-2xl p-8
+                        hover:border-emerald-400/70 hover:from-emerald-950/70
+                        transition-all duration-300 group"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-3xl">🐍</span>
+                <h3 className="text-2xl font-semibold text-emerald-300">SNAKE GAME</h3>
+              </div>
+              <p className="text-emerald-200/55 text-sm mb-5">
+                {language === "Kor"
+                  ? "발견하셨군요... 여기 숨겨진 무언가가 있습니다."
+                  : "You found it... something is hidden here."}
+              </p>
+              <div className="flex items-center gap-2 text-emerald-400 text-sm font-mono group-hover:gap-3 transition-all duration-200">
+                <span>→</span>
+                <span>
+                  {language === "Kor" ? "클릭해서 탐험하기" : "Click to explore"}
+                </span>
+              </div>
+            </Link>
+          )}
+
           {filteredProjects.map((project) => {
             const t = project.translations[language];
             return (
