@@ -85,6 +85,34 @@ export default function Home() {
     setIsHydrated(true);
   }, []);
 
+  // ── 섹션 진입 시 Robo에게 이벤트 전송 ─────────────────────────────────────
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    const sectionIds = ["hero-section", "features-section", "tech-section", "links-section"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            window.dispatchEvent(
+              new CustomEvent("robo-section", {
+                detail: { sectionId: entry.target.id },
+              })
+            );
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [isHydrated]);
+
   const handleScroll = () => {
     const featuresSection = document.getElementById("features-section");
     if (featuresSection) {
@@ -150,7 +178,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col justify-center items-center text-center space-y-8 py-16 px-4 sm:px-6 md:px-12 relative overflow-hidden">
+      <section id="hero-section" className="min-h-screen flex flex-col justify-center items-center text-center space-y-8 py-16 px-4 sm:px-6 md:px-12 relative overflow-hidden">
         <div className={"relative z-10 transition-all duration-1000 flex flex-col items-center"}>
           <h1 className="text-4xl xs:text-5xl sm:text-6xl font-extrabold tracking-tight mb-6">
             <ResponsiveText
@@ -202,6 +230,7 @@ export default function Home() {
 
       {/* Project Section */}
       <motion.section
+        id="features-section"
         className="py-24 px-4 sm:px-6 md:px-12"
         initial="hidden"
         whileInView="visible"
@@ -234,6 +263,7 @@ export default function Home() {
 
       {/* Tech Stack Preview */}
       <motion.section
+        id="tech-section"
         className="py-24 px-4 sm:px-6 md:px-12"
         initial="hidden"
         whileInView="visible"
@@ -275,6 +305,7 @@ export default function Home() {
 
       {/* Links Section */}
       <motion.section
+        id="links-section"
         className="py-24 px-4 sm:px-6 md:px-12"
         initial="hidden"
         whileInView="visible"

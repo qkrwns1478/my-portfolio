@@ -7,7 +7,7 @@ import { FiMail, FiFileText, FiSettings } from "react-icons/fi";
 import ContactMe from "./ContactMe";
 import Resume from "./Resume";
 import Settings from "./Settings";
-import { useSettingsStore } from '../store/settingsStore';
+import { useSettingsStore, Language } from '../store/settingsStore';
 
 const buttonContainerVariants: Variants = {
   open: {
@@ -34,8 +34,47 @@ const buttonVariants: Variants = {
   },
 };
 
+// ─── 홈 페이지 섹션별 Robo 코멘트 ────────────────────────────────────────────
+const sectionMessages: Record<string, { Kor: string; Eng: string }> = {
+  "features-section": {
+    Kor: "자랑스러운 프로젝트들이\n여기 있어요! 👀",
+    Eng: "Here are my\nproudest projects! 👀",
+  },
+  "tech-section": {
+    Kor: "이 기술들을 실제로\n다뤄봤어요! 💪",
+    Eng: "I've actually used\nall of these! 💪",
+  },
+  "links-section": {
+    Kor: "GitHub이나 블로그도\n한번 들러보세요!",
+    Eng: "Feel free to check\nout my GitHub!",
+  },
+};
+
+// ─── 시간대별 기본 인사말 ─────────────────────────────────────────────────────
+function getTimeGreeting(lang: Language): string {
+  const hour = new Date().getHours();
+  if (hour >= 0 && hour < 6) {
+    return lang === "Kor"
+      ? "밤새 코딩하셨나요?\n저도 늦게까지 일해봤어요! 🌙"
+      : "Burning the midnight oil?\nSo have I! 🌙";
+  }
+  if (hour >= 6 && hour < 12) {
+    return lang === "Kor"
+      ? "좋은 아침이에요!\n오늘도 좋은 하루 되세요! ☀️"
+      : "Good morning!\nHave a great day! ☀️";
+  }
+  if (hour >= 12 && hour < 18) {
+    return lang === "Kor"
+      ? "안녕하세요!\n무엇을 도와드릴까요?"
+      : "Howdy!\nHow can I help you?";
+  }
+  return lang === "Kor"
+    ? "저녁 시간에 오셨군요!\n편하게 둘러보세요. 🌆"
+    : "Evening visit!\nTake your time. 🌆";
+}
+
 export default function RoboMenu() {
-  const { language }= useSettingsStore();
+  const { language } = useSettingsStore();
 
   const [open, setOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
@@ -53,7 +92,9 @@ export default function RoboMenu() {
 
   const [roboText, setRoboText] = useState("...");
   const [roboImage, setRoboImage] = useState("/images/robo/robo1.webp");
+  const [activeSectionId, setActiveSectionId] = useState("");
 
+  // ── 말풍선 텍스트 & 이미지 결정 ──────────────────────────────────────────────
   useEffect(() => {
     if (roboPanicking) {
       setRoboText(language === "Kor" ? "으아아악!!" : "NOOOOOOO!!");
@@ -68,8 +109,17 @@ export default function RoboMenu() {
       } else if (pathname.startsWith("/about")) {
         setRoboText(language === "Kor" ? "자기소개 페이지입니다." : "Let me introduce myself.");
         setRoboImage("/images/robo/robo3.webp");
+      } else if (pathname === "/") {
+        // 홈: 스크롤 섹션 코멘트 우선, 없으면 시간대별 인사말
+        const sectionMsg = activeSectionId ? sectionMessages[activeSectionId] : null;
+        setRoboText(
+          sectionMsg
+            ? language === "Kor" ? sectionMsg.Kor : sectionMsg.Eng
+            : getTimeGreeting(language)
+        );
+        setRoboImage("/images/robo/robo1.webp");
       } else {
-        setRoboText(language === "Kor" ? "안녕하세요!\n무엇을 도와드릴까요?" : "Howdy! How can I help you?");
+        setRoboText(getTimeGreeting(language));
         setRoboImage("/images/robo/robo1.webp");
       }
     } else {
@@ -87,7 +137,7 @@ export default function RoboMenu() {
         setRoboImage("/images/robo/robo2.webp");
       }
     }
-  }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking, language]);
+  }, [open, hovered, pathname, feedbackState, feedbackStatePDF, roboPanicking, language, activeSectionId]);
 
   useEffect(() => {
     const imagesToPreload = [
@@ -99,12 +149,27 @@ export default function RoboMenu() {
       '/images/robo/robo6.webp',
       '/images/robo/robo404.webp',
     ];
-  
+
     imagesToPreload.forEach((image) => {
       const img = new Image();
       img.src = image;
     });
   }, []);
+
+  // ── 홈 페이지 섹션 진입 이벤트 수신 ──────────────────────────────────────────
+  useEffect(() => {
+    const handleSection = (e: Event) => {
+      const { sectionId } = (e as CustomEvent<{ sectionId: string }>).detail;
+      setActiveSectionId(sectionId);
+    };
+    window.addEventListener("robo-section", handleSection);
+    return () => window.removeEventListener("robo-section", handleSection);
+  }, []);
+
+  // 페이지 이동 시 섹션 상태 초기화 (잔상 방지)
+  useEffect(() => {
+    setActiveSectionId("");
+  }, [pathname]);
 
   return (
     <>
