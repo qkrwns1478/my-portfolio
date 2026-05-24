@@ -57,13 +57,13 @@ function getTimeGreeting(lang: Language): string {
   const hour = new Date().getHours();
   if (hour >= 0 && hour < 6) {
     return lang === "Kor"
-      ? "밤새 코딩하셨나요?\n저도 늦게까지 일해봤어요! 🌙"
-      : "Burning the midnight oil?\nSo have I! 🌙";
+      ? "밤새 코딩하셨나요?\n저도 늦게까지 일해봤어요!"
+      : "Burning the midnight oil?\nSo have I!";
   }
   if (hour >= 6 && hour < 12) {
     return lang === "Kor"
-      ? "좋은 아침이에요!\n오늘도 좋은 하루 되세요! ☀️"
-      : "Good morning!\nHave a great day! ☀️";
+      ? "좋은 아침이에요!\n오늘도 좋은 하루 되세요!"
+      : "Good morning!\nHave a great day!";
   }
   if (hour >= 12 && hour < 18) {
     return lang === "Kor"
@@ -71,8 +71,8 @@ function getTimeGreeting(lang: Language): string {
       : "Howdy!\nHow can I help you?";
   }
   return lang === "Kor"
-    ? "저녁 시간에 오셨군요!\n편하게 둘러보세요. 🌆"
-    : "Evening visit!\nTake your time. 🌆";
+    ? "저녁 시간에 오셨군요!\n편하게 둘러보세요."
+    : "Evening visit!\nTake your time.";
 }
 
 export default function RoboMenu() {
@@ -133,7 +133,7 @@ export default function RoboMenu() {
         return;
       }
       if (idleState === "surprised") {
-        setRoboText(language === "Kor" ? "으앗! 깜짝이야! 😲" : "Oh! You startled me! 😲");
+        setRoboText(language === "Kor" ? "으앗! 깜짝이야!" : "Oh! You startled me!");
         setRoboImage("/images/robo/robo9.webp");
         return;
       }
