@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useState } from 'react';
 
 interface ProjectImageProps {
@@ -21,12 +22,16 @@ const ProjectImage = ({ projectId, projectTitle, onClick }: ProjectImageProps) =
 
   return (
     <div className="flex-grow-0 flex-shrink-0 md:basis-1/3 flex items-center justify-center md:mt-auto">
-      <img
+      <Image
         src={imageUrl}
         alt={`${projectTitle} screenshot`}
         onClick={() => onClick(imageUrl)}
         onError={handleError}
-        className="rounded-lg shadow-lg cursor-pointer object-cover w-full h-auto transition-transform duration-300 hover:scale-105"
+        width={0}
+        height={0}
+        sizes="(max-width: 768px) 100vw, 33vw"
+        style={{ width: '100%', height: 'auto' }}
+        className="rounded-lg shadow-lg cursor-pointer object-cover transition-transform duration-300 hover:scale-105"
       />
     </div>
   );

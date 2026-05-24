@@ -1,6 +1,6 @@
 "use client";
+import Image from "next/image";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { ArrowRight, ChevronsDown, Wrench, Cpu } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { motion, Variants } from "framer-motion";
@@ -8,29 +8,7 @@ import { techIconMap } from "./utils/techIcons";
 import ResponsiveText from "./components/ResponsiveText";
 import { useSettingsStore } from "./store/settingsStore";
 import { projects, Project } from "@/data/projects";
-
-const Button = ({
-  href,
-  className = "",
-  children,
-}: {
-  href: string;
-  className?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <Link
-      href={href}
-      className={`group relative px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl font-semibold text-white transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/25 hover:scale-105 border border-cyan-500/20 backdrop-blur-sm ${className}`}
-    >
-      <span className="relative z-10 flex items-center justify-center gap-2">
-        {children}
-        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-      </span>
-      <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm" />
-    </Link>
-  );
-};
+import MetalButton from "./components/MetalButton";
 
 const ProjectCard = ({ project, language }: { project: Project; language: "Kor" | "Eng" }) => {
   const { title, desc, role } = project.translations[language];
@@ -52,12 +30,13 @@ const ProjectCard = ({ project, language }: { project: Project; language: "Kor" 
       <motion.div
         animate={{ y: isHovered ? -20 : 0, opacity: isHovered ? 0.3 : 1 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="absolute inset-0 overflow-hidden rounded-2xl border border-cyan-500/20 shadow-lg"
+        className="absolute inset-0 overflow-hidden rounded-2xl border border-white/8 shadow-lg"
       >
-        <img
+        <Image
           src={`/images/projects/${project.id}.webp`}
           alt={`${title} project image`}
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         <h3 className="absolute bottom-4 left-4 text-2xl font-bold text-white">{title}</h3>
@@ -67,10 +46,10 @@ const ProjectCard = ({ project, language }: { project: Project; language: "Kor" 
       <motion.div
         animate={{ y: isHovered ? 0 : "100%" }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="absolute inset-0 backdrop-blur-lg bg-slate-900/95 rounded-2xl border border-cyan-400/40 p-6 flex flex-col"
+        className="absolute inset-0 backdrop-blur-lg bg-[rgba(6,11,24,0.92)] rounded-2xl border border-white/12 p-6 flex flex-col"
       >
-        <h4 className="text-xl font-bold text-cyan-300 mb-2">{title}</h4>
-        <p className="text-sm text-slate-300/90 italic border-l-2 border-cyan-500 pl-2 mb-4">{desc}</p>
+        <h4 className="text-xl font-bold text-white mb-2">{title}</h4>
+        <p className="text-sm text-slate-300/90 italic border-l-2 border-white/25 pl-2 mb-4">{desc}</p>
         <div className="mb-4">
           <h5 className="text-md font-semibold text-slate-200 mb-2 flex items-center gap-2">
             <Cpu className="w-4 h-4" /> What I did
@@ -87,7 +66,7 @@ const ProjectCard = ({ project, language }: { project: Project; language: "Kor" 
           </h5>
           <div className="flex flex-wrap gap-2">
             {project.stack?.map((tech) => (
-              <span key={tech} className="px-2 py-1 bg-cyan-900/40 text-cyan-300 text-xs rounded-md">
+              <span key={tech} className="px-2 py-1 bg-white/6 text-slate-300 text-xs rounded-md border border-white/10">
                 {tech}
               </span>
             ))}
@@ -105,6 +84,34 @@ export default function Home() {
   useEffect(() => {
     setIsHydrated(true);
   }, []);
+
+  // ── 섹션 진입 시 Robo에게 이벤트 전송 ─────────────────────────────────────
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    const sectionIds = ["hero-section", "features-section", "tech-section", "links-section"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            window.dispatchEvent(
+              new CustomEvent("robo-section", {
+                detail: { sectionId: entry.target.id },
+              })
+            );
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [isHydrated]);
 
   const handleScroll = () => {
     const featuresSection = document.getElementById("features-section");
@@ -171,15 +178,15 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col justify-center items-center text-center space-y-8 py-16 px-4 sm:px-6 md:px-12 relative overflow-hidden">
+      <section id="hero-section" className="min-h-screen flex flex-col justify-center items-center text-center space-y-8 py-16 px-4 sm:px-6 md:px-12 relative overflow-hidden">
         <div className={"relative z-10 transition-all duration-1000 flex flex-col items-center"}>
           <h1 className="text-4xl xs:text-5xl sm:text-6xl font-extrabold tracking-tight mb-6">
             <ResponsiveText
               values={language === "Kor" ? ["안녕하세요,", "박준식입니다"] : ["Hello!", "I'm ParkJS"]}
-              className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent slide-in-blur-top"
+              className="metal-title slide-in-blur-top"
             />
           </h1>
-          <div className="text-lg sm:text-xl max-w-2xl mx-auto text-slate-200/90 leading-relaxed mb-8">
+          <div className="text-lg sm:text-xl max-w-2xl mx-auto text-slate-300/80 leading-relaxed mb-8">
             <ResponsiveText
               values={
                 language === "Kor"
@@ -201,12 +208,12 @@ export default function Home() {
             />
           </div>
           <div className="flex flex-col sm:flex-row justify-center items-center sm:space-x-6 space-y-4 sm:space-y-0 mb-12">
-            <Button href="/about" className="w-48 fade-in-expand">
+            <MetalButton href="/about" className="w-48 fade-in-expand">
               About Me
-            </Button>
-            <Button href="/projects" className="w-48 fade-in-expand">
+            </MetalButton>
+            <MetalButton href="/projects" className="w-48 fade-in-expand">
               Projects
-            </Button>
+            </MetalButton>
           </div>
 
           <motion.button
@@ -223,6 +230,7 @@ export default function Home() {
 
       {/* Project Section */}
       <motion.section
+        id="features-section"
         className="py-24 px-4 sm:px-6 md:px-12"
         initial="hidden"
         whileInView="visible"
@@ -231,7 +239,7 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto">
           <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center mb-4">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="metal-title">
               {language === "Kor" ? "주요 프로젝트" : "Featured Projects"}
             </span>
           </motion.h2>
@@ -255,6 +263,7 @@ export default function Home() {
 
       {/* Tech Stack Preview */}
       <motion.section
+        id="tech-section"
         className="py-24 px-4 sm:px-6 md:px-12"
         initial="hidden"
         whileInView="visible"
@@ -263,7 +272,7 @@ export default function Home() {
       >
         <div className="max-w-4xl mx-auto text-center">
           <motion.h2 variants={itemVariants} className="text-3xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="metal-title">
               {language === "Kor" ? "주요 기술 스택" : "Key Tech Stacks"}
             </span>
           </motion.h2>
@@ -283,7 +292,7 @@ export default function Home() {
               return (
                 <span
                   key={tech}
-                  className="flex items-center gap-2 px-4 py-2 bg-cyan-900/20 border border-cyan-500/30 text-cyan-300 rounded-full text-sm font-medium hover:border-cyan-400/50 hover:bg-cyan-900/30 transition-all duration-200"
+                  className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/15 text-slate-300 rounded-full text-sm font-medium hover:border-white/28 hover:bg-white/8 transition-all duration-200"
                 >
                   {IconComponent && <IconComponent className="w-4 h-4" />}
                   {tech}
@@ -296,6 +305,7 @@ export default function Home() {
 
       {/* Links Section */}
       <motion.section
+        id="links-section"
         className="py-24 px-4 sm:px-6 md:px-12"
         initial="hidden"
         whileInView="visible"
@@ -304,7 +314,7 @@ export default function Home() {
       >
         <div className="max-w-4xl mx-auto">
           <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center mb-4">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="metal-title">
               {language == "Kor" ? "더 알아보기" : "Learn More"}
             </span>
           </motion.h2>
@@ -316,14 +326,14 @@ export default function Home() {
           <motion.div className="grid md:grid-cols-2 gap-8" variants={containerVariants}>
             <motion.div
               variants={itemVariants}
-              className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105"
+              className="group bg-gradient-to-br from-white/4 to-white/2 backdrop-blur-sm border border-white/8 rounded-2xl p-8 hover:border-white/18 transition-all duration-300 hover:transform hover:scale-105"
             >
               <div className="flex items-center mb-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-slate-700 to-slate-600 rounded-full flex items-center justify-center mr-4">
                   <FaGithub className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-100 group-hover:text-white transition-colors">
                     GitHub
                   </h3>
                   <p className="text-slate-400 text-sm">
@@ -339,17 +349,17 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 text-sm text-slate-400">
                   <span className="flex items-center">
-                    <div className="w-3 h-3 bg-cyan-400 rounded-full mr-2"></div>10+ Repositories
+                    <div className="w-3 h-3 bg-slate-300 rounded-full mr-2"></div>40+ Repositories
                   </span>
                   <span className="flex items-center">
-                    <div className="w-3 h-3 bg-green-400 rounded-full mr-2"></div>Active
+                    <div className="w-3 h-3 bg-slate-400 rounded-full mr-2"></div>Active
                   </span>
                 </div>
                 <a
                   href="https://github.com/qkrwns1478"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
+                  className="flex items-center text-slate-300 hover:text-white transition-colors font-medium"
                 >
                   {language === "Kor" ? "방문하기" : "Visit"}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -358,14 +368,14 @@ export default function Home() {
             </motion.div>
             <motion.div
               variants={itemVariants}
-              className="group bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm border border-cyan-500/20 rounded-2xl p-8 hover:border-cyan-400/40 transition-all duration-300 hover:transform hover:scale-105"
+              className="group bg-gradient-to-br from-white/4 to-white/2 backdrop-blur-sm border border-white/8 rounded-2xl p-8 hover:border-white/18 transition-all duration-300 hover:transform hover:scale-105"
             >
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full flex items-center justify-center mr-4">
-                  <img src="/munsik.ico" className="w-8 h-8" />
+                <div className="w-12 h-12 bg-gradient-to-r from-slate-700 to-slate-600 rounded-full flex items-center justify-center mr-4">
+                  <Image src="/munsik.ico" alt="" width={32} height={32} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-100 group-hover:text-white transition-colors">
                     Tech Blog
                   </h3>
                   <p className="text-slate-400 text-sm">
@@ -381,17 +391,17 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4 text-sm text-slate-400">
                   <span className="flex items-center">
-                    <div className="w-3 h-3 bg-blue-400 rounded-full mr-2"></div>Weekly Posts
+                    <div className="w-3 h-3 bg-slate-300 rounded-full mr-2"></div>Daily Posts
                   </span>
                   <span className="flex items-center">
-                    <div className="w-3 h-3 bg-purple-400 rounded-full mr-2"></div>Tech Focus
+                    <div className="w-3 h-3 bg-slate-400 rounded-full mr-2"></div>Tech Focus
                   </span>
                 </div>
                 <a
                   href="https://munsik22.tistory.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-cyan-400 hover:text-cyan-300 transition-colors font-medium"
+                  className="flex items-center text-slate-300 hover:text-white transition-colors font-medium"
                 >
                   {language === "Kor" ? "방문하기" : "Visit"}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
