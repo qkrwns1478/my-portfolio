@@ -23,13 +23,14 @@ export default function PrismButton({ href, onClick, children, className = "" }:
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const node = containerRef.current;
+    if (!node) return;
 
     // React Strict Mode 마운트 꼬임 방지
-    containerRef.current.innerHTML = "";
+    node.innerHTML = "";
 
     const mount = new ShaderMount(
-      containerRef.current,
+      node,
       liquidMetalFragmentShader,
       {
         u_repetition: 1.5,
@@ -52,8 +53,8 @@ export default function PrismButton({ href, onClick, children, className = "" }:
       const s = mount as { destroy?: () => void; unmount?: () => void };
       if (typeof s.destroy === "function") s.destroy();
       else if (typeof s.unmount === "function") s.unmount();
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
+      if (node) {
+        node.innerHTML = "";
       }
     };
   }, []);

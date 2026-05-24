@@ -73,6 +73,7 @@ export default function CustomCursor() {
         .filter((p): p is Particle => p !== null);
     });
 
+    // eslint-disable-next-line react-hooks/immutability
     animationFrameId.current = requestAnimationFrame(animateParticles);
   }, []);
 

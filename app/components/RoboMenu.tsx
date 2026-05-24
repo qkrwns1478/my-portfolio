@@ -124,6 +124,7 @@ export default function RoboMenu() {
   // ── 아이들 상태 ──────────────────────────────────────────────────────────────
   const [idleState, setIdleState] = useState<IdleState>("active");
   const idleStateRef = useRef<IdleState>("active");
+  // eslint-disable-next-line react-hooks/purity
   const lastActivityRef = useRef<number>(Date.now());
 
   // ── Robo 클릭 핸들러 (아이들 상태 고려) ──────────────────────────────────────
