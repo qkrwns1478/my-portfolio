@@ -1,5 +1,6 @@
 export interface Project {
   id: string;
+  active?: boolean;
   category: string[];
   period: string;
   stack?: string[];
@@ -23,6 +24,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'boj-banner-maker',
+    active: false,
     category: ['Frontend', 'Backend'],
     period: '2026.03',
     stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS'],
@@ -57,6 +59,7 @@ export const projects: Project[] = [
   },
   {
     id: 'alicelingo',
+    active: true,
     category: ['Frontend', 'Backend'],
     period: '2026.02 – 2026.03',
     stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Supabase', 'OpenAI'],
@@ -93,6 +96,7 @@ export const projects: Project[] = [
   },
   {
     id: 'namu-clone',
+    active: false,
     category: ['Frontend'],
     period: '2026.02 – 2026.02',
     stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Prisma'],
@@ -128,6 +132,7 @@ export const projects: Project[] = [
   },
   {
     id: 'shopping-mall-front',
+    active: false,
     category: ['Frontend'],
     period: '2025.11 – 2025.12',
     stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer'],
@@ -163,6 +168,7 @@ export const projects: Project[] = [
   },
   {
     id: 'shopping-mall-back',
+    active: false,
     category: ['Backend'],
     period: '2025.11 – 2025.12',
     stack: ['Java', 'Spring', 'Springboot', 'MySQL'],
@@ -198,6 +204,7 @@ export const projects: Project[] = [
   },
   {
     id: 'eip-practice',
+    active: true,
     category: ['Frontend'],
     period: '2025.10 – 2025.12',
     stack: ['Vue.js', 'Vite', 'JavaScript'],
@@ -223,6 +230,7 @@ export const projects: Project[] = [
   },
   {
     id: 'my-activity-graph',
+    active: false,
     category: ['Frontend'],
     period: '2025.08',
     stack: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Vercel'],
@@ -245,6 +253,7 @@ export const projects: Project[] = [
   },
   {
     id: 'my-portfolio',
+    active: true,
     category: ['Frontend'],
     period: '2025.08 – 2025.09',
     stack: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Zustand', 'Vercel'],
@@ -270,6 +279,7 @@ export const projects: Project[] = [
   },
   {
     id: 'klicklab',
+    active: true,
     category: ['Frontend', 'Backend'],
     period: '2025.06 – 2025.07',
     stack: ['React', 'Zustand', 'TailwindCSS', 'Node.js', 'ClickHouse', 'Kafka', 'AWS EC2'],
@@ -299,6 +309,7 @@ export const projects: Project[] = [
   },
   {
     id: 'pintos',
+    active: true,
     category: ['OS'],
     period: '2025.05 – 2025.06',
     stack: ['C', 'QEMU', 'GDB', 'Makefile'],
@@ -324,6 +335,7 @@ export const projects: Project[] = [
   },
   {
     id: 'fortune-cookie',
+    active: true,
     category: ['Frontend'],
     period: '2025.03',
     stack: ['TailwindCSS', 'JavaScript', 'Python', 'Flask', 'Jinja', 'MongoDB'],
@@ -351,6 +363,7 @@ export const projects: Project[] = [
   },
   {
     id: 'stm32-fan',
+    active: true,
     category: ['Embedded'],
     period: '2024.03 – 2024.06',
     stack: ['STM32F', 'Embedded C'],
@@ -378,6 +391,7 @@ export const projects: Project[] = [
   },
   {
     id: 'kiosk-version',
+    active: true,
     category: ['Frontend', 'Backend'],
     period: '2024.01 – 2024.02',
     stack: ['jQuery', 'PHP', 'MySQL'],
