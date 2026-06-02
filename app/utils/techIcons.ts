@@ -8,7 +8,7 @@ import {
   // CSS
   SiTailwindcss, SiFramer,
   // Databases
-  SiMongodb, SiMysql, SiPostgresql, SiClickhouse, SiPrisma,
+  SiMongodb, SiMysql, SiPostgresql, SiClickhouse, SiPrisma, SiRedis,
   // Cloud/DevOps
   SiAmazon, SiVercel, SiApachekafka,
   // Build Tools
@@ -54,6 +54,7 @@ export const techIconMap: Record<string, IconComponent> = {
   'ClickHouse': SiClickhouse,
   'Prisma': SiPrisma,
   'Supabase': RiSupabaseFill,
+  'Redis': SiRedis,
   
   // AI
   'OpenAI': RiOpenaiFill,
