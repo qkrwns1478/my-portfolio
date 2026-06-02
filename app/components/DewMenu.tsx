@@ -220,7 +220,7 @@ export default function DewMenu() {
                     zIndex: 3,
                     color: "rgba(228,238,255,0.92)",
                     transition: "transform 0.3s",
-                    transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                    transform: isOpen ? "rotate(135deg)" : "rotate(0deg)",
                   }}
                 />
               </button>

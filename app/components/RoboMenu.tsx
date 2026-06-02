@@ -280,8 +280,8 @@ export default function RoboMenu() {
     window.addEventListener("keydown", onExplicitActivity);
     window.addEventListener("touchstart", onExplicitActivity);
 
-    const drowseTime = 30_000;
-    const sleepTime = 60_000;
+    const drowseTime = 540_000; // 9분
+    const sleepTime = 600_000; // 10분
 
     const interval = setInterval(() => {
       const current = idleStateRef.current;
