@@ -29,9 +29,10 @@ export const projects: Project[] = [
     period: '2026.05 – 2026.06',
     stack: ['Java', 'Springboot', 'PostgreSQL', 'Kafka', 'Redis'],
     github: 'https://github.com/qkrwns1478/sparta-logistics',
+    details: '/projects/sparta-logistics',
     translations: {
       Kor: {
-        "title": "스파르타 로지틱스",
+        "title": "스파르타 로지스틱스",
         "desc": "MSA 기반 B2B 물류 플랫폼",
         "summary": "분산 환경에서도 데이터 정합성이 보장되는 이벤트 드리븐 아키텍처 설계",
         "asis": [
