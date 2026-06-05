@@ -143,7 +143,7 @@ export default function SpartaLogisticsDetail() {
                   </li>
                   <li>
                     {isKor
-                      ? "AI 역할을 분리해 작업을 구조화했습니다. 조사 및 구현은 Claude, 코드 리뷰는 Gemini로 담당을 나눠 각 AI의 출력이 서로 독립적인 관점을 유지하도록 했습니다."
+                      ? "AI 역할을 분리해 작업을 구조화했습니다. 조사 및 설계는 Claude, 코드 리뷰는 Gemini로 담당을 나눠 각 AI의 출력이 서로 독립적인 관점을 유지하도록 했습니다."
                       : "AI roles were separated to structure the workflow: Claude handled investigation and implementation planning, while Gemini handled code review — keeping each AI's output as an independent perspective."}
                   </li>
                   <li>
@@ -329,6 +329,13 @@ export default function SpartaLogisticsDetail() {
                     {isKor
                       ? "Redis 분산 락(SET NX EX 30)을 도입해 임계 구간에 하나의 요청만 진입하도록 직렬화하여 동시 진입으로 인한 상태 충돌을 해소했습니다."
                       : "Introduced a Redis distributed lock (SET NX EX 30) to serialize access so only one request enters the critical section at a time, resolving state conflicts from concurrent entry."}
+                    <ul className="list-[circle] pl-6 text-slate-300 space-y-3 mt-1">
+                      <li>
+                        {isKor
+                          ? "TTL 30초는 Saga 전체 왕복(수백 ms~수 초)에 네트워크 지연과 Consumer 일시 부하를 감안한 보수적 상한이며, TTL이 만료되어도 낙관적 락이 최후 방어선으로 정합성을 보장합니다."
+                          : "The 30s TTL is a conservative upper bound over the Saga round-trip (hundreds of ms to a few seconds), accounting for network delay and transient Consumer load — even if the TTL expires, the optimistic lock (L3) acts as a final safeguard for consistency."}
+                      </li>
+                    </ul>
                     <Image
                       src="/images/sparta-logistics/key_seq_2.webp"
                       alt="Challenge No.2 Solution 1 Sequence Diagram"
@@ -395,6 +402,11 @@ export default function SpartaLogisticsDetail() {
                   </li>
                   <li>
                     {isKor
+                      ? "Debezium CDC 대신 @Scheduled 폴링을 선택한 이유: Debezium은 WAL 실시간 스트리밍으로 폴링 지연이 없고 at-least-once 보장이 더 견고하지만, 별도의 Kafka Connect 클러스터, wal_level=logical 설정, 커넥터 배포 및 모니터링 인프라가 필요합니다. 운영 복잡도 대비 Saga 이벤트 체이닝 수준에서 허용 가능한 지연 범위 내에 있다고 판단했으며, 폴링 주기는 outbox.relay.fixed-delay-ms 프로퍼티로 조정 가능하도록 설계했습니다."
+                      : "Why @Scheduled polling over Debezium CDC: Debezium offers real-time WAL streaming with stronger at-least-once guarantees, but requires a dedicated Kafka Connect cluster, wal_level=logical configuration, and connector deployment infrastructure. The polling latency was judged acceptable at the Saga event-chaining level; the interval is configurable via the outbox.relay.fixed-delay-ms property."}
+                  </li>
+                  <li>
+                    {isKor
                       ? "@PreDestroy + AtomicBoolean 플래그로 컨텍스트 종료 시 DROP TABLE 레이스 컨디션을 차단했고, Outbox 공통 모듈을 common 모듈로 추출해 다른 서비스도 재사용할 수 있도록 설계했습니다."
                       : "@PreDestroy + AtomicBoolean flag prevents DROP TABLE race conditions on context shutdown. The Outbox module was extracted into a common module, making it reusable across other services."}
                   </li>
@@ -442,6 +454,51 @@ export default function SpartaLogisticsDetail() {
                       ? "Choreography Saga 3건 + Orchestration Saga 7건, 총 10개 시나리오를 @EmbeddedKafka로 검증했습니다. 실제 Kafka 브로커 없이 Consumer 레이어부터 DB 상태 전이까지 자동화 검증이 가능합니다."
                       : "Verified 10 total scenarios (3 Choreography Saga + 7 Orchestration Saga) using @EmbeddedKafka, enabling automated validation from the Consumer layer through DB state transitions without a real Kafka broker."}
                   </li>
+                </ul>
+                <div className="overflow-x-auto mt-3">
+                  <table className="w-full text-sm text-slate-300 border-collapse">
+                    <thead>
+                      <tr className="border-b border-white/10 text-slate-400">
+                        <th className="text-left py-2 pr-6 font-medium whitespace-nowrap">
+                          {isKor ? "분류" : "Category"}
+                        </th>
+                        <th className="text-left py-2 font-medium">{isKor ? "시나리오" : "Scenario"}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {(isKor
+                        ? [
+                            [
+                              "Choreography (3건)",
+                              "정상 주문 생성 → ACCEPTED 전이 / 재고 예약 실패 → 주문 CANCELLED 보상 / 배송 생성 실패 → 주문 CANCELLED 보상",
+                            ],
+                            [
+                              "Orchestration (7건)",
+                              "정상 취소 완료 / 배송 취소 거부 → 이전 상태 복구 / 재고 복구 실패 1회 재시도 성공 / 재고 복구 실패 최대 재시도 초과 / CANCELLING 중 delivery.created 수신 무시 / CANCELLING 중 stock.reservation.failed 수신 무시 / CANCELLING 중복 취소 요청 차단",
+                            ],
+                          ]
+                        : [
+                            [
+                              "Choreography (3)",
+                              "Normal order creation → ACCEPTED / Stock reservation failed → CANCELLED compensation / Delivery creation failed → CANCELLED compensation",
+                            ],
+                            [
+                              "Orchestration (7)",
+                              "Normal cancellation / Delivery cancel rejected → restore previous state / Stock restore 1-retry success / Stock restore max retries exceeded / Ignore delivery.created while CANCELLING / Ignore stock.reservation.failed while CANCELLING / Block duplicate cancel while CANCELLING",
+                            ],
+                          ]
+                      ).map(([category, scenarios], i) => (
+                        <tr key={i}>
+                          <td className="py-2 pr-6 font-mono text-xs text-slate-200 whitespace-nowrap align-top">
+                            {category}
+                          </td>
+                          <td className="py-2 text-xs text-slate-300">{scenarios}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-2">
                   <li>
                     {isKor
                       ? "Config Server 비활성 환경의 optional:configserver: 처리 문제와 @WebMvcTest + @MockitoBean 조합으로 컨트롤러 단위 테스트 격리를 해결했습니다."
