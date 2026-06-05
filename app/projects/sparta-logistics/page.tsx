@@ -324,6 +324,13 @@ export default function SpartaLogisticsDetail() {
                     />
                   </li>
                 </ul>
+                <div className="flex max-w justify-center">
+                  <img
+                    src="/images/sparta-logistics/redis_code.webp"
+                    alt="Distributed Lock Code Snippet"
+                    className="mt-2 rounded-lg border border-white/10 max-w-full"
+                  />
+                </div>
               </div>
 
               <div>
@@ -350,6 +357,11 @@ export default function SpartaLogisticsDetail() {
                     }
                   </li>
                 </ul>
+                <img
+                  src="/images/sparta-logistics/outbox.webp"
+                  alt="Outbox Diagram"
+                  className="mt-2 rounded-lg border border-white/10 max-w-full"
+                />
               </div>
 
               <div>
