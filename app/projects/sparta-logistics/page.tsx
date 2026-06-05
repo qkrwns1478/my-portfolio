@@ -60,7 +60,7 @@ export default function SpartaLogisticsDetail() {
             </div>
             <div>
               <p className="text-xs text-slate-500 uppercase tracking-widest mb-1">{isKor ? "팀 구성" : "Team"}</p>
-              <p className="text-slate-300 text-sm">{isKor ? "6인" : "6 members"}</p>
+              <p className="text-slate-300 text-sm">{isKor ? "6명" : "6 members"}</p>
             </div>
             <div>
               <p className="text-xs text-slate-500 uppercase tracking-widest mb-1">{isKor ? "역할" : "Role"}</p>
@@ -98,6 +98,66 @@ export default function SpartaLogisticsDetail() {
                 }
               </li>
             </ul>
+          </div>
+
+          {/* 설계 프로세스 및 AI 활용 */}
+          <div>
+            <h3 className="text-xl font-semibold text-slate-200">▶ {isKor ? "설계 프로세스 및 AI 활용" : "Design Process & AI Utilization"}</h3>
+            <div className="space-y-5 mt-4">
+
+              <div>
+                <h4 className="text-lg font-semibold text-slate-200">
+                  1. {isKor ? "구현 전 SA 문서로 팀 계약 수립" : "Pre-implementation SA Document as Team Contract"}
+                </h4>
+                <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-1">
+                  <li>
+                    {isKor
+                      ? "구현 시작 전에 서비스 전체를 아우르는 SA 문서를 팀 공통 기준으로 먼저 작성했습니다. 포트, ERD, API 명세(필드별 유효성 규칙 포함), DB 컬럼 명세, ENUM 값 목록, 권한 매트릭스, Mermaid 시퀀스 다이어그램을 단일 문서에 담아 팀원 각자가 참조할 수 있는 계약서 역할을 했습니다."
+                      : "Before implementation, I authored the team-wide SA document covering all services — port assignments, ERDs, per-field API validation rules, DB column specs, ENUM lists, permission matrices, and Mermaid sequence diagrams — serving as a shared contract each member could reference independently."
+                    }
+                  </li>
+                  <li>
+                    {isKor
+                      ? "설계 과정에서 배민, 컬리 등 테크기업 기술 블로그를 참고해 Saga 패턴 적용 사례와 분산 트랜잭션 전략을 검토하고, 프로젝트 규모에 맞게 선별해 적용했습니다."
+                      : "During the design process, referenced tech blogs from companies such as Baemin and Kurly to review Saga pattern implementations and distributed transaction strategies, selecting and adapting what was appropriate for the project scale."
+                    }
+                  </li>
+                  <li>
+                    {isKor
+                      ? "API 계약 불일치로 인한 통합 실패는 발생하지 않았고, 구현 중 발생하는 판단은 log 문서로 남기는 체계(SA → log → 코드)로 연결됐습니다. Kafka 선택, Saga 패턴 분리, 동시성 전략 각 결정의 근거가 코드와 함께 추적 가능한 형태로 남아 있습니다."
+                      : "No integration failures due to API contract mismatches occurred. Design decisions made during implementation were recorded as log documents, forming a traceable chain (SA → log → code) for each decision — Kafka selection, Saga pattern split, and concurrency strategy."
+                    }
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-semibold text-slate-200">
+                  2. {isKor ? "AI 워크플로우 구조화" : "Structured AI Workflow"}
+                </h4>
+                <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-1">
+                  <li>
+                    {isKor
+                      ? "작업 범위 이탈과 변경 리스크를 방지하기 위해 AI에게 구현 전 계획 문서를 먼저 작성하게 한 뒤 직접 승인하거나 수정했습니다. SA 문서의 추상적 명세(예: '서비스 간 통신은 메시징 기반 구조 고려')가 구체적 구현 계획으로 변환되는 과정을 이 방식으로 제어했습니다."
+                      : "To prevent scope drift and change risk, I had AI produce a plan document before each implementation, then personally approved or revised it. This controlled how abstract SA specs (e.g., 'consider messaging-based communication') were translated into concrete implementation plans."
+                    }
+                  </li>
+                  <li>
+                    {isKor
+                      ? "AI 역할을 분리해 작업을 구조화했습니다. 조사 및 구현은 Claude, 코드 리뷰는 Gemini로 담당을 나눠 각 AI의 출력이 서로 독립적인 관점을 유지하도록 했습니다."
+                      : "AI roles were separated to structure the workflow: Claude handled investigation and implementation planning, while Gemini handled code review — keeping each AI's output as an independent perspective."
+                    }
+                  </li>
+                  <li>
+                    {isKor
+                      ? "프롬프트 및 로깅 훅을 구축해 AI 에이전트의 작업 내역을 추적 가능하게 했습니다. 30개 이상의 설계 문서가 프로젝트와 함께 축적됐고, 멘토 리뷰와 코드리뷰에서 '설계 의사결정 문서가 훌륭하다'는 피드백을 받았습니다."
+                      : "Built prompt and logging hooks to make AI agent work history traceable. Over 30 design documents accumulated alongside the project, and received feedback from mentors and reviewers that the design decision documentation was excellent."
+                    }
+                  </li>
+                </ul>
+              </div>
+
+            </div>
           </div>
 
           {/* 시스템 아키텍처 */}
@@ -212,33 +272,7 @@ export default function SpartaLogisticsDetail() {
 
               <div>
                 <h4 className="text-lg font-semibold text-slate-200">
-                  1. {isKor ? "Outbox 패턴으로 이벤트 유실 방지" : "Preventing Event Loss with the Outbox Pattern"}
-                </h4>
-                <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-1">
-                  <li>
-                    {isKor
-                      ? "DB 커밋 후 kafkaTemplate.send()가 실패하면 주문이 PENDING으로 고착되는 문제가 있었습니다. DB 커밋과 Kafka 발행이 원자적으로 묶이지 않는 구조가 원인이었습니다."
-                      : "If kafkaTemplate.send() failed after a DB commit, the order would get stuck in PENDING. The root cause was that the DB commit and Kafka publish were not atomically coupled."
-                    }
-                  </li>
-                  <li>
-                    {isKor
-                      ? "p_order와 p_outbox를 같은 트랜잭션에 저장하고, @Scheduled 릴레이가 1초 주기로 PENDING 이벤트를 폴링해 Kafka에 발행합니다. Kafka 장애 시 PENDING 레코드가 남아 복구 후 재발행(at-least-once)이 보장됩니다."
-                      : "p_order and p_outbox are saved in the same transaction, and an @Scheduled relay polls PENDING events every second to publish to Kafka. If Kafka fails, PENDING records remain for redelivery after recovery (at-least-once guarantee)."
-                    }
-                  </li>
-                  <li>
-                    {isKor
-                      ? "@PreDestroy + AtomicBoolean 플래그로 컨텍스트 종료 시 DROP TABLE 레이스 컨디션을 차단했고, Outbox 공통 모듈을 common 모듈로 추출해 다른 서비스도 재사용할 수 있도록 설계했습니다."
-                      : "@PreDestroy + AtomicBoolean flag prevents DROP TABLE race conditions on context shutdown. The Outbox module was extracted into a common module, making it reusable across other services."
-                    }
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold text-slate-200">
-                  2. {isKor ? "Redis 분산 락 + 상태 키로 분산 동시성 제어" : "Distributed Concurrency Control with Redis Lock + State Keys"}
+                  1. {isKor ? "Redis 분산 락 + 상태 키로 분산 동시성 제어" : "Distributed Concurrency Control with Redis Lock + State Keys"}
                 </h4>
                 <ul className="list-disc pl-6 text-slate-300 space-y-3 mt-1">
                   <li>
@@ -288,6 +322,32 @@ export default function SpartaLogisticsDetail() {
                       alt="Challenge No.2 Solution 2 Sequence Diagram"
                       className="mt-2 rounded-lg border border-white/10 max-w-full"
                     />
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-semibold text-slate-200">
+                  2. {isKor ? "Outbox 패턴으로 이벤트 유실 방지" : "Preventing Event Loss with the Outbox Pattern"}
+                </h4>
+                <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-1">
+                  <li>
+                    {isKor
+                      ? "DB 커밋 후 kafkaTemplate.send()가 실패하면 주문이 PENDING으로 고착되는 문제가 있었습니다. DB 커밋과 Kafka 발행이 원자적으로 묶이지 않는 구조가 원인이었습니다."
+                      : "If kafkaTemplate.send() failed after a DB commit, the order would get stuck in PENDING. The root cause was that the DB commit and Kafka publish were not atomically coupled."
+                    }
+                  </li>
+                  <li>
+                    {isKor
+                      ? "p_order와 p_outbox를 같은 트랜잭션에 저장하고, @Scheduled 릴레이가 1초 주기로 PENDING 이벤트를 폴링해 Kafka에 발행합니다. Kafka 장애 시 PENDING 레코드가 남아 복구 후 재발행(at-least-once)이 보장됩니다."
+                      : "p_order and p_outbox are saved in the same transaction, and an @Scheduled relay polls PENDING events every second to publish to Kafka. If Kafka fails, PENDING records remain for redelivery after recovery (at-least-once guarantee)."
+                    }
+                  </li>
+                  <li>
+                    {isKor
+                      ? "@PreDestroy + AtomicBoolean 플래그로 컨텍스트 종료 시 DROP TABLE 레이스 컨디션을 차단했고, Outbox 공통 모듈을 common 모듈로 추출해 다른 서비스도 재사용할 수 있도록 설계했습니다."
+                      : "@PreDestroy + AtomicBoolean flag prevents DROP TABLE race conditions on context shutdown. The Outbox module was extracted into a common module, making it reusable across other services."
+                    }
                   </li>
                 </ul>
               </div>
