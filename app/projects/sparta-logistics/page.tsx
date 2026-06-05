@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Button from "../../components/Button";
 import { useSettingsStore } from "../../store/settingsStore";
 
@@ -161,10 +162,13 @@ export default function SpartaLogisticsDetail() {
               ▶ {isKor ? "시스템 아키텍처" : "System Architecture"}
             </h3>
             <div className="mt-4">
-              <img
+              <Image
                 src="/images/sparta-logistics/architecture.webp"
                 alt="MSA System Architecture"
-                className="rounded-lg border border-white/10 max-w-full"
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="rounded-lg border border-white/10 w-full h-auto"
               />
             </div>
           </div>
@@ -244,10 +248,13 @@ export default function SpartaLogisticsDetail() {
                     {isKor
                       ? "각 서비스가 이벤트를 수신하면 독립적으로 반응하는 구조로, 중앙 조율자 없이 4개 서비스를 거쳐 주문이 완성됩니다."
                       : "Each service reacts independently upon receiving an event, completing the order through 4 services without a central orchestrator."}
-                    <img
+                    <Image
                       src="/images/sparta-logistics/choreo_saga.webp"
                       alt="Choreography Saga Flow"
-                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="mt-2 rounded-lg border border-white/10 w-full h-auto"
                     />
                   </li>
                   <li>
@@ -270,10 +277,13 @@ export default function SpartaLogisticsDetail() {
                     {isKor
                       ? "보상 순서가 명확하고 실패 재시도 로직을 한 곳에서 관리해야 했기 때문에, 취소 흐름에는 Orchestration 패턴을 적용했습니다. CancelOrderOrchestrator가 각 서비스에 커맨드를 순차적으로 발행합니다."
                       : "Since the compensation order was clear and retry logic needed to be managed in one place, the Orchestration pattern was applied for the cancellation flow. CancelOrderOrchestrator sequentially issues commands to each service."}
-                    <img
+                    <Image
                       src="/images/sparta-logistics/orches_saga.webp"
                       alt="Orchestration Saga Flow"
-                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="mt-2 rounded-lg border border-white/10 w-full h-auto"
                     />
                   </li>
                   <li>
@@ -305,10 +315,13 @@ export default function SpartaLogisticsDetail() {
                     {isKor
                       ? "동일한 주문에 대해 주문 승인(Kafka Consumer)과 주문 취소(REST API)가 동시에 진입하면 상태 값이 충돌했습니다."
                       : "When order approval (Kafka Consumer) and order cancellation (REST API) entered simultaneously for the same order, state values conflicted."}
-                    <img
+                    <Image
                       src="/images/sparta-logistics/key_seq_1.webp"
                       alt="Challenge No.2 Problem 1 Sequence Diagram"
-                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="mt-2 rounded-lg border border-white/10 w-full h-auto"
                     />
                   </li>
                   <li>
@@ -316,10 +329,13 @@ export default function SpartaLogisticsDetail() {
                     {isKor
                       ? "Redis 분산 락(SET NX EX 30)을 도입해 임계 구간에 하나의 요청만 진입하도록 직렬화하여 동시 진입으로 인한 상태 충돌을 해소했습니다."
                       : "Introduced a Redis distributed lock (SET NX EX 30) to serialize access so only one request enters the critical section at a time, resolving state conflicts from concurrent entry."}
-                    <img
+                    <Image
                       src="/images/sparta-logistics/key_seq_2.webp"
                       alt="Challenge No.2 Solution 1 Sequence Diagram"
-                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="mt-2 rounded-lg border border-white/10 w-full h-auto"
                     />
                   </li>
                   <li>
@@ -327,10 +343,13 @@ export default function SpartaLogisticsDetail() {
                     {isKor
                       ? "분산 락은 Saga 종료가 아닌 임계 구간 탈출 시점에 해제되므로, 락 해제 후 커밋 완료 사이의 구간은 보호되지 않았습니다."
                       : "Since the distributed lock is released when leaving the critical section rather than at Saga completion, the gap between lock release and commit completion remained unprotected."}
-                    <img
+                    <Image
                       src="/images/sparta-logistics/key_seq_3.webp"
                       alt="Challenge No.2 Problem 2 Sequence Diagram"
-                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="mt-2 rounded-lg border border-white/10 w-full h-auto"
                     />
                   </li>
                   <li>
@@ -338,18 +357,23 @@ export default function SpartaLogisticsDetail() {
                     {isKor
                       ? "분산 락과 Redis 상태 키(CANCELLING / PROCESSING)를 함께 사용해, 락 해제 이후 구간도 상태 키로 사전 차단하고 JPA @Version 낙관적 락으로 DB 레벨 최후 방어선을 추가했습니다."
                       : "By combining the distributed lock with Redis state keys (CANCELLING / PROCESSING), the gap after lock release is blocked by the state key, with JPA @Version optimistic lock added as a final DB-level safeguard."}
-                    <img
+                    <Image
                       src="/images/sparta-logistics/key_seq_4.webp"
                       alt="Challenge No.2 Solution 2 Sequence Diagram"
-                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="mt-2 rounded-lg border border-white/10 w-full h-auto"
                     />
                   </li>
                 </ul>
                 <div className="flex max-w justify-center">
-                  <img
+                  <Image
                     src="/images/sparta-logistics/redis_code.webp"
                     alt="Distributed Lock Code Snippet"
-                    className="mt-2 rounded-lg border border-white/10 max-w-full"
+                    width={800}
+                    height={600}
+                    className="mt-2 rounded-lg border border-white/10 max-w-full h-auto"
                   />
                 </div>
               </div>
@@ -375,10 +399,13 @@ export default function SpartaLogisticsDetail() {
                       : "@PreDestroy + AtomicBoolean flag prevents DROP TABLE race conditions on context shutdown. The Outbox module was extracted into a common module, making it reusable across other services."}
                   </li>
                 </ul>
-                <img
+                <Image
                   src="/images/sparta-logistics/outbox.webp"
                   alt="Outbox Diagram"
-                  className="mt-2 rounded-lg border border-white/10 max-w-full"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="mt-2 rounded-lg border border-white/10 w-full h-auto"
                 />
               </div>
 
