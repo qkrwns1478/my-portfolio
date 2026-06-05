@@ -1,5 +1,6 @@
 export interface Project {
   id: string;
+  active?: boolean;
   category: string[];
   period: string;
   stack?: string[];
@@ -22,7 +23,71 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'sparta-logistics',
+    active: true,
+    category: ['Backend'],
+    period: '2026.05 – 2026.06',
+    stack: ['Java', 'Springboot', 'PostgreSQL', 'Kafka', 'Redis'],
+    github: 'https://github.com/qkrwns1478/sparta-logistics',
+    details: '/projects/sparta-logistics',
+    translations: {
+      Kor: {
+        "title": "스파르타 로지스틱스",
+        "desc": "MSA 기반 B2B 물류 플랫폼",
+        "summary": "분산 환경에서도 데이터 정합성이 보장되는 이벤트 드리븐 아키텍처 설계",
+        "asis": [
+          "DB 커밋 후 Kafka 발행 실패 시 이벤트 유실 → 주문 PENDING 고착",
+          "Kafka Consumer와 취소 REST API 동시 접근으로 주문 상태 불일치 (레이스 컨디션)",
+          "Saga 도중 외부 서비스 실패 시 주문 CANCELLING 상태 무기한 고착"
+        ],
+        "challenge": [
+          "Outbox 패턴 도입: p_order·p_outbox 동일 트랜잭션 저장 + @Scheduled 릴레이 폴링 발행",
+          "Redis 분산 락(SET NX EX) + CANCELLING/PROCESSING 상태 키 + @Version 낙관적 락 3중 방어",
+          "단계별 보상 트랜잭션 구현(이전 상태 복구 및 재시도) + CancellingSagaTimeoutChecker로 고착 감지"
+        ],
+        "tobe": [
+          "Kafka 장애 복구 후 PENDING 이벤트 자동 재발행, at-least-once 이벤트 발행 보장",
+          "Consumer↔HTTP 임계 구간 직렬화 및 Saga 중복 처리 방지",
+          "실패 시나리오별 독립 복구 경로 확보, 고착 조기 감지"
+        ],
+        "role": [
+          "Order 서비스 ERD 설계, REST API 구현, Saga 흐름 설계, 동시성 전략 수립",
+          "Choreography Saga(주문 생성) 5단계 이벤트 체이닝 및 보상 트랜잭션",
+          "Orchestration Saga(주문 취소) CancelOrderOrchestrator 설계 및 구현",
+          "Redis 분산 락 + 상태 키 동시성 제어 구현",
+        ]
+      },
+      Eng: {
+        "title": "Sparta Logistics",
+        "desc": "MSA-based B2B logistics platform",
+        "summary": "Designing an event-driven architecture that ensures data consistency even in a distributed environment",
+        "asis": [
+          "Event lost if Kafka issue fails after DB commit → order pending",
+          "Order Status Mismatch (Race Condition) with Kafka Consumer and Cancellation REST API Simultaneous Access",
+          "In case of failure of external service during Saga, order CANCELLING status stuck indefinitely"
+        ],
+        "challenge": [
+          "Outbox pattern introduction: p_order·p_outbox save same transaction + issue @Schedulesed Relay Polling",
+          "Redis Distributed Lock (SET NX EX) + CANCELLING/PROCESSING Status Key + @Version Optimistic Lock Triple Defense",
+          "Implementation of step-by-step compensation transactions (previous state recovery and retries) + detect stickiness with CancellingSagaTimeoutChecker"
+        ],
+        "tobe": [
+          "Automatic reissue of PENDING event after Kafka failure recovery, guarantee to issue at-least-once event",
+          "Consumer↔ HTTP critical interval serialization and Saga redundancy prevention",
+          "Ensure independent recovery paths for each failure scenario, early detection of stickiness"
+        ],
+        "role": [
+          "Order service ERD design, REST API implementation, Saga flow design, concurrency strategy formulation",
+          "Choreography Saga 5-Step Event Chaining and Reward Transactions",
+          "Orchestration Saga CancellOrder Orchestrator Design and Implementation",
+          "Implement Redis Distributed Lock + Status Key Concurrent Control",
+        ]
+      }
+    }
+  },
+  {
     id: 'boj-banner-maker',
+    active: false,
     category: ['Frontend', 'Backend'],
     period: '2026.03',
     stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS'],
@@ -33,9 +98,6 @@ export const projects: Project[] = [
         title: '백준 문제 배너 생성기',
         desc: '백준(BOJ) 문제 배너 이미지 생성 서비스',
         summary: 'Solved.ac API를 활용하여 백준 알고리즘 문제 정보를 바탕으로 동적 배너 이미지를 생성하는 웹 애플리케이션',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Next.js API Routes를 활용한 동적 배너 이미지 생성 로직 구현',
           'Solved.ac API 연동 및 문제 데이터 파싱'
@@ -45,9 +107,6 @@ export const projects: Project[] = [
         title: 'BOJ Banner Maker',
         desc: 'Baekjoon(BOJ) Problem Banner Image Generator',
         summary: 'A web application that generates dynamic banner images based on Baekjoon problem information using the Solved.ac API.',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Implemented dynamic banner image generation logic using Next.js API Routes.',
           'Integrated Solved.ac API and parsed problem data.'
@@ -57,6 +116,7 @@ export const projects: Project[] = [
   },
   {
     id: 'alicelingo',
+    active: true,
     category: ['Frontend', 'Backend'],
     period: '2026.02 – 2026.03',
     stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Supabase', 'OpenAI'],
@@ -67,9 +127,6 @@ export const projects: Project[] = [
         title: 'AliceLingo',
         desc: 'AI 기반 어학 학습 플랫폼',
         summary: 'Groq API와 Supabase를 활용한 맞춤형 어학 학습 및 AI 평가 서비스',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Next.js 및 Supabase를 활용한 풀스택 로직 및 사용자 인증 구현',
           'Groq API를 연동한 실시간 음성 인식 및 AI 채점 파이프라인 구축',
@@ -80,9 +137,6 @@ export const projects: Project[] = [
         title: 'AliceLingo',
         desc: 'AI-Based Language Learning Platform',
         summary: 'A personalized language learning and AI evaluation service using Groq API and Supabase.',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Implemented full-stack logic and user authentication using Next.js and Supabase.',
           'Built a real-time voice recognition and AI grading pipeline using Groq API.',
@@ -93,6 +147,7 @@ export const projects: Project[] = [
   },
   {
     id: 'namu-clone',
+    active: false,
     category: ['Frontend'],
     period: '2026.02 – 2026.02',
     stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Prisma'],
@@ -102,9 +157,6 @@ export const projects: Project[] = [
         title: '나무위키 클론',
         desc: '위키 서비스 클론 프로젝트',
         summary: 'Next.js와 Prisma를 활용하여 나무위키의 문서 열람, 편집, 역사 등의 핵심 기능을 구현한 클론 프로젝트',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           '프론트엔드 및 백엔드 전반 로직 구현',
           '마크다운 및 위키 문법 파싱/렌더링 로직 개발',
@@ -115,9 +167,6 @@ export const projects: Project[] = [
         title: 'Namu Clone',
         desc: 'Wiki Service Clone Project',
         summary: 'A clone project of Namuwiki implementing core features such as viewing, editing, and history using Next.js and Prisma.',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Full-stack frontend and backend development',
           'Developed markdown and wiki syntax parsing/rendering logic',
@@ -128,6 +177,7 @@ export const projects: Project[] = [
   },
   {
     id: 'shopping-mall-front',
+    active: false,
     category: ['Frontend'],
     period: '2025.11 – 2025.12',
     stack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer'],
@@ -137,9 +187,6 @@ export const projects: Project[] = [
         title: '쇼핑몰 웹사이트 (프론트엔드)',
         desc: '이커머스 프론트엔드 웹 애플리케이션',
         summary: 'Next.js와 React 기반으로 구축된 쇼핑몰 프론트엔드 프로젝트로, 상품 탐색부터 결제까지의 사용자 경험(UX)을 고려한 UI 구현',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Next.js를 활용한 쇼핑몰 프론트엔드 전반 로직 구현',
           'Framer Motion 및 Dnd-kit을 이용한 동적 UI 및 인터랙션 적용',
@@ -150,9 +197,6 @@ export const projects: Project[] = [
         title: 'Shopping Mall Website (Frontend)',
         desc: 'E-commerce Frontend Web Application',
         summary: 'A shopping mall frontend project built with Next.js and React, implementing UI with a focus on user experience (UX) from product browsing to checkout.',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Implemented overall frontend logic for the shopping mall using Next.js',
           'Applied dynamic UI and interactions using Framer Motion and Dnd-kit',
@@ -163,6 +207,7 @@ export const projects: Project[] = [
   },
   {
     id: 'shopping-mall-back',
+    active: false,
     category: ['Backend'],
     period: '2025.11 – 2025.12',
     stack: ['Java', 'Spring', 'Springboot', 'MySQL'],
@@ -172,9 +217,6 @@ export const projects: Project[] = [
         title: '쇼핑몰 API 서버 (백엔드)',
         desc: '이커머스 백엔드 REST API 서버',
         summary: 'Spring Boot 기반의 쇼핑몰 백엔드 프로젝트로, 회원 인증, 상품 관리, 주문 처리 등의 핵심 비즈니스 로직과 API 설계',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Spring Boot 및 Spring Data JPA를 활용한 안정적인 백엔드 아키텍처 구축',
           'Spring Security를 적용한 사용자 인증 및 권한 관리 구조 설계',
@@ -185,9 +227,6 @@ export const projects: Project[] = [
         title: 'Shopping Mall API Server (Backend)',
         desc: 'E-commerce Backend REST API Server',
         summary: 'A shopping mall backend project based on Spring Boot, focusing on designing APIs and core business logic such as user authentication, product management, and order processing.',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: [
           'Built a robust backend architecture using Spring Boot and Spring Data JPA',
           'Designed user authentication and authorization structure using Spring Security',
@@ -198,6 +237,7 @@ export const projects: Project[] = [
   },
   {
     id: 'eip-practice',
+    active: true,
     category: ['Frontend'],
     period: '2025.10 – 2025.12',
     stack: ['Vue.js', 'Vite', 'JavaScript'],
@@ -206,23 +246,18 @@ export const projects: Project[] = [
       Kor: {
         title: '정보처리기사 실기 퀴즈 앱',
         summary: '정보처리기사 실기 대비 랜덤 퀴즈 애플리케이션',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: ['Vue.js 학습 및 적용']
       },
       Eng: {
         title: 'EIP Practice',
         summary: 'Random Quiz Application for Engineer Information Processing Test',
-        // asis: [],
-        // challenge: [],
-        // tobe: [],
         role: ['Learning and applying Vue.js']
       },
     }
   },
   {
     id: 'my-activity-graph',
+    active: false,
     category: ['Frontend'],
     period: '2025.08',
     stack: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Vercel'],
@@ -245,6 +280,7 @@ export const projects: Project[] = [
   },
   {
     id: 'my-portfolio',
+    active: true,
     category: ['Frontend'],
     period: '2025.08 – 2025.09',
     stack: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Zustand', 'Vercel'],
@@ -270,6 +306,7 @@ export const projects: Project[] = [
   },
   {
     id: 'klicklab',
+    active: true,
     category: ['Frontend', 'Backend'],
     period: '2025.06 – 2025.07',
     stack: ['React', 'Zustand', 'TailwindCSS', 'Node.js', 'ClickHouse', 'Kafka', 'AWS EC2'],
@@ -299,6 +336,7 @@ export const projects: Project[] = [
   },
   {
     id: 'pintos',
+    active: false,
     category: ['OS'],
     period: '2025.05 – 2025.06',
     stack: ['C', 'QEMU', 'GDB', 'Makefile'],
@@ -324,6 +362,7 @@ export const projects: Project[] = [
   },
   {
     id: 'fortune-cookie',
+    active: true,
     category: ['Frontend'],
     period: '2025.03',
     stack: ['TailwindCSS', 'JavaScript', 'Python', 'Flask', 'Jinja', 'MongoDB'],
@@ -351,6 +390,7 @@ export const projects: Project[] = [
   },
   {
     id: 'stm32-fan',
+    active: true,
     category: ['Embedded'],
     period: '2024.03 – 2024.06',
     stack: ['STM32F', 'Embedded C'],
@@ -378,6 +418,7 @@ export const projects: Project[] = [
   },
   {
     id: 'kiosk-version',
+    active: true,
     category: ['Frontend', 'Backend'],
     period: '2024.01 – 2024.02',
     stack: ['jQuery', 'PHP', 'MySQL'],

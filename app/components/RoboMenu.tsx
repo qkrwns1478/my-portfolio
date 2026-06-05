@@ -280,8 +280,8 @@ export default function RoboMenu() {
     window.addEventListener("keydown", onExplicitActivity);
     window.addEventListener("touchstart", onExplicitActivity);
 
-    const drowseTime = 30_000;
-    const sleepTime = 60_000;
+    const drowseTime = 540_000; // 9분
+    const sleepTime = 600_000; // 10분
 
     const interval = setInterval(() => {
       const current = idleStateRef.current;
@@ -327,14 +327,15 @@ export default function RoboMenu() {
         <div className="relative">
           {isImageVisible && (
             <div
-              className={`relative w-fit z-[200] transition-all duration-500 ease-in-out ${
+              className={`relative w-fit z-[200] transition-all duration-500 ease-in-out group ${
                 isSlidingOut ? "translate-x-[500px] opacity-0" : "translate-x-0 opacity-100"
               }`}
               onTransitionEnd={() => {
                 if (isSlidingOut) setIsImageVisible(false);
               }}
             >
-              <div className="absolute w-full z-[200] bottom-full mb-2 left-1/2 -translate-x-1/2 text-white">
+              <div className="absolute w-full z-[200] bottom-full mb-2 left-1/2 -translate-x-1/2 text-white transition
+                              max-lg:opacity-10 max-lg:group-hover:opacity-100">
                 <div className="whitespace-pre-line bg-black border-4 border-white px-3 py-2 font-mono text-sm leading-tight rounded-none">
                   {roboText}
                 </div>
@@ -381,7 +382,9 @@ export default function RoboMenu() {
                   width={240}
                   height={240}
                   unoptimized
-                  className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] z-[200] relative transition cursor-pointer"
+                  loading="eager"
+                  className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] z-[200] relative transition cursor-pointer
+                            max-lg:opacity-10 max-lg:group-hover:opacity-100"
                 />
               </motion.div>
 
@@ -438,7 +441,8 @@ export default function RoboMenu() {
                 alt="Robo Reset Button"
                 width={240}
                 height={240}
-                className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] cursor-pointer"
+                className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] cursor-pointer
+                          max-lg:opacity-10 max-lg:hover:opacity-100 transition"
                 onClick={() => {
                   setResetRoboVisible(false);
                   setIsImageVisible(true);

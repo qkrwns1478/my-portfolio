@@ -37,7 +37,7 @@ export default function Projects() {
     setIsHydrated(true);
   }, []);
 
-  const allCategories = getAllCategories(projectList);
+  const allCategories = getAllCategories(projectList.filter(p => p.active));
 
   const isSnakeSearch = searchText.trim() !== "" &&
     SNAKE_KEYWORDS.some((kw) =>
@@ -46,6 +46,7 @@ export default function Projects() {
 
   const filteredProjects = projectList
     .filter((p) => {
+      if (!p.active) return false;
       const translation = p.translations[language];
       const inCategory = selectedCategory
         ? Array.isArray(p.category) && p.category.includes(selectedCategory)
