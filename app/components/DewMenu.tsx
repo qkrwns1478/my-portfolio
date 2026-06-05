@@ -45,11 +45,12 @@ export default function DewMenu() {
 
   /* ── Liquid Metal Shader mount ── */
   useEffect(() => {
-    if (!shaderRef.current) return;
-    shaderRef.current.innerHTML = "";
+    const node = shaderRef.current;
+    if (!node) return;
+    node.innerHTML = "";
 
     const mount = new ShaderMount(
-      shaderRef.current,
+      node,
       liquidMetalFragmentShader,
       {
         u_repetition: 1.5,
@@ -72,7 +73,7 @@ export default function DewMenu() {
       const s = mount as { destroy?: () => void; unmount?: () => void };
       if (typeof s.destroy === "function") s.destroy();
       else if (typeof s.unmount === "function") s.unmount();
-      if (shaderRef.current) shaderRef.current.innerHTML = "";
+      if (node) node.innerHTML = "";
     };
   }, []);
 
@@ -219,7 +220,7 @@ export default function DewMenu() {
                     zIndex: 3,
                     color: "rgba(228,238,255,0.92)",
                     transition: "transform 0.3s",
-                    transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                    transform: isOpen ? "rotate(135deg)" : "rotate(0deg)",
                   }}
                 />
               </button>

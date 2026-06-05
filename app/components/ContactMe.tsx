@@ -83,6 +83,7 @@ export default function ContactMe({open, setOpen, onSuccess}: {open: boolean; se
           <button onClick={() => setOpen(false)} className="text-sm text-slate-400 hover:text-white transition-colors">✕</button>
         </div>
 
+        {/* eslint-disable-next-line react-hooks/refs */}
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <input {...register("name")} required placeholder={language === "Kor" ? "이름" : "Name"} className="w-full p-2 rounded bg-white/6 border border-white/12 text-white placeholder:text-slate-500 focus:outline-none focus:border-white/25 transition-colors" />
