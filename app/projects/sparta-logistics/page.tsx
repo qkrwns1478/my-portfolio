@@ -70,6 +70,12 @@ export default function SpartaLogisticsDetail() {
           <div>
             <h3 className="text-xl font-semibold text-slate-200">▶ {language === "Kor" ? "Saga 흐름 설계" : "Saga Flow Design"}</h3>
             <div className="space-y-5 mt-4">
+              <div className="mb-4">
+                {language === "Kor"
+                  ? "주문 생성과 주문 취소, 두 흐름의 특성이 완전히 달랐기 때문에 하나의 패턴으로 통일하는 것은 맞지 않다고 판단했습니다."
+                  : "Since the characteristics of the two flows, order creation and order cancellation, were completely different, we decided that it was not right to unify them into one pattern."
+                }
+              </div>
 
               <div>
                 <h4 className="text-lg font-semibold text-slate-200">
@@ -81,8 +87,6 @@ export default function SpartaLogisticsDetail() {
                       ? "각 서비스가 이벤트를 수신하면 독립적으로 반응하는 구조로, 중앙 조율자 없이 4개 서비스를 거쳐 주문이 완성됩니다."
                       : "Each service reacts independently upon receiving an event, completing the order through 4 services without a central orchestrator."
                     }
-                  </li>
-                  <li>
                     <img
                       src="/images/sparta-logistics/choreo_saga.webp"
                       alt="Choreography Saga Flow"
@@ -108,8 +112,6 @@ export default function SpartaLogisticsDetail() {
                       ? "보상 순서가 명확하고 실패 재시도 로직을 한 곳에서 관리해야 했기 때문에, 취소 흐름에는 Orchestration 패턴을 적용했습니다. CancelOrderOrchestrator가 각 서비스에 커맨드를 순차적으로 발행합니다."
                       : "Since the compensation order was clear and retry logic needed to be managed in one place, the Orchestration pattern was applied for the cancellation flow. CancelOrderOrchestrator sequentially issues commands to each service."
                     }
-                  </li>
-                  <li>
                     <img
                       src="/images/sparta-logistics/orches_saga.webp"
                       alt="Orchestration Saga Flow"
@@ -131,65 +133,10 @@ export default function SpartaLogisticsDetail() {
           <div>
             <h3 className="text-xl font-semibold text-slate-200">▶ {language === "Kor" ? "기술적 도전과 해결" : "Technical Challenges & Solutions"}</h3>
             <div className="space-y-5 mt-4">
-
-              {/* 도전 1: Outbox 패턴 */}
+              {/* 도전 1: Kafka 선택 이유 */}
               <div>
                 <h4 className="text-lg font-semibold text-slate-200">
-                  1. {language === "Kor" ? "Outbox 패턴으로 이벤트 유실 방지" : "Preventing Event Loss with the Outbox Pattern"}
-                </h4>
-                <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-1">
-                  <li>
-                    {language === "Kor"
-                      ? "DB 커밋 후 kafkaTemplate.send()가 실패하면 주문이 PENDING으로 고착되는 문제가 있었습니다. DB 커밋과 Kafka 발행이 원자적으로 묶이지 않는 구조가 원인이었습니다."
-                      : "If kafkaTemplate.send() failed after a DB commit, the order would get stuck in PENDING. The root cause was that the DB commit and Kafka publish were not atomically coupled."
-                    }
-                  </li>
-                  <li>
-                    {language === "Kor"
-                      ? "p_order와 p_outbox를 같은 트랜잭션에 저장하고, @Scheduled 릴레이가 1초 주기로 PENDING 이벤트를 폴링해 Kafka에 발행합니다. Kafka 장애 시 PENDING 레코드가 남아 복구 후 재발행(at-least-once)이 보장됩니다."
-                      : "p_order and p_outbox are saved in the same transaction, and an @Scheduled relay polls PENDING events every second to publish to Kafka. If Kafka fails, PENDING records remain for redelivery after recovery (at-least-once guarantee)."
-                    }
-                  </li>
-                  <li>
-                    {language === "Kor"
-                      ? "@PreDestroy + AtomicBoolean 플래그로 컨텍스트 종료 시 DROP TABLE 레이스 컨디션을 차단했고, Outbox 공통 모듈을 common 모듈로 추출해 다른 서비스도 재사용할 수 있도록 설계했습니다."
-                      : "@PreDestroy + AtomicBoolean flag prevents DROP TABLE race conditions on context shutdown. The Outbox module was extracted into a common module, making it reusable across other services."
-                    }
-                  </li>
-                </ul>
-              </div>
-
-              {/* 도전 2: Redis 분산 락 */}
-              <div>
-                <h4 className="text-lg font-semibold text-slate-200">
-                  2. {language === "Kor" ? "Redis 분산 락 + 상태 키로 분산 동시성 제어" : "Distributed Concurrency Control with Redis Lock + State Keys"}
-                </h4>
-                <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-1">
-                  <li>
-                    {language === "Kor"
-                      ? "Kafka Consumer(비동기)와 REST API(동기)가 동일 주문에 동시 접근하면 상태 불일치가 발생했습니다. 대표적으로 delivery.created Consumer가 ACCEPTED를 쓰는 중 취소 API가 진입하면 CANCELLED 상태 주문이 IN_DELIVERY로 전이되는 문제였습니다."
-                      : "Simultaneous access to the same order by the Kafka Consumer (async) and REST API (sync) caused state inconsistency. A representative case was the order transitioning to IN_DELIVERY even when CANCELLED, if the cancellation API entered while the delivery.created Consumer was writing ACCEPTED."
-                    }
-                  </li>
-                  <li>
-                    {language === "Kor"
-                      ? "세 계층의 방어선을 중첩 적용했습니다: L1 Redis 상태 키(CANCELLING / PROCESSING)로 빠른 사전 차단, L2 Redis 분산 락(SET NX EX 30)으로 임계 구간 직렬화, L3 JPA @Version 낙관적 락으로 DB 레벨 최후 방어."
-                      : "Three layers of defense were stacked: L1 Redis state keys (CANCELLING / PROCESSING) for fast pre-blocking, L2 Redis distributed lock (SET NX EX 30) for critical section serialization, L3 JPA @Version optimistic lock as the last line of defense at the DB level."
-                    }
-                  </li>
-                  <li>
-                    {language === "Kor"
-                      ? "CANCELLING 키 생명 주기를 Saga 완료/복구 시점까지 유지하고, Consumer 4종에 CANCELLING 확인 → PROCESSING 세팅 패턴을 일관되게 적용했습니다."
-                      : "The CANCELLING key lifecycle is maintained until Saga completion/recovery, and the CANCELLING check → PROCESSING set pattern is consistently applied across all 4 Consumer types."
-                    }
-                  </li>
-                </ul>
-              </div>
-
-              {/* 도전 3: Kafka 선택 이유 */}
-              <div>
-                <h4 className="text-lg font-semibold text-slate-200">
-                  3. {language === "Kor" ? "Kafka를 선택한 이유 (vs RabbitMQ)" : "Why Kafka Over RabbitMQ"}
+                  1. {language === "Kor" ? "Kafka를 선택한 이유 (vs RabbitMQ)" : "Why Kafka Over RabbitMQ"}
                 </h4>
                 <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-1">
                   <li>
@@ -208,6 +155,90 @@ export default function SpartaLogisticsDetail() {
                     {language === "Kor"
                       ? "Outbox 패턴 연계: 로그 기반 영속성과 at-least-once 보장이 폴링 릴레이 방식과 자연스럽게 결합됩니다."
                       : "Outbox pattern synergy: Log-based persistence and at-least-once guarantees naturally combine with the polling relay approach."
+                    }
+                  </li>
+                </ul>
+              </div>
+
+              {/* 도전 2: Redis 분산 락 */}
+              <div>
+                <h4 className="text-lg font-semibold text-slate-200">
+                  2. {language === "Kor" ? "Redis 분산 락 + 상태 키로 분산 동시성 제어" : "Distributed Concurrency Control with Redis Lock + State Keys"}
+                </h4>
+                <ul className="list-disc pl-6 text-slate-300 space-y-3 mt-1">
+                  <li>
+                    <span className="text-slate-400 font-medium">{language === "Kor" ? "문제 1. " : "Problem 1. "}</span>
+                    {language === "Kor"
+                      ? "동일한 주문에 대해 주문 승인(Kafka Consumer)과 주문 취소(REST API)가 동시에 진입하면 상태 값이 충돌했습니다."
+                      : "When order approval (Kafka Consumer) and order cancellation (REST API) entered simultaneously for the same order, state values conflicted."
+                    }
+                    <img
+                      src="/images/sparta-logistics/key_seq_1.webp"
+                      alt="Challenge No.2 Problem 1 Sequence Diagram"
+                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                    />
+                  </li>
+                  <li>
+                    <span className="text-slate-400 font-medium">{language === "Kor" ? "해결 1. " : "Solution 1. "}</span>
+                    {language === "Kor"
+                      ? "Redis 분산 락(SET NX EX 30)을 도입해 임계 구간에 하나의 요청만 진입하도록 직렬화하여 동시 진입으로 인한 상태 충돌을 해소했습니다."
+                      : "Introduced a Redis distributed lock (SET NX EX 30) to serialize access so only one request enters the critical section at a time, resolving state conflicts from concurrent entry."
+                    }
+                    <img
+                      src="/images/sparta-logistics/key_seq_2.webp"
+                      alt="Challenge No.2 Solution 1 Sequence Diagram"
+                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                    />
+                  </li>
+                  <li>
+                    <span className="text-slate-400 font-medium">{language === "Kor" ? "문제 2. " : "Problem 2. "}</span>
+                    {language === "Kor"
+                      ? "분산 락은 Saga 종료가 아닌 임계 구간 탈출 시점에 해제되므로, 락 해제 후 커밋 완료 사이의 구간은 보호되지 않았습니다."
+                      : "Since the distributed lock is released when leaving the critical section rather than at Saga completion, the gap between lock release and commit completion remained unprotected."
+                    }
+                    <img
+                      src="/images/sparta-logistics/key_seq_3.webp"
+                      alt="Challenge No.2 Problem 2 Sequence Diagram"
+                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                    />
+                  </li>
+                  <li>
+                    <span className="text-slate-400 font-medium">{language === "Kor" ? "해결 2. " : "Solution 2. "}</span>
+                    {language === "Kor"
+                      ? "분산 락과 Redis 상태 키(CANCELLING / PROCESSING)를 함께 사용해, 락 해제 이후 구간도 상태 키로 사전 차단하고 JPA @Version 낙관적 락으로 DB 레벨 최후 방어선을 추가했습니다."
+                      : "By combining the distributed lock with Redis state keys (CANCELLING / PROCESSING), the gap after lock release is blocked by the state key, with JPA @Version optimistic lock added as a final DB-level safeguard."
+                    }
+                    <img
+                      src="/images/sparta-logistics/key_seq_4.webp"
+                      alt="Challenge No.2 Solution 2 Sequence Diagram"
+                      className="mt-2 rounded-lg border border-white/10 max-w-full"
+                    />
+                  </li>
+                </ul>
+              </div>
+
+              {/* 도전 3: Outbox 패턴 */}
+              <div>
+                <h4 className="text-lg font-semibold text-slate-200">
+                  3. {language === "Kor" ? "Outbox 패턴으로 이벤트 유실 방지" : "Preventing Event Loss with the Outbox Pattern"}
+                </h4>
+                <ul className="list-disc pl-6 text-slate-300 space-y-1 mt-1">
+                  <li>
+                    {language === "Kor"
+                      ? "DB 커밋 후 kafkaTemplate.send()가 실패하면 주문이 PENDING으로 고착되는 문제가 있었습니다. DB 커밋과 Kafka 발행이 원자적으로 묶이지 않는 구조가 원인이었습니다."
+                      : "If kafkaTemplate.send() failed after a DB commit, the order would get stuck in PENDING. The root cause was that the DB commit and Kafka publish were not atomically coupled."
+                    }
+                  </li>
+                  <li>
+                    {language === "Kor"
+                      ? "p_order와 p_outbox를 같은 트랜잭션에 저장하고, @Scheduled 릴레이가 1초 주기로 PENDING 이벤트를 폴링해 Kafka에 발행합니다. Kafka 장애 시 PENDING 레코드가 남아 복구 후 재발행(at-least-once)이 보장됩니다."
+                      : "p_order and p_outbox are saved in the same transaction, and an @Scheduled relay polls PENDING events every second to publish to Kafka. If Kafka fails, PENDING records remain for redelivery after recovery (at-least-once guarantee)."
+                    }
+                  </li>
+                  <li>
+                    {language === "Kor"
+                      ? "@PreDestroy + AtomicBoolean 플래그로 컨텍스트 종료 시 DROP TABLE 레이스 컨디션을 차단했고, Outbox 공통 모듈을 common 모듈로 추출해 다른 서비스도 재사용할 수 있도록 설계했습니다."
+                      : "@PreDestroy + AtomicBoolean flag prevents DROP TABLE race conditions on context shutdown. The Outbox module was extracted into a common module, making it reusable across other services."
                     }
                   </li>
                 </ul>
